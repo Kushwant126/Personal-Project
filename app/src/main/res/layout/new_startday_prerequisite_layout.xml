@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/new_bg_color"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/startday_PreCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/start_day_bg" />
+
+            <TextView
+                android:id="@+id/start_day_pr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size15"
+                android:layout_marginTop="@dimen/size170"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="@string/start_Day_Pre_by_requisitest"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="240dp"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/size10"
+                    android:layout_marginBottom="@dimen/size0"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/size15"
+                    app:cardElevation="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size15"
+                            android:layout_marginTop="@dimen/size20"
+                            android:background="@color/white"
+                            android:orientation="horizontal">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:cardBackgroundColor="#29D356"
+                                app:cardCornerRadius="@dimen/size25">
+
+                                <ImageView
+                                    android:layout_width="@dimen/size30"
+                                    android:layout_height="@dimen/size30"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/startday_synchronization" />
+                            </androidx.cardview.widget.CardView>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:paddingLeft="@dimen/size15">
+
+                                <TextView
+                                    android:id="@+id/sync"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat_bold"
+                                    android:text="@string/synchronization"
+                                    android:textColor="#000000"
+                                    android:textSize="@dimen/size14" />
+
+                                <TextView
+                                    android:id="@+id/sync1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat_medium"
+                                    android:paddingRight="@dimen/size10"
+                                    android:text="It Check the data is synced between server &amp; App"
+                                    android:textColor="#717070"
+                                    android:textSize="11sp" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/syn_tick"
+                                android:layout_width="@dimen/size26"
+                                android:layout_height="@dimen/size26"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/size20"
+                                android:background="@drawable/charm_tick" />
+
+                            <ImageView
+                                android:id="@+id/syn_cross"
+                                android:layout_width="@dimen/size26"
+                                android:layout_height="@dimen/size26"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/size20"
+                                android:background="@drawable/charm_cross"
+                                android:visibility="gone" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="@dimen/size75"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginRight="@dimen/size15"
+                            android:layout_marginBottom="16dp"
+                            android:background="#DFDFDF" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size15"
+                            android:layout_marginTop="0dp"
+                            android:background="@color/white"
+                            android:orientation="horizontal">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:cardBackgroundColor="#E57676"
+                                app:cardCornerRadius="@dimen/size25">
+                                <ImageView
+                                    android:layout_width="@dimen/size30"
+                                    android:layout_height="@dimen/size30"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/mdi_signal" />
+                            </androidx.cardview.widget.CardView>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:paddingLeft="@dimen/size15">
+
+                                <TextView
+                                    android:id="@+id/data"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat_bold"
+                                    android:text="@string/data_check"
+                                    android:textColor="#000000"
+                                    android:textSize="@dimen/size14" />
+
+                                <TextView
+                                    android:id="@+id/data1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat_medium"
+                                    android:text="Check Network Availability"
+                                    android:textColor="#717070"
+                                    android:textSize="11sp" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/datacheck_tick"
+                                android:layout_width="@dimen/size26"
+                                android:layout_height="@dimen/size26"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/size20"
+                                android:background="@drawable/charm_tick" />
+
+                            <ImageView
+                                android:id="@+id/datacheck_cross"
+                                android:layout_width="@dimen/size26"
+                                android:layout_height="@dimen/size26"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/size20"
+                                android:background="@drawable/charm_cross"
+                                android:visibility="gone" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="@dimen/size75"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginRight="@dimen/size15"
+                            android:layout_marginBottom="16dp"
+                            android:background="#DFDFDF" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size15"
+                            android:layout_marginTop="0dp"
+                            android:background="@color/white"
+                            android:orientation="horizontal">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:cardBackgroundColor="#7224AF"
+                                app:cardCornerRadius="@dimen/size25">
+                                <ImageView
+                                    android:layout_width="@dimen/size30"
+                                    android:layout_height="@dimen/size30"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/bx_wifi" />
+                            </androidx.cardview.widget.CardView>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:paddingLeft="@dimen/size15">
+
+                                <TextView
+                                    android:id="@+id/netspeed"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat_bold"
+                                    android:text="@string/internet_speed_check"
+                                    android:textColor="#000000"
+                                    android:textSize="@dimen/size14" />
+
+                                <TextView
+                                    android:id="@+id/netspeed1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat_medium"
+                                    android:text="Internet source &amp; Speed"
+                                    android:textColor="#717070"
+                                    android:textSize="11sp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/size2"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/netspeed2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/montserrat_medium"
+                                        android:text="Net Speed: "
+                                        android:textColor="#2C2C2C"
+                                        android:textSize="11sp" />
+
+                                    <ImageView
+                                        android:layout_width="@dimen/size15"
+                                        android:layout_height="@dimen/size15"
+                                        android:layout_gravity="center"
+                                        android:background="@drawable/startday_download" />
+
+                                    <TextView
+                                        android:id="@+id/down_load"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="2dp"
+                                        android:fontFamily="@font/montserrat_medium"
+                                        android:text="0 Bps"
+                                        android:textColor="#2C2C2C"
+                                        android:textSize="11sp" />
+
+                                    <ImageView
+                                        android:layout_width="@dimen/size15"
+                                        android:layout_height="@dimen/size15"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="3dp"
+                                        android:background="@drawable/startday_upload" />
+
+                                    <TextView
+                                        android:id="@+id/up_load"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="2dp"
+                                        android:fontFamily="@font/montserrat_medium"
+                                        android:text="0 Bps"
+                                        android:textColor="#2C2C2C"
+                                        android:textSize="11sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/internetspeed_tick"
+                                android:layout_width="@dimen/size26"
+                                android:layout_height="@dimen/size26"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/size20"
+                                android:background="@drawable/charm_tick" />
+
+                            <ImageView
+                                android:id="@+id/internetspeed_cross"
+                                android:layout_width="@dimen/size26"
+                                android:layout_height="@dimen/size26"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/size20"
+                                android:background="@drawable/charm_cross"
+                                android:visibility="gone" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="@dimen/size75"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginRight="@dimen/size15"
+                            android:layout_marginBottom="16dp"
+                            android:background="#DFDFDF" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size15"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginBottom="@dimen/size25"
+                            android:background="@color/white"
+                            android:orientation="horizontal">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:cardBackgroundColor="#FFA943"
+                                app:cardCornerRadius="@dimen/size25">
+                                <ImageView
+                                    android:layout_width="@dimen/size30"
+                                    android:layout_height="@dimen/size30"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/startday_battery" />
+                            </androidx.cardview.widget.CardView>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:paddingLeft="@dimen/size15">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/battery"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/montserrat_bold"
+                                        android:text="@string/Battery"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/size14" />
+
+                                    <TextView
+                                        android:id="@+id/battery_percentage"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:fontFamily="@font/montserrat_extrabold"
+                                        android:text="0%"
+                                        android:textColor="#000000"
+                                        android:textSize="@dimen/size14" />
+
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/battery1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/montserrat_medium"
+                                    android:paddingRight="@dimen/size20"
+                                    android:text="Make sure battery is  minimum 40% Charge to start your Day"
+                                    android:textColor="#717070"
+                                    android:textSize="11sp" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/battery_tick"
+                                android:layout_width="@dimen/size26"
+                                android:layout_height="@dimen/size26"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/size20"
+                                android:background="@drawable/charm_tick" />
+
+                            <ImageView
+                                android:id="@+id/battery_cross"
+                                android:layout_width="@dimen/size26"
+                                android:layout_height="@dimen/size26"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="@dimen/size20"
+                                android:background="@drawable/charm_cross"
+                                android:visibility="gone" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size0"
+                    android:layout_weight="1" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/startday_PreCheck_attendance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/size10"
+                    android:layout_marginTop="@dimen/size10"
+                    android:layout_marginBottom="@dimen/size15"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/size10"
+                    app:cardElevation="@dimen/size10">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/size30"
+                            android:layout_height="@dimen/size30"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/size30"
+                            android:layout_marginTop="@dimen/size20"
+                            android:layout_marginBottom="@dimen/size20"
+                            android:src="@drawable/startday_verified_account" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/size15"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:text="@string/Attendance"
+                            android:textColor="#000000"
+                            android:textSize="@dimen/size14" />
+
+                        <ImageView
+                            android:layout_width="@dimen/size30"
+                            android:layout_height="@dimen/size30"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="@dimen/size20"
+                            android:background="@drawable/arrow_left" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/startday_TakeSelfie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size200"
+                android:background="@drawable/start_day_bg2" />
+
+            <TextView
+                android:id="@+id/mark_attendance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size25"
+                android:layout_marginTop="@dimen/size30"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="Mark \nAttendance"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size32" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="120dp"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size17"
+                    android:layout_marginTop="@dimen/size10"
+                    android:layout_marginRight="@dimen/size17"
+                    android:layout_marginBottom="@dimen/size15"
+                    android:background="@color/white"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="@dimen/size10">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="@dimen/size20"
+                            android:layout_marginTop="@dimen/size20"
+                            android:layout_marginBottom="@dimen/size10"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:text="@string/Attendance_Details"
+                            android:textColor="#666666"
+                            android:textSize="@dimen/size14" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/size20"
+                            android:layout_marginBottom="@dimen/size25"
+                            android:background="#A5A5A5"
+                            android:padding="2dp">
+
+                            <LinearLayout
+                                android:id="@+id/llattendance_DropDown"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:padding="0dp">
+
+                                <TextView
+                                    android:id="@+id/tvattendance_type"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginVertical="@dimen/size18"
+                                    android:layout_marginLeft="@dimen/size15"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/montserrat_bold"
+                                    android:text=""
+                                    android:textColor="#2F2F2F"
+                                    android:textSize="@dimen/size14"
+                                    tools:text="Attendance Details" />
+
+                                <ImageView
+                                    android:layout_width="@dimen/size30"
+                                    android:layout_height="@dimen/size30"
+                                    android:layout_gravity="center"
+                                    android:layout_marginRight="@dimen/size15"
+                                    android:background="@drawable/arrow_down" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/startday_capture_selfie"
+                            android:layout_width="@dimen/size75"
+                            android:layout_height="@dimen/size75"
+                            android:layout_marginLeft="@dimen/size20"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginRight="@dimen/size17"
+                            android:layout_marginBottom="@dimen/size30"
+                            android:visibility="visible"
+                            app:cardBackgroundColor="#DEDEDE"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="@dimen/size30"
+                                    android:layout_height="@dimen/size30"
+                                    android:background="@drawable/camer_black" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/size8"
+                                    android:text="Take Selfie"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/size8" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <RelativeLayout
+                            android:id="@+id/selfie_taken"
+                            android:layout_width="match_parent"
+                            android:layout_height="340dp"
+                            android:visibility="visible">
+
+                            <ImageView
+                                android:id="@+id/selfie_img"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="0dp"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/practice_selfie" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size90"
+                                android:layout_alignBottom="@id/selfie_img"
+                                android:background="@drawable/bg_down_shadow"
+                                android:orientation="horizontal"
+                                android:paddingHorizontal="@dimen/size15"
+                                android:paddingVertical="@dimen/size10">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tv_timeDetails"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/montserrat_extrabold"
+                                        android:text="9:48 AM, 05-Oct-2023"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/size15" />
+
+                                    <TextView
+                                        android:id="@+id/tv_locationDetails"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/montserrat_medium"
+                                        android:lines="3"
+                                        android:text="South_2, RRC - KTK,  Karnataka,  Bangalore,  Yelahankar -1, 6900102712"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/size12" />
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:id="@+id/ivRetake_selfie"
+                                    android:layout_width="@dimen/size90"
+                                    android:layout_height="@dimen/size30"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/retake" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size0"
+                    android:layout_weight="1" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/size24"
+                    android:layout_marginBottom="@dimen/size15"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/new_app_color"
+                    app:cardCornerRadius="@dimen/size25"
+                    app:cardElevation="@dimen/size25">
+
+                </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/startday_proceed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/size24"
+                    android:layout_marginBottom="@dimen/size15"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="center"
+                    android:text="@string/proceed"
+                    android:paddingVertical="@dimen/size20"
+                    android:background="@drawable/corner_radius_16"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

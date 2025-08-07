@@ -1,0 +1,990 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/main1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--new DashBoard-->
+            <LinearLayout
+                android:id="@+id/llHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/new_bg_color"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingVertical="@dimen/size7"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <Button
+                    android:id="@+id/btnMenu"
+                    android:layout_width="@dimen/size25"
+                    android:layout_height="@dimen/size20"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/size2"
+                    android:layout_marginVertical="@dimen/size5"
+                    android:background="@drawable/menu"
+                    android:gravity="center"
+                    android:visibility="visible"
+                    tools:visibility="visible" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/size20"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/transparent"
+                    app:cardCornerRadius="@dimen/size24" />
+
+                <ImageView
+                    android:layout_width="@dimen/size60"
+                    android:layout_height="@dimen/size40"
+                    android:layout_marginLeft="@dimen/size20"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/images_1"
+                    android:visibility="visible" />
+
+                <View
+                    android:layout_width="@dimen/size0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+
+                <ImageView
+                    android:layout_width="@dimen/size70"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@drawable/images_2"
+                    android:scaleType="fitXY"
+                    android:visibility="visible" />
+
+                <View
+                    android:layout_width="@dimen/size0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="@dimen/size40"
+                    android:layout_height="@dimen/size40"
+                    android:layout_gravity="center"
+                    android:background="@drawable/practice_selfie"
+                    android:gravity="center"
+                    android:scaleType="fitXY"
+                    android:visibility="gone" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivprofile"
+                    android:layout_width="@dimen/size40"
+                    android:layout_height="@dimen/size40"
+                    android:layout_gravity="center"
+                    android:elevation="@dimen/size15"
+                    android:src="@drawable/practice_selfie" />
+
+                <View
+                    android:layout_width="@dimen/size0"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".3" />
+
+            </LinearLayout>
+
+            <!-- Dash Board Right Layout -->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/llMenu"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/size2"
+                        android:background="@drawable/menu" />
+
+                    <LinearLayout
+                        android:layout_width="398dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/btnLogo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size5"
+                            android:background="@drawable/toplogo"
+                            android:contentDescription="@string/app_name"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/tvRouteCode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center"
+                            android:paddingRight="@dimen/size10"
+                            android:text="@string/clear"
+                            android:textColor="@color/text_color_light"
+                            android:textSize="@dimen/text_size_small_12sp"
+                            android:textStyle="bold"
+                            android:visibility="visible" />
+
+                        <ImageView
+                            android:id="@+id/ivBuildImage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size20"
+                            android:layout_marginTop="@dimen/size3"
+                            android:background="@drawable/build_type_production"
+                            android:contentDescription="@string/app_name"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/txtheader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_10"
+                            android:text=""
+                            android:textColor="@color/header_color"
+                            android:textSize="@dimen/size15"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size2"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btnSKIPExpiryCheck"
+                    style="@style/TextHeader1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Skip"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btnFinish"
+                    style="@style/TextHeader1"
+                    android:layout_gravity="center"
+                    android:layout_toRightOf="@+id/btnRefresh"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:text="@string/Start_Day"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvTimer"
+                    android:layout_width="110dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="right|center"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/roundcorner_new_one_new"
+                    android:drawableLeft="@drawable/timer"
+                    android:drawablePadding="@dimen/margin_5"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/margin_10"
+                    android:paddingRight="@dimen/margin_10"
+                    android:text="00:07:00"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+                <!-- <TextView
+                     android:id="@+id/tvRouteCode"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_gravity="center"
+                     android:gravity="center"
+                     android:paddingRight="@dimen/size10"
+                     android:textColor="@color/text_color_light"
+                     android:textSize="@dimen/text_size_small_12sp"
+                     android:textStyle="bold"
+                     android:text="@string/clear"
+                     android:visibility="visible"></TextView>-->
+                <Button
+                    android:id="@+id/btnSetting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btnMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/btnCartCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dip"
+                        android:layout_marginRight="12dip"
+                        android:layout_toLeftOf="@+id/llInfo"
+                        android:background="@drawable/cart_count_background"
+                        android:text="0"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/ivShoppingCart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="26dip"
+                        android:layout_marginRight="28dip"
+                        android:layout_toLeftOf="@+id/llInfo"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/shopping_cart"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/ivDivider"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_toLeftOf="@+id/llInfo"
+                            android:src="@drawable/vertical_divideline"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:id="@+id/ivSignal"
+                        android:layout_width="5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/signal"
+                        android:contentDescription="@string/app_name"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:id="@+id/btnSave"
+                        style="@style/TextHeader1"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        android:gravity="center"
+                        android:text="Save"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:id="@+id/btnSaveNew"
+                        style="@style/TextHeader1"
+
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginBottom="@dimen/margin_5dip"
+                        android:layout_toRightOf="@+id/btnSave"
+                        android:gravity="center"
+                        android:text="@string/Remote_Collection"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:id="@+id/btnRefresh"
+                        style="@style/TextHeader1"
+                        android:drawablePadding="10dp"
+                        android:gravity="center"
+                        android:text="Refresh"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/llJourneyDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_10"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tvDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="30"
+                            android:textColor="@color/header_color"
+                            android:textSize="@dimen/text_size_one_large" />
+
+                        <TextView
+                            android:id="@+id/tvMonth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="Sep"
+                            android:textColor="@color/text_color_header"
+                            android:textSize="@dimen/text_size_small_12sp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/llInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toLeftOf="@+id/ivSignal"
+                        android:gravity="right|center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:orientation="horizontal"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:id="@+id/tvUsername"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_10"
+                                android:layout_marginTop="@dimen/margin_10"
+                                android:gravity="right"
+                                android:textColor="@color/text_color_header_normal"
+                                android:textSize="@dimen/text_size_small" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/margin_5"
+                                android:gravity="center_horizontal"
+                                android:text="-"
+                                android:textColor="@color/text_color_header_normal"
+                                android:textSize="@dimen/text_size_small_12sp"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/tvUserADID"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/margin_10"
+                                android:layout_marginTop="@dimen/margin_10"
+                                android:gravity="right"
+                                android:textColor="@color/text_color_header_normal"
+                                android:textSize="@dimen/text_size_small_12sp"
+                                android:visibility="gone" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:orientation="horizontal"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/size10"
+                                android:layout_marginBottom="@dimen/size10"
+                                android:text="Route code : "
+                                android:textColor="@color/text_color_header_normal"
+                                android:textSize="@dimen/text_size_small_12sp"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/tvUserType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/size10"
+                                android:text="SALESMAN"
+                                android:textColor="@color/text_color_header_normal"
+                                android:textSize="@dimen/text_size_small_12sp"
+                                android:visibility="visible" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btnprogress"
+                            style="@style/TextHeader1"
+                            android:layout_marginTop="@dimen/margin_5"
+                            android:layout_marginRight="@dimen/margin_5"
+                            android:layout_marginBottom="@dimen/margin_5"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/margin_15"
+                            android:paddingTop="@dimen/margin_10"
+                            android:paddingRight="@dimen/margin_15"
+                            android:paddingBottom="@dimen/margin_10"
+                            android:text="Start day"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/ivLogOut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/size5"
+                        android:layout_marginRight="5dip"
+                        android:layout_marginBottom="@dimen/size5"
+                        android:background="@drawable/topsaparetor"
+                        android:contentDescription="@string/app_name"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnLogOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/size2"
+                    android:background="@drawable/logout"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btnLoginLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/toolbar_red"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+
+            <LinearLayout
+                android:id="@+id/llSecurityHeader"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tvSecurityHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/size10"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size20"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnChkOutVan"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/size35"
+                    android:layout_weight="1"
+                    android:text="Check-Out Of Van"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="16dip"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/btnChkInVan"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/size35"
+                    android:layout_weight="1"
+                    android:text="Check-In Of Van"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="16dip"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <androidx.drawerlayout.widget.DrawerLayout
+                android:id="@+id/drawerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:id="@+id/flMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:id="@+id/llBody"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cvBottomNavigationBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_margin="10dp"
+                            android:foregroundGravity="bottom"
+                            app:cardBackgroundColor="@color/new_app_color"
+                            app:cardCornerRadius="@dimen/size25">
+
+                            <LinearLayout
+                                android:id="@+id/llNavigationBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/size75"
+                                android:orientation="horizontal"
+
+                                android:weightSum="4">
+
+                                <LinearLayout
+                                    android:id="@+id/llnon_start_day"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal"
+                                    android:visibility="visible">
+
+                                    <LinearLayout
+                                        android:id="@+id/llMenuOne"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical"
+                                        android:paddingStart="5dp"
+                                        android:paddingEnd="5dp">
+
+                                        <ImageView
+                                            android:id="@+id/ivMenuOne"
+                                            style="@style/dashBoardImageviews"
+                                            android:layout_width="@dimen/size40"
+                                            android:layout_height="@dimen/size40"
+                                            android:layout_gravity="center|bottom"
+                                            android:layout_marginVertical="5dp"
+                                            android:adjustViewBounds="true"
+                                            android:background="@drawable/circle_white"
+                                            android:padding="@dimen/size5"
+                                            android:src="@drawable/dashboard_2" />
+
+                                        <TextView
+                                            android:id="@+id/tvMenuOne"
+                                            style="@style/textDashboard"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:text="@string/dashboard"
+                                            android:visibility="visible" />
+
+                                        <View
+                                            android:id="@+id/v1"
+                                            android:layout_width="40dp"
+                                            android:layout_height="3dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="25dp"
+                                            android:layout_marginTop="@dimen/size5"
+                                            android:layout_marginRight="25dp"
+                                            android:background="@color/white" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/llMenuTwo"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:id="@+id/ivMenuTwo"
+                                            style="@style/dashBoardImageviews"
+                                            android:layout_width="@dimen/size40"
+                                            android:layout_height="@dimen/size40"
+                                            android:layout_gravity="center|bottom"
+                                            android:layout_marginVertical="5dp"
+                                            android:adjustViewBounds="true"
+                                            android:padding="@dimen/size5"
+                                            android:src="@drawable/leaderboard_1" />
+
+                                        <TextView
+                                            android:id="@+id/tvMenuTwo"
+                                            style="@style/textDashboard"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:text="@string/leaderboard"
+                                            android:visibility="visible" />
+
+                                        <View
+                                            android:id="@+id/v2"
+                                            android:layout_width="40dp"
+                                            android:layout_height="3dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="25dp"
+                                            android:layout_marginTop="@dimen/size5"
+                                            android:layout_marginRight="25dp"
+                                            android:background="@color/white" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/llMenuThree"
+
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:id="@+id/ivMenuThree"
+                                            style="@style/dashBoardImageviews"
+                                            android:layout_width="@dimen/size40"
+                                            android:layout_height="@dimen/size40"
+                                            android:layout_gravity="center|bottom"
+                                            android:layout_marginVertical="5dp"
+                                            android:adjustViewBounds="true"
+                                            android:padding="@dimen/size5"
+                                            android:src="@drawable/jp_1" />
+
+                                        <TextView
+                                            android:id="@+id/tvMenuThree"
+
+                                            style="@style/textDashboard"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:text="@string/jp"
+
+                                            android:visibility="visible" />
+
+                                        <View
+                                            android:id="@+id/v3"
+                                            android:layout_width="40dp"
+                                            android:layout_height="3dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="25dp"
+                                            android:layout_marginTop="@dimen/size5"
+                                            android:layout_marginRight="25dp"
+                                            android:background="@color/white" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/llOthers"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:id="@+id/ivOthers"
+                                            style="@style/dashBoardImageviews"
+                                            android:layout_width="@dimen/size40"
+                                            android:layout_height="@dimen/size40"
+                                            android:layout_gravity="center|bottom"
+                                            android:layout_marginVertical="5dp"
+                                            android:adjustViewBounds="true"
+                                            android:padding="@dimen/size5"
+                                            android:src="@drawable/menu_1" />
+
+                                        <TextView
+                                            android:id="@+id/tvOthers"
+                                            style="@style/textDashboard"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:text="@string/others_new"
+                                            android:visibility="visible" />
+
+                                        <View
+                                            android:id="@+id/v4"
+                                            android:layout_width="40dp"
+                                            android:layout_height="3dp"
+                                            android:layout_gravity="center"
+                                            android:layout_marginLeft="25dp"
+                                            android:layout_marginTop="@dimen/size5"
+                                            android:layout_marginRight="25dp"
+                                            android:background="@color/white" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/llstart_day"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal"
+                                    android:visibility="gone"
+                                    tools:visibility="visible">
+
+                                    <TextView
+                                        android:id="@+id/start_day"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_gravity="center"
+                                        android:fontFamily="@font/montserrat_semibold"
+                                        android:gravity="center"
+                                        android:text="@string/Start_Day"
+                                        android:textColor="@color/white"
+                                        android:textSize="20sp"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/flMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start">
+
+                    <LinearLayout
+                        android:id="@+id/llDashBoard"
+                        android:layout_width="@dimen/size200"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <ExpandableListView
+                            android:id="@+id/lvDashBoard"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:cacheColorHint="@null"
+                            android:divider="@color/white"
+                            android:dividerHeight="@dimen/size0"
+                            android:fadingEdge="none"
+                            android:scrollbars="none" />
+                    </LinearLayout>
+                </FrameLayout>
+            </androidx.drawerlayout.widget.DrawerLayout>
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvStartDay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/size10"
+            android:visibility="gone"
+            app:cardCornerRadius="@dimen/size24">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@color/new_app_color"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/size15"
+                    android:text="@string/Start_Day"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_large" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--Bottom Navigation-->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvBottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="@dimen/size20"
+            android:layout_marginBottom="@dimen/size10"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/new_app_color"
+            app:cardCornerRadius="@dimen/size28"
+            tools:visibility="gone">
+            <!--<android.support.design.widget.BottomNavigationView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size50"
+                app:itemBackground="@color/new_app_color"
+                app:menu="@menu/nav_menu"
+                app:itemTextColor="@drawable/bottom_navigation_selector" />-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/size5"
+                android:paddingTop="@dimen/size10"
+                android:paddingBottom="@dimen/size6">
+
+                <LinearLayout
+                    android:id="@+id/lldb"
+                    android:layout_width="@dimen/size0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/ivdb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/size40"
+                        android:background="@drawable/circle_white"
+                        android:padding="@dimen/size5"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/dashboard_2" />
+
+                    <TextView
+                        android:id="@+id/tvdb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/size2"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:gravity="center"
+                        android:text="Dashboard"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/size14"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lllb"
+                    android:layout_width="@dimen/size0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/ivlb"
+                        android:layout_width="@dimen/size40"
+                        android:layout_height="@dimen/size40"
+                        android:padding="@dimen/size5"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/leaderboard_1" />
+
+                    <TextView
+                        android:id="@+id/tvlb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/size2"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:gravity="center"
+                        android:text="Leaderboard"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/size10"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lljp"
+                    android:layout_width="@dimen/size0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/ivjp"
+                        android:layout_width="@dimen/size40"
+                        android:layout_height="@dimen/size40"
+                        android:padding="@dimen/size5"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/jp_1" />
+
+                    <TextView
+                        android:id="@+id/tvjp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/size2"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:gravity="center"
+                        android:text="JP"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/size10"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/size0"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="@dimen/size40"
+                        android:layout_height="@dimen/size40"
+                        android:padding="@dimen/size5"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/menu_1" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/size2"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:gravity="center"
+                        android:text="Menu"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/size10"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</LinearLayout>

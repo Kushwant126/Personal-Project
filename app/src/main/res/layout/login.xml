@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="end"
+        >
+
+        <TextView
+            android:id="@+id/tvIMEINO_NEW"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/IMEINO"
+            android:text="IMEI NUMBER"
+            />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fadingEdge="none"
+        android:background="@drawable/login_main_bg"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="1dip"
+            android:layout_marginBottom="@dimen/size100"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/size2"
+                android:layout_marginBottom="@dimen/margin_10"
+              android:layout_marginRight="@dimen/margin_50"
+              android:layout_marginLeft="@dimen/margin_50"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/etUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_50"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:background="@drawable/input_new"
+                    android:drawableLeft="@drawable/user"
+                     android:drawablePadding="@dimen/size10"
+                    android:hint="@string/usercode_hint"
+                    android:imeOptions="actionNext"
+                    android:paddingLeft="20dip"
+                    android:singleLine="true"
+                    android:textColor="@color/text_color_normal"
+                    android:textColorHint="@color/text_color_normal"
+                    android:textSize="@dimen/text_size_small_14sp" />
+
+                <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_50"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginTop="10dip"
+                    android:background="@drawable/input_new"
+                    android:drawableLeft="@drawable/pwd"
+                    android:drawablePadding="@dimen/size10"
+                    android:hint="@string/Password_hint"
+                    android:imeActionLabel="Login"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:paddingLeft="20dip"
+                    android:singleLine="true"
+                    android:textColor="@color/text_color_normal"
+                    android:textColorHint="@color/text_color_normal"
+                    android:textSize="@dimen/text_size_small_14sp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_rememberme"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_8"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:visibility="visible"
+                    android:gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/ivCheck_rememberMe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size3"
+                        android:gravity="center_vertical"
+                        android:src="@drawable/remeber_me_uncheck_box" />
+
+                    <TextView
+                        android:id="@+id/tvRemember"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size10"
+                        android:background="@null"
+                        android:gravity="center_vertical"
+                        android:text="@string/Remember_me"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/text_size_very_large" />
+                    <TextView
+                        android:paddingRight="@dimen/margin_8"
+                        android:id="@+id/tvForgotPassword"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:background="@null"
+                        android:gravity="right|center"
+                        android:text="@string/forgot_password_new"
+                        android:textColor="@color/app_color"
+                        android:textSize="@dimen/text_size_small_14sp"
+                        android:visibility="visible" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_50"
+                    android:layout_marginTop="5dip"
+                    android:background="@drawable/login_btn_bg"
+                    android:text="LOGIN"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_size_small_14sp"
+                    android:textColor="@color/white" />
+
+                <ImageView
+                    android:id="@+id/ivBuildType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:gravity="center"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvServerSettings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:gravity="right"
+                    android:text="@string/server_settings"
+                    android:textSize="@dimen/text_size_large"
+                    android:textColor="@color/text_color_normal"
+                    android:visibility="gone" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SERVICES  "
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_10"
+                    android:text=":"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tvAppservice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="@string/sfaVersion"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvCurrentversion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_5dip"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvCurrentDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dip"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+<!--    add by lakshmi-->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:background="@color/color_highlited"-->
+<!--        android:gravity="start">-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="@dimen/margin_10"-->
+<!--            android:text="  SERVICE URL: https://arlasfa.danyaltd.com:8443/Webservicenew"-->
+<!--            android:layout_gravity="left"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="@dimen/text_size_very_small" />-->
+<!--&lt;!&ndash;        ==================================&ndash;&gt;-->
+<!--    </LinearLayout>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/color_highlited"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/size5"
+            android:paddingLeft="@dimen/size10"
+            android:paddingRight="@dimen/size10"
+            android:paddingTop="@dimen/size5" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Release Date"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_very_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_5"
+                android:text=" : "
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/release_date"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_very_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:text="Version No."
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_very_small" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_5"
+                android:text=" : "
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Mio Amore  "
+                android:singleLine="true"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_very_small" />
+            <TextView
+                android:id="@+id/tvAppVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="SAP"
+                android:textStyle="bold"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_very_small" />
+            <TextView
+                android:id="@+id/tvVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text=" V1.5"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_very_small" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

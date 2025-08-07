@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/new_bg_color"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size150"
+                android:layout_marginVertical="@dimen/size3"
+                android:layout_marginTop="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_1" />
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size15"
+            android:layout_marginTop="@dimen/size90"
+            android:layout_marginBottom="@dimen/size10"
+            app:cardCornerRadius="@dimen/size16"
+            app:cardElevation="@dimen/size6">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size110"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvuserName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:gravity="center"
+                        android:text="Practice"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/size24"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/size5"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tvUserType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:gravity="center"
+                        android:text="Android Developer"
+                        android:textColor="@color/new_app_color"
+                        android:textSize="@dimen/size14"
+                        android:textStyle="bold" />
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="@dimen/size7"
+                        android:layout_height="@dimen/size7"
+                        android:layout_marginHorizontal="@dimen/size8"
+                        app:cardBackgroundColor="#9C9C9C"
+                        android:layout_gravity="center"/>
+                    <TextView
+                        android:id="@+id/tvUserId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/montserrat_semibold"
+                        android:gravity="center"
+                        android:text="7780293187"
+                        android:textColor="@color/label_color"
+                        android:textSize="@dimen/size14"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size1"
+                    android:background="#ECECEC" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/size10"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/size10"
+                        android:src="@drawable/shops_icon" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:text="IT Company"
+                            android:textColor="@color/label_color"
+                            android:textSize="@dimen/size10" />
+
+                        <TextView
+                            android:id="@+id/tvUserCompany"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:text="Wozart Smart Home Automation"
+                            android:textColor="@color/new_app_color"
+                            android:textSize="@dimen/size14"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:text="23492 / HUB0069599"
+                            android:textColor="#8B8B8B"
+                            android:textSize="@dimen/size10" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/size40"
+            android:elevation="@dimen/size15"
+            android:src="@drawable/practice_selfie" />
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size15"
+        android:layout_marginVertical="@dimen/size5"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/size16"
+        app:cardElevation="@dimen/size10">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/size25"
+                android:layout_height="@dimen/size25"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/size10"
+                android:src="@drawable/profile_logo" />
+
+            <TextView
+                android:id="@+id/tvUserProfile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginVertical="@dimen/size5"
+                android:fontFamily="@font/montserrat_semibold"
+                android:gravity="center|left"
+                android:text="View Profile"
+                android:textColor="@color/text_color1"
+                android:textSize="@dimen/size15" />
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size15"
+        android:layout_marginVertical="@dimen/size5"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/size16"
+        app:cardElevation="@dimen/size10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/size25"
+                android:layout_height="@dimen/size25"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/size10"
+                android:src="@drawable/lock2" />
+
+            <TextView
+                android:id="@+id/tvChangePassword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginVertical="@dimen/size5"
+                android:fontFamily="@font/montserrat_semibold"
+                android:gravity="center|left"
+                android:text="Change Password"
+                android:textColor="@color/text_color1"
+                android:textSize="@dimen/size15" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size15"
+        android:layout_marginVertical="@dimen/size5"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/size16"
+        app:cardElevation="@dimen/size10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/size25"
+                android:layout_height="@dimen/size25"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/size10"
+                android:src="@drawable/model" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/size5"
+                android:layout_marginLeft="@dimen/size5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:gravity="center|left"
+                    android:text="Model"
+                    android:textColor="@color/label_color"
+                    android:textSize="@dimen/size10" />
+
+
+                <TextView
+                    android:id="@+id/tvUserModel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="center|left"
+                    android:text="Nothing"
+                    android:textColor="@color/new_app_color"
+                    android:textSize="@dimen/size14"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size15"
+        android:layout_marginVertical="@dimen/size5"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/size16"
+        app:cardElevation="@dimen/size10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/size25"
+                android:layout_height="@dimen/size25"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/size10"
+                android:src="@drawable/version" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/size5"
+                android:layout_marginLeft="@dimen/size5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:gravity="center|left"
+                    android:text="Model Manufacturer"
+                    android:textColor="@color/label_color"
+                    android:textSize="@dimen/size10" />
+
+
+                <TextView
+                    android:id="@+id/tvUserOS"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="center|left"
+                    android:text="Android OS"
+                    android:textColor="@color/new_app_color"
+                    android:textSize="@dimen/size14"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size15"
+        android:layout_marginVertical="@dimen/size5"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/size16"
+        app:cardElevation="@dimen/size10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/size25"
+                android:layout_height="@dimen/size25"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/size10"
+                android:layout_marginHorizontal="@dimen/size5"
+                android:layout_marginVertical="@dimen/size5"
+                android:src="@drawable/os" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/size5"
+                android:layout_marginLeft="@dimen/size5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/montserrat_semibold"
+                    android:gravity="center|left"
+                    android:text="OS (OS Version)"
+                    android:textColor="@color/label_color"
+                    android:textSize="@dimen/size10" />
+
+
+                <TextView
+                    android:id="@+id/tvUserOSVersion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:gravity="center|left"
+                    android:text="33"
+                    android:textColor="@color/new_app_color"
+                    android:textSize="@dimen/size14"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size15"
+        android:layout_marginBottom="@dimen/size20"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/size16"
+        app:cardElevation="@dimen/size10">
+
+        <TextView
+            android:id="@+id/tvlogout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="center"
+            android:paddingVertical="@dimen/size10"
+            android:text="Logout"
+            android:textColor="@color/black"
+            android:textSize="@dimen/size15"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

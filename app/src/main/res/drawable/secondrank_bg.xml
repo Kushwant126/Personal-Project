@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#005BAA" /> <!-- Button background color -->
+            <corners
+                android:bottomLeftRadius="8dp"
+                android:topLeftRadius="8dp" />
+            <gradient
+                android:angle="0"
+                android:centerColor="#042D98"
+                android:endColor="#042D98"
+                android:startColor="#0849F3"
+                android:type="linear" />
+
+        </shape>
+    </item>
+</layer-list>

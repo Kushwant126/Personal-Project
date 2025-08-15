@@ -21,16 +21,6 @@
 package com.example.personalproject.mainPackage.httpimage;
 
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FilterInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Handler;
@@ -43,41 +33,52 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FilterInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 
 /**
  * HttpImageManager uses 3-level caching to download and store network images.
  * <p>
- *     ---------------<br>
- *     memory cache<br>
- *     ---------------<br>
- *     persistent storage (DB/FS)<br>
- *     ---------------<br>
- *     network loader<br>
- *     ---------------
- *     
+ * ---------------<br>
+ * memory cache<br>
+ * ---------------<br>
+ * persistent storage (DB/FS)<br>
+ * ---------------<br>
+ * network loader<br>
+ * ---------------
+ *
  * <p>
  * HttpImageManager will first look up the memory cache, return the image bitmap if it was already
- * cached in memory. Upon missing, it will further look at the 2nd level cache, 
+ * cached in memory. Upon missing, it will further look at the 2nd level cache,
  * which is the persistence layer. It only goes to network if the resource has never been downloaded.
- * 
+ *
  * <p>
- * The downloading process is handled in asynchronous manner. To get notification of the response, 
+ * The downloading process is handled in asynchronous manner. To get notification of the response,
  * one can add an OnLoadResponseListener to the LoadRequest object.
- * 
+ *
  * <p>
- * HttpImageManager is usually used for ImageView to display a network image. To simplify the code, 
- * One can register an ImageView object as target to the LoadRequest instead of an 
+ * HttpImageManager is usually used for ImageView to display a network image. To simplify the code,
+ * One can register an ImageView object as target to the LoadRequest instead of an
  * OnLoadResponseListener. HttpImageManager will try to feed the loaded resource to the target ImageView
  * upon successful download. Following code snippet shows how it is used in a customer list adapter.
- * 
+ *
  * <p>
  * <pre>
  *         ...
  *         String imageUrl = userInfo.getUserImage();
  *         ImageView imageView = holder.image;
- * 
+ *
  *         imageView.setImageResource(R.drawable.default_image);
- * 
+ *
  *         if(!TextUtils.isEmpty(imageUrl)){
  *             Bitmap bitmap = mHttpImageManager.loadImage(new HttpImageManager.LoadRequest(Uri.parse(imageUrl), imageView));
  *            if (bitmap != null) {
@@ -86,11 +87,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
  *        }
  *
  * </pre>
- * 
- * 
+ *
  * @author zonghai@gmail.com
  */
-public class HttpImageManager{
+public class HttpImageManager {
 
     private static final String TAG = "HttpImageManager";
     private static final boolean DEBUG = false;
@@ -101,27 +101,26 @@ public class HttpImageManager{
 
 
     public static class LoadRequest {
-        public LoadRequest (Uri uri) {
-            this(uri, null, null,null);
+        public LoadRequest(Uri uri) {
+            this(uri, null, null, null);
         }
 
 
-        public LoadRequest(Uri uri, ImageView v,String path){
+        public LoadRequest(Uri uri, ImageView v, String path) {
             this(uri, v, null, path);
         }
-        
-      //============================================newly added merchandise
-        public LoadRequest(Uri uri, ImageView v, String path,boolean isRounded)
-        {
+
+        //============================================newly added merchandise
+        public LoadRequest(Uri uri, ImageView v, String path, boolean isRounded) {
             this(uri, v, null, path, isRounded);
         }
 
-        public LoadRequest(Uri uri, OnLoadResponseListener l,String path){
-            this( uri, null, l,path);
+        public LoadRequest(Uri uri, OnLoadResponseListener l, String path) {
+            this(uri, null, l, path);
         }
 
-        public LoadRequest(Uri uri, ImageView v, OnLoadResponseListener l,String path){
-            if(uri == null) 
+        public LoadRequest(Uri uri, ImageView v, OnLoadResponseListener l, String path) {
+            if (uri == null)
                 throw new NullPointerException("uri must not be null");
             String filename = path;
             filename = String.valueOf(filename.hashCode());
@@ -131,17 +130,17 @@ public class HttpImageManager{
             mListener = l;
             this.path = path;
         }
-        
-      //============================================newly added merchandise
-        public LoadRequest(Uri uri, ImageView v, OnLoadResponseListener l,String path,boolean isRounded){
-            if(uri == null) 
+
+        //============================================newly added merchandise
+        public LoadRequest(Uri uri, ImageView v, OnLoadResponseListener l, String path, boolean isRounded) {
+            if (uri == null)
                 throw new NullPointerException("uri must not be null");
             String filename = path;
             filename = String.valueOf(filename.hashCode());
             mUri = Uri.parse(filename);
             mHashedUri = mUri.toString();
             mImageView = v;
-            this.isRounded=isRounded;
+            this.isRounded = isRounded;
             mListener = l;
             this.path = path;
         }
@@ -157,83 +156,83 @@ public class HttpImageManager{
         }
 
 
-        public String getHashedUri () {
+        public String getHashedUri() {
             return this.mHashedUri;
         }
 
 
-        @Override 
+        @Override
         public int hashCode() {
             return mUri.hashCode();
         }
 
 
-        @Override 
-        public boolean equals(Object b){
-            if(b instanceof LoadRequest)
-                return mUri.equals(((LoadRequest)b).getUri());
+        @Override
+        public boolean equals(Object b) {
+            if (b instanceof LoadRequest)
+                return mUri.equals(((LoadRequest) b).getUri());
 
             return false;
         }
 
-        private Uri mUri;
-        private String mHashedUri;
-        private String path;
-        private OnLoadResponseListener mListener;
-        private ImageView mImageView;
-        
-      //======================newly added merchandiser
+        private final Uri mUri;
+        private final String mHashedUri;
+        private final String path;
+        private final OnLoadResponseListener mListener;
+        private final ImageView mImageView;
+
+        //======================newly added merchandiser
         private boolean isRounded;
     }
 
 
-    public static interface OnLoadResponseListener {
-        public void onLoadResponse(LoadRequest r, Bitmap data);
-        public void onLoadProgress(LoadRequest r, long totalContentSize, long loadedContentSize);
-        public void onLoadError(LoadRequest r, Throwable e);
+    public interface OnLoadResponseListener {
+        void onLoadResponse(LoadRequest r, Bitmap data);
+
+        void onLoadProgress(LoadRequest r, long totalContentSize, long loadedContentSize);
+
+        void onLoadError(LoadRequest r, Throwable e);
     }
 
-    
+
     /**
-     * 
-     * Give a chance to apply any future processing on the bitmap retrieved from network. 
+     * Give a chance to apply any future processing on the bitmap retrieved from network.
      */
-    public static interface BitmapFilter {
-        public Bitmap filter ( final Bitmap in );
+    public interface BitmapFilter {
+        Bitmap filter(final Bitmap in);
     }
-    
 
-    ////////HttpImageManager
-    public HttpImageManager (BitmapCache cache,  BitmapCache persistence ) {
+
+    /// /////HttpImageManager
+    public HttpImageManager(BitmapCache cache, BitmapCache persistence) {
         mCache = cache;
         mPersistence = persistence;
         if (mPersistence == null) {
-            throw new IllegalArgumentException (" persistence layer should be specified");
+            throw new IllegalArgumentException(" persistence layer should be specified");
         }
     }
 
 
-    public HttpImageManager ( BitmapCache persistence ) {
+    public HttpImageManager(BitmapCache persistence) {
         this(null, persistence);
     }
 
 
-    public void setDecodingPixelConstraint (int max) {
+    public void setDecodingPixelConstraint(int max) {
         mMaxNumOfPixelsConstraint = max;
     }
-    
-    
-    public int getDecodingPixelConstraint()
-    {
+
+
+    public int getDecodingPixelConstraint() {
         return mMaxNumOfPixelsConstraint;
     }
-    
-    
-    public void setBitmapFilter (BitmapFilter filter) {
+
+
+    public void setBitmapFilter(BitmapFilter filter) {
         mFilter = filter;
     }
-    
-    
+
+
     static public BitmapCache createDefaultMemoryCache() {
         return new BasicBitmapCache(DEFAULT_CACHE_SIZE);
     }
@@ -246,45 +245,44 @@ public class HttpImageManager{
 
     /**
      * Nonblocking call, return null if the bitmap is not in cache.
+     *
      * @param r
      * @return
      */
-    public Bitmap loadImage( LoadRequest r ) {
-        if(r == null || r.getUri() == null || TextUtils.isEmpty(r.getUri().toString())) 
-            throw new IllegalArgumentException( "null or empty request");
+    public Bitmap loadImage(LoadRequest r) {
+        if (r == null || r.getUri() == null || TextUtils.isEmpty(r.getUri().toString()))
+            throw new IllegalArgumentException("null or empty request");
 
         ImageView iv = r.getImageView();
-        if(iv != null){
-            synchronized ( iv ) {
+        if (iv != null) {
+            synchronized (iv) {
                 iv.setTag(r.getUri()); // bind URI to the ImageView, to prevent image write-back of earlier requests.
             }
         }
 
         String key = r.getHashedUri();
 
-        if(mCache != null && mCache.exists(key)) {
+        if (mCache != null && mCache.exists(key)) {
             return mCache.loadData(key);
-        }
-        else { 
+        } else {
             // not ready yet, try to retrieve it asynchronously.
-            mExecutor.execute( newRequestCall(r));
+            mExecutor.execute(newRequestCall(r));
             return null;
         }
     }
-    
-    
 
 
-    ////PRIVATE
+    /// /PRIVATE
     private Runnable newRequestCall(final LoadRequest request) {
         return () -> {
 
             // if the request dosen't represent the intended ImageView, do nothing.
-            if(request.getImageView() != null) {
+            if (request.getImageView() != null) {
                 final ImageView iv = request.getImageView();
-                synchronized ( iv ) {
-                    if ( iv.getTag() != request.getUri() ) {
-                        if(DEBUG)  LogUtils.debug(TAG, "give up loading: " + request.getUri().toString());
+                synchronized (iv) {
+                    if (iv.getTag() != request.getUri()) {
+                        if (DEBUG)
+                            LogUtils.debug(TAG, "give up loading: " + request.getUri().toString());
                         return;
                     }
                 }
@@ -295,7 +293,8 @@ public class HttpImageManager{
                 while (mActiveRequests.contains(request)) {
                     try {
                         mActiveRequests.wait();
-                    } catch(InterruptedException e) {}
+                    } catch (InterruptedException e) {
+                    }
                 }
 
                 mActiveRequests.add(request);
@@ -309,72 +308,76 @@ public class HttpImageManager{
                 if (mCache != null)
                     data = mCache.loadData(key);
 
-                if(data == null)
-                {
-                    if(DEBUG)  LogUtils.debug(TAG, "cache missing " + request.getUri().toString());
+                if (data == null) {
+                    if (DEBUG) LogUtils.debug(TAG, "cache missing " + request.getUri().toString());
                     //then check the persistent storage
                     data = mPersistence.loadData(key);
-                    if(data != null) {
-                        if(DEBUG)  LogUtils.debug(TAG, "found in persistent: " + request.getUri().toString());
+                    if (data != null) {
+                        if (DEBUG)
+                            LogUtils.debug(TAG, "found in persistent: " + request.getUri().toString());
 
                         // load it into memory
                         if (mCache != null)
                             mCache.storeData(key, data);
 
                         fireLoadProgress(request, 1, 1); // fire progress done
-                    }
-                    else {
+                    } else {
                         // we go to network
-                        if(DEBUG)  LogUtils.debug(TAG, "go to network " + request.getUri().toString());
+                        if (DEBUG)
+                            LogUtils.debug(TAG, "go to network " + request.getUri().toString());
                         long millis = System.currentTimeMillis();
 
                         byte[] binary = null;
                         InputStream responseStream = null;
 
+                        try {
                             try {
+                                responseStream = request.getImageView().getContext().getAssets().open(request.path);
+                            } catch (Exception e) {
+                                File file = new File(request.path);
+                                if (responseStream == null && file.exists()) {
+                                    responseStream = new FileInputStream(file);
+                                }
+                                if (responseStream == null) {
+                                    HttpGet httpGet = new HttpGet(request.path);
+                                    DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
+                                    HttpResponse httpResponse = defaultHttpClient.execute(httpGet);
+                                    responseStream = httpResponse.getEntity().getContent();
+                                }
+                            }
+
+                            if (responseStream != null) {
+                                responseStream = new FlushedInputStream(responseStream); //patch the inputstream
+
+                                long contentSize = responseStream.available();
+                                binary = readInputStreamProgressively(responseStream, (int) contentSize, request);
+                                data = BitmapUtil.decodeByteArray(binary, mMaxNumOfPixelsConstraint);
+                            }
+
+                        } finally {
+                            if (responseStream != null) {
                                 try {
-                                    responseStream = request.getImageView().getContext().getAssets().open(request.path);
-                                } catch (Exception e) {
-                                    File file = new File(request.path);
-                                    if(responseStream==null && file.exists()){
-                                        responseStream = new FileInputStream(file);
-                                    }
-                                    if(responseStream==null){
-                                        HttpGet httpGet = new HttpGet(request.path);
-                                        DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
-                                        HttpResponse httpResponse = defaultHttpClient.execute(httpGet);
-                                        responseStream = httpResponse.getEntity().getContent();
-                                    }
-                                }
-
-                                if(responseStream!=null){
-                                     responseStream = new FlushedInputStream(responseStream); //patch the inputstream
-
-                                     long contentSize = responseStream.available();
-                                     binary = readInputStreamProgressively(responseStream, (int)contentSize, request);
-                                     data = BitmapUtil.decodeByteArray(binary, mMaxNumOfPixelsConstraint);
-                                }
-
-                            }
-                            finally {
-                                if(responseStream != null) {
-                                    try { responseStream.close(); } catch (IOException e) {}
+                                    responseStream.close();
+                                } catch (IOException e) {
                                 }
                             }
+                        }
 
-                        if(data == null)
+                        if (data == null)
                             throw new RuntimeException("data from remote can't be decoded to bitmap");
 
-                        if(DEBUG) LogUtils.debug(TAG, "decoded image: " + data.getWidth() + "x" + data.getHeight() );
-                        if(DEBUG) LogUtils.debug(TAG, "time consumed: " + (System.currentTimeMillis() - millis));
+                        if (DEBUG)
+                            LogUtils.debug(TAG, "decoded image: " + data.getWidth() + "x" + data.getHeight());
+                        if (DEBUG)
+                            LogUtils.debug(TAG, "time consumed: " + (System.currentTimeMillis() - millis));
 
                         //apply filter(s)
                         if (mFilter != null) {
                             try {
                                 Bitmap newData = mFilter.filter(data);
                                 if (newData != null) data = newData;
+                            } catch (Throwable e) {
                             }
-                            catch (Throwable e) {}
                         }
                         // load it into memory
                         if (mCache != null)
@@ -385,16 +388,16 @@ public class HttpImageManager{
                     }
                 }
 
-                if(data != null && request.getImageView() != null) {
+                if (data != null && request.getImageView() != null) {
                     final Bitmap finalData = data;
                     final ImageView iv = request.getImageView();
 
-                    synchronized ( iv ) {
-                        if ( iv.getTag() == request.getUri() ) {
+                    synchronized (iv) {
+                        if (iv.getTag() == request.getUri()) {
                             mHandler.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if ( iv.getTag() == request.getUri()) {
+                                    if (iv.getTag() == request.getUri()) {
                                         iv.setImageBitmap(finalData);
                                     }
                                 }
@@ -405,11 +408,9 @@ public class HttpImageManager{
 
                 // callback listener if any
                 fireLoadResponse(request, data);
-            }
-            catch (Throwable e) {
+            } catch (Throwable e) {
                 fireLoadFailure(request, e);
-            }
-            finally{
+            } finally {
                 synchronized (mActiveRequests) {
                     mActiveRequests.remove(request);
                     mActiveRequests.notifyAll();  // wake up pending requests who's querying the same URL.
@@ -422,42 +423,42 @@ public class HttpImageManager{
 
 
     /**
-     * Make memory cache empty, release all bitmap reference held. 
+     * Make memory cache empty, release all bitmap reference held.
      */
-    public void emptyCache () {
-        if ( mCache != null) 
-            mCache .clear();
+    public void emptyCache() {
+        if (mCache != null)
+            mCache.clear();
     }
 
 
     /**
-     * Remove the persistent data. This is a blocking call. 
+     * Remove the persistent data. This is a blocking call.
      */
-    public void emptyPersistence () {
+    public void emptyPersistence() {
         if (mPersistence != null)
-            mPersistence .clear();
+            mPersistence.clear();
     }
 
 
-    ////////PRIVATE
-    private byte[] readInputStreamProgressively (InputStream is, int totalSize, LoadRequest r) 
+    /// /////PRIVATE
+    private byte[] readInputStreamProgressively(InputStream is, int totalSize, LoadRequest r)
             throws IOException {
 
         fireLoadProgress(r, 3, 1); // compensate 33% of total time, which was consumed by establishing HTTP connection
 
-        if (totalSize > 0 && r.mListener!=null) { // content length is known
+        if (totalSize > 0 && r.mListener != null) { // content length is known
             byte[] data = new byte[totalSize];
             int offset = 0;
             int readed;
 
             while (offset < totalSize && (readed = is.read(data, offset, totalSize - offset)) != -1) {
                 offset += readed;
-                fireLoadProgress(r, totalSize, (totalSize + offset) >> 1 );
+                fireLoadProgress(r, totalSize, (totalSize + offset) >> 1);
             }
 
             if (offset != totalSize)
                 throw new IOException("Unexpected readed size. current: " + offset + ", excepted: " + totalSize);
-            
+
             return data;
 
         }
@@ -477,8 +478,8 @@ public class HttpImageManager{
 
             fireLoadProgress(r, count, count);
 
-            if (count > Integer.MAX_VALUE) 
-                throw new IOException("content too large: " + (count / (1024 * 1024 )) + " M");
+            if (count > Integer.MAX_VALUE)
+                throw new IOException("content too large: " + (count / (1024 * 1024)) + " M");
 
             return output.toByteArray();
         }
@@ -486,49 +487,49 @@ public class HttpImageManager{
 
 
     private void fireLoadResponse(final LoadRequest r, final Bitmap image) {
-        if ( r.mListener != null) {
+        if (r.mListener != null) {
             try {
                 r.mListener.onLoadResponse(r, image);
+            } catch (Throwable t) {
             }
-            catch (Throwable t) {}
         }
     }
 
 
     private void fireLoadProgress(final LoadRequest r, final long totalContentSize, final long loadedContentSize) {
-        if ( r.mListener != null) {
+        if (r.mListener != null) {
             try {
                 r.mListener.onLoadProgress(r, totalContentSize, loadedContentSize);
+            } catch (Throwable t) {
             }
-            catch (Throwable t) {}
         }
     }
-    
-    
+
+
     private void fireLoadFailure(final LoadRequest r, final Throwable e) {
-        if ( r.mListener != null) {
+        if (r.mListener != null) {
             try {
                 r.mListener.onLoadError(r, e);
+            } catch (Throwable t) {
             }
-            catch (Throwable t) {}
         }
     }
 
 
     private int mMaxNumOfPixelsConstraint = DECODING_MAX_PIXELS_DEFAULT;
-    private BitmapCache mCache;
-    private BitmapCache mPersistence;
-    private Handler mHandler = new Handler();
-    private ThreadPoolExecutor mExecutor = new ThreadPoolExecutor(3, 5, 5, TimeUnit.SECONDS, new LinkedBlockingStack<Runnable>());
-    private Set<LoadRequest> mActiveRequests = new HashSet<LoadRequest>();
+    private final BitmapCache mCache;
+    private final BitmapCache mPersistence;
+    private final Handler mHandler = new Handler();
+    private final ThreadPoolExecutor mExecutor = new ThreadPoolExecutor(3, 5, 5, TimeUnit.SECONDS, new LinkedBlockingStack<Runnable>());
+    private final Set<LoadRequest> mActiveRequests = new HashSet<LoadRequest>();
     private BitmapFilter mFilter;
 
-    
+
     /*
      * The BitmapFactory.decodeStream() method fails to read a JPEG image (i.e.
      * returns null) if the skip() method of the used InputStream skip less bytes
      * than the required amount.
-     * 
+     *
      * author: public domain
      */
     private static class FlushedInputStream extends FilterInputStream {
@@ -536,7 +537,7 @@ public class HttpImageManager{
             super(inputStream);
         }
 
-        
+
         @Override
         public long skip(long n) throws IOException {
             long totalBytesSkipped = 0L;

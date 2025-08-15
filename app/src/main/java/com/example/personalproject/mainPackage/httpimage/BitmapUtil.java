@@ -20,6 +20,11 @@
 
 package com.example.personalproject.mainPackage.httpimage;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.RectF;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -27,25 +32,20 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.RectF;
-
 
 /**
  * Bimtap encoding/decoding helper methods based on BitmapFactory
- * 
+ *
  * @author zonghai
  */
 public class BitmapUtil {
 
     private static final int UNCONSTRAINED = -1;
 
-    public static Bitmap decodeByteArray( byte[] bytes, int maxNumOfPixels) {
-        
+    public static Bitmap decodeByteArray(byte[] bytes, int maxNumOfPixels) {
+
         if (bytes == null) return null;
-        
+
         try {
             BitmapFactory.Options option = new BitmapFactory.Options();
             // Decode only image size
@@ -60,71 +60,72 @@ public class BitmapUtil {
 
         } catch (OutOfMemoryError oom) {
 
-        	oom.printStackTrace();
+            oom.printStackTrace();
             return null;
         }
     }
-    
-	public static Bitmap scaleCenterCrop(Bitmap source, int newHeight, int newWidth) {
-		try {
-			int sourceWidth = source.getWidth();
-			int sourceHeight = source.getHeight();
 
-			// Compute the scaling factors to fit the new height and width,
-			// respectively.
-			// To cover the final image, the final scaling will be the bigger
-			// of these two.
-			float xScale = (float) newWidth / sourceWidth;
-			float yScale = (float) newHeight / sourceHeight;
-			float scale = Math.max(xScale, yScale);
+    public static Bitmap scaleCenterCrop(Bitmap source, int newHeight, int newWidth) {
+        try {
+            int sourceWidth = source.getWidth();
+            int sourceHeight = source.getHeight();
 
-			// Now get the size of the source bitmap when scaled
-			float scaledWidth = scale * sourceWidth;
-			float scaledHeight = scale * sourceHeight;
+            // Compute the scaling factors to fit the new height and width,
+            // respectively.
+            // To cover the final image, the final scaling will be the bigger
+            // of these two.
+            float xScale = (float) newWidth / sourceWidth;
+            float yScale = (float) newHeight / sourceHeight;
+            float scale = Math.max(xScale, yScale);
 
-			// Let's find out the upper left coordinates if the scaled bitmap
-			// should be centered in the new size give by the parameters
-			float left = (newWidth - scaledWidth) / 2;
-			float top = (newHeight - scaledHeight) / 2;
+            // Now get the size of the source bitmap when scaled
+            float scaledWidth = scale * sourceWidth;
+            float scaledHeight = scale * sourceHeight;
 
-			// The target rectangle for the new, scaled version of the source
-			// bitmap will now
-			// be
-			RectF targetRect = new RectF(left, top, left + scaledWidth, top
-					+ scaledHeight);
+            // Let's find out the upper left coordinates if the scaled bitmap
+            // should be centered in the new size give by the parameters
+            float left = (newWidth - scaledWidth) / 2;
+            float top = (newHeight - scaledHeight) / 2;
 
-			// Finally, we create a new bitmap of the specified size and draw
-			// our new,
-			// scaled bitmap onto it.
-			Bitmap dest = Bitmap.createBitmap(newWidth, newHeight,
-					source.getConfig());
-			Canvas canvas = new Canvas(dest);
-			canvas.drawBitmap(source, null, targetRect, null);
+            // The target rectangle for the new, scaled version of the source
+            // bitmap will now
+            // be
+            RectF targetRect = new RectF(left, top, left + scaledWidth, top
+                    + scaledHeight);
 
-			return dest;
-		} catch (OutOfMemoryError e) {
-			return source;
-		} catch (Exception e) {
-			return source;
-		}
+            // Finally, we create a new bitmap of the specified size and draw
+            // our new,
+            // scaled bitmap onto it.
+            Bitmap dest = Bitmap.createBitmap(newWidth, newHeight,
+                    source.getConfig());
+            Canvas canvas = new Canvas(dest);
+            canvas.drawBitmap(source, null, targetRect, null);
 
-	}
+            return dest;
+        } catch (OutOfMemoryError e) {
+            return source;
+        } catch (Exception e) {
+            return source;
+        }
+
+    }
+
     public static Bitmap decodeStream(InputStream is, int maxNumOfPixels) {
 
         if (is == null) return null;
-        
+
         try {
-            return decodeByteArray( readStream(is), maxNumOfPixels);
+            return decodeByteArray(readStream(is), maxNumOfPixels);
 
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
-    
-    
+
+
     public static Bitmap decodeFile(String filePath, int maxNumOfPixels) {
-        
+
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(new File(filePath));
@@ -133,34 +134,36 @@ public class BitmapUtil {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
-        }
-        finally {
-            if(fis != null) {
-                try { fis.close(); } catch (IOException e) {}
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                }
             }
         }
-        
+
     }
-    
+
     /*
      * Compute the sample size as a function of minSideLength and
      * maxNumOfPixels. minSideLength is used to specify that minimal width or
      * height of a bitmap. maxNumOfPixels is used to specify the maximal size in
      * pixels that is tolerable in terms of memory usage.
-     * 
+     *
      * The function returns a sample size based on the constraints. Both size
      * and minSideLength can be passed in as IImage.UNCONSTRAINED, which
      * indicates no care of the corresponding constraint. The functions prefers
      * returning a sample size that generates a smaller bitmap, unless
      * minSideLength = IImage.UNCONSTRAINED.
-     * 
+     *
      * Also, the function rounds up the sample size to a power of 2 or multiple
      * of 8 because BitmapFactory only honors sample size this way. For example,
      * BitmapFactory downsamples an image by 2 even though the request is 3. So
      * we round up the sample size to avoid OOM.
      */
     private static int computeSampleSize(BitmapFactory.Options options,
-            int minSideLength, int maxNumOfPixels) {
+                                         int minSideLength, int maxNumOfPixels) {
         int initialSize = computeInitialSampleSize(options, minSideLength,
                 maxNumOfPixels);
 
@@ -176,10 +179,10 @@ public class BitmapUtil {
 
         return roundedSize;
     }
-    
+
 
     private static int computeInitialSampleSize(BitmapFactory.Options options,
-            int minSideLength, int maxNumOfPixels) {
+                                                int minSideLength, int maxNumOfPixels) {
         double w = options.outWidth;
         double h = options.outHeight;
 
@@ -204,7 +207,7 @@ public class BitmapUtil {
         }
     }
 
-    
+
     private static byte[] readStream(InputStream is) throws IOException {
         int len;
         byte[] buf;
@@ -220,7 +223,7 @@ public class BitmapUtil {
                 bos.write(buf, 0, len);
             buf = bos.toByteArray();
         }
-        
+
         return buf;
     }
 }

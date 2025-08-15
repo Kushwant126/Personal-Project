@@ -8,43 +8,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
-import android.location.Geocoder;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Environment;
 
 import com.example.personalproject.R;
 import com.example.personalproject.mainPackage.gpsutills.common.GPSErrorCode;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.api.GoogleApiClient;/*
-import com.google.android.gms.maps.model.LatLng;
-import com.winit.alseer.salesman.dataobject.CustomerDao;
-import com.winit.alseer.salesman.utilities.StringUtils;
-import com.winit.arlafoodpresales.R;
-import com.winit.gpsutills.lib.common.GPSConstants;
-import com.winit.gpsutills.lib.common.GPSErrorCode;
-import com.winit.gpsutills.lib.common.GPSLogutils;
-import com.winit.gpsutills.lib.common.GPSPreference;*/
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.model.LatLng;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class GPSUtills {
-    private String TAG = "GPSTrack";
-    private Context context;
+    private final String TAG = "GPSTrack";
+    private final Context context;
 
-//    private GPSTrackerService gpsTrackerService;
+    //    private GPSTrackerService gpsTrackerService;
     private GPSCallback gpsCallback;
     private static GPSUtills gpsUtills;
 
     private List<Address> address;
     private LatLng currentLatLng;
-    private GPSTrackerService gpsTrackerService;
+    private final GPSTrackerService gpsTrackerService;
 
     public synchronized static GPSUtills getInstance(Context context) {
         if (gpsUtills == null) {
@@ -62,6 +47,7 @@ public class GPSUtills {
     public void setListner(GPSCallback gpsCallback) {
         this.gpsCallback = gpsCallback;
     }
+
     //method to set enable/disble logs
     public void setLogEnable(boolean isLogEnable) {
         GPSLogutils.setLogEnable(isLogEnable);
@@ -115,6 +101,7 @@ public class GPSUtills {
             GPSLogutils.createLogDataForLib("isGpsProviderEnabled", "Gps Provider Not Enabled", "EC_GPS_PROVIDER_NOT_ENABLED");
         }
     }
+
     public void getCurrentLatLng() {
         currentLatLng = gpsTrackerService.getLatLng();
         if (currentLatLng.latitude == 0.0 && currentLatLng.longitude == 0.0) {
@@ -122,7 +109,7 @@ public class GPSUtills {
             GPSLogutils.createLogDataForLib("getCurrentLatLng", getString(R.string.lattitude_col) + currentLatLng.latitude + ", " + currentLatLng.longitude, "EC_UNABLE_TO_FIND_LOCATION");
         } else {
             gpsCallback.gotGpsValidationResponse(currentLatLng, GPSErrorCode.EC_LOCATION_FOUND);
-            GPSLogutils.createLogDataForLib("getCurrentLatLng", getString(R.string.lattitude_col)  + currentLatLng.latitude + ", " + currentLatLng.longitude, "EC_LOCATION_FOUND");
+            GPSLogutils.createLogDataForLib("getCurrentLatLng", getString(R.string.lattitude_col) + currentLatLng.latitude + ", " + currentLatLng.longitude, "EC_LOCATION_FOUND");
         }
     }
 
@@ -130,9 +117,6 @@ public class GPSUtills {
         if (gpsTrackerService != null) currentLatLng = gpsTrackerService.getLatLng();
         return currentLatLng;
     }
-
-
-
 
 
     //method to check Gps Hardware setUp availble or not in Device.
@@ -163,12 +147,15 @@ public class GPSUtills {
     public void connectGoogleApiClient() {
         gpsTrackerService.connectGoogleApiClient();
     }
+
     public void disConnectGoogleApiClient() {
         gpsTrackerService.disConnectGoogleApiClient();
     }
+
     public void stopLocationUpdates() {
         gpsTrackerService.stopLocationUpdates();
     }
+
     public GoogleApiClient getGoogleApiClient() {
         return gpsTrackerService.getGoogleApiClient();
     }

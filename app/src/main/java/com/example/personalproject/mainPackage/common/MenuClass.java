@@ -9,13 +9,13 @@ import java.util.Vector;
 
 public class MenuClass {
 
-    private Context context;
+    private final Context context;
 
     public MenuClass(Context context) {
         this.context = context;
     }
 
-    public enum MENUS{
+    public enum MENUS {
         MENU_JOURNEY_PLAN,
         MENU_NEXTDAY_JOURNEY_PLAN,
         MENU_MY_CUSTOMER,
@@ -46,7 +46,7 @@ public class MenuClass {
         MENU_FOOTER
     }
 
-    public MENUS menuVanSeller[] = {
+    public MENUS[] menuVanSeller = {
             MENUS.MENU_JOURNEY_PLAN,
             MENUS.MENU_NEXTDAY_JOURNEY_PLAN,
             MENUS.MENU_MY_CUSTOMER,
@@ -59,7 +59,7 @@ public class MenuClass {
             MENUS.MENU_LOGOUT,
             MENUS.MENU_FOOTER
     };
-    public MENUS menuVanSellerAfterCheckIn[] = new MENUS[]{
+    public MENUS[] menuVanSellerAfterCheckIn = new MENUS[]{
             MENUS.MENU_CUSTOMER_DASHBOARD,
             MENUS.MENU_EXECUTION_SUMMARY,
             MENUS.MENU_ACTIVE_PROMOTIONS,
@@ -69,7 +69,7 @@ public class MenuClass {
             MENUS.MENU_FOOTER
     };
 
-    public MENUS menuPreSeller[] = {
+    public MENUS[] menuPreSeller = {
 //            MENUS.MENU_JOURNEY_PLAN,
             MENUS.MENU_NEXTDAY_JOURNEY_PLAN,
             MENUS.MENU_MY_CUSTOMER,
@@ -81,7 +81,7 @@ public class MenuClass {
             MENUS.MENU_LOGOUT,
 //            MENUS.MENU_FOOTER //by kush
     };
-    public MENUS menuPreSellerAfterCheckIn[] = new MENUS[]{
+    public MENUS[] menuPreSellerAfterCheckIn = new MENUS[]{
             MENUS.MENU_CUSTOMER_DASHBOARD,
             MENUS.MENU_EXECUTION_SUMMARY,
             MENUS.MENU_ACTIVE_PROMOTIONS,
@@ -91,21 +91,21 @@ public class MenuClass {
 //            MENUS.MENU_FOOTER //by kush
     };
 
-    public MENUS loadManagement[] = {
+    public MENUS[] loadManagement = {
             MENUS.MENU_VAN_STOCK,
             MENUS.MENU_DAMAGE_RETURNS,
             MENUS.MENU_EXPIRY_RETURNS,
             MENUS.MENU_UNLOAD
     };
 
-    public MENUS executionSummary[] = new MENUS[]{
+    public MENUS[] executionSummary = new MENUS[]{
             MENUS.MENU_ORDER_SUMMMARY,
             MENUS.MENU_PAYMENT_SUMMMARY,
             MENUS.MENU_LOG_REPORT,
             MENUS.MENU_RETURN_SUMMARY //by kush
     };
 
-    public MENUS others[] = {
+    public MENUS[] others = {
             MENUS.MENU_SETTINGS,
             MENUS.MENU_ABOUT_APPLICATION
     };
@@ -113,7 +113,7 @@ public class MenuClass {
 
     public Vector<MenuDO> loadMenu(int userType, boolean isCheckIn) {
         Vector<MenuDO> vecMenuDOs = new Vector<>();
-        switch (userType){
+        switch (userType) {
             case AppConstants.USER_VAN_SALES:
                 if (isCheckIn) {
                     for (MENUS objMenu : menuVanSellerAfterCheckIn) {
@@ -139,8 +139,7 @@ public class MenuClass {
                         menuDO = getMenuChildDO(menuDO);
                         vecMenuDOs.add(menuDO);
                     }
-                }
-                else {
+                } else {
                     for (MENUS objMenu : menuPreSeller) {
                         MenuDO menuDO = getMenuDO(objMenu);
                         menuDO.objMenu = objMenu;
@@ -154,7 +153,7 @@ public class MenuClass {
     }
 
 
-    public MenuDO getMenuDO(MENUS field){
+    public MenuDO getMenuDO(MENUS field) {
         MenuDO menu = new MenuDO();
         switch (field) {
             case MENU_JOURNEY_PLAN:
@@ -335,6 +334,7 @@ public class MenuClass {
 //        }
         return isShowed;
     }
+
     public boolean isCommonEOTPopupCheckinBlockDisplayed(Context context) {
         boolean isShowed = false;
         /*if (((BaseActivity) context).isShortRoute&&!((BaseActivity) context).isPreviousDayEOTDone) {
@@ -356,6 +356,7 @@ public class MenuClass {
 //        }
         return isShowed;
     }
+
     public boolean isCommonEOTPopupDisplayedCheckEOT(Context context) {
         boolean isShowed = false;
         /*if (!((BaseActivity) context).isCanStartDayNew) {
@@ -368,6 +369,7 @@ public class MenuClass {
         }*/
         return isShowed;
     }
+
     public boolean isEOTPopupDisplayed(Context context) {
         boolean isShowed = false;
        /* if ( !((BaseActivity) context).isOdometerReadingDoneforLastdate) {
@@ -391,7 +393,7 @@ public class MenuClass {
 
     static String DASHBOARD = "Dashboard";
     static String LEADERBOARD = "Leaderboard";
-//    static String LEADERBOARD = getString(R.string.);
+    //    static String LEADERBOARD = getString(R.string.);
     static String JP = "JP";
     static String MENU = "Menu";
 

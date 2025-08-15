@@ -21,7 +21,7 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 public class CustomBarChartRender extends BarChartRenderer {
     // used for TOP CORNER CURVES of the bar
 
-    private RectF mBarShadowRectBuffer = new RectF();
+    private final RectF mBarShadowRectBuffer = new RectF();
 
     private int mRadius;
 
@@ -149,6 +149,7 @@ public class CustomBarChartRender extends BarChartRenderer {
             j += 4;
         }
     }
+
     private Path roundRect(RectF rect, float rx, float ry, boolean tl,
                            boolean tr, boolean br, boolean bl) {
         float top = rect.top;

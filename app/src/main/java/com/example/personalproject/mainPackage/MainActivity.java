@@ -56,32 +56,31 @@ import java.util.Map;
 import java.util.Random;
 
 public class MainActivity extends BaseActivity {
-//    https://www.figma.com/design/kiwPyxZfIsLBFionrvu2KI/President-with-Alert-haier-HIMS?node-id=0-1&t=aGMfkA6rPcgF7LJN-0
-    String[] xLabels = new String[]{"MTD","LM","YTD","LY","QW","PS","SK"};
-    String[] xLabels1 = new String[]{"","MTD","LM","YTD","LY","QW","PS","SK"};
-    ArrayList<String> xlabels123 = new ArrayList<>();
-//    ArrayList<Integer> growPercentage1 = new ArrayList<>();
-//    ArrayList<Integer> myColors = new ArrayList<>();
+    //    https://www.figma.com/design/kiwPyxZfIsLBFionrvu2KI/President-with-Alert-haier-HIMS?node-id=0-1&t=aGMfkA6rPcgF7LJN-0
+    String[] xLabels = new String[]{"MTD", "LM", "YTD", "LY", "QW", "PS", "SK"};
+    String[] xLabels1 = new String[]{"", "MTD", "LM", "YTD", "LY", "QW", "PS", "SK"};
+    ArrayList<String> xlabels123 = new ArrayList<>(Arrays.asList(xLabels));
     ArrayList<Integer> growPercentage1 = new ArrayList<>(Arrays.asList(1, -2, 3, 3, -4, 5, 6, 7));
     ArrayList<Integer> myColors = new ArrayList<>(Arrays.asList(Color.BLACK, Color.YELLOW, Color.BLUE, Color.DKGRAY, Color.GREEN, Color.GRAY));
-
-
-    boolean iscategoryWSPvalue=true,issegTAvalue=true,iscatTAvalue=true;
+    boolean iscategoryWSPvalue = true, issegTAvalue = true, iscatTAvalue = true;
     FrameLayout frame_layout_container;
     ScrollView scrollView;
     PieChart zone_wise_sales_piechart;
-    BarChart category_over_ATQ,region_over_ATQ,isd_barChart1,isd_barChart2,segment_sellio_barchart,category_sellio_barchart,sellio_barchart,pdp_barChart1,
-            pdp_barChart2, ar_od_performance,Region_wise_performance,zeroSales_isdCount, state_wise_sales_barchart,barChart1,barChart2,
-            zone_AR_TA,isdTA_cm,isdTA_l1m,isdTA_l2m, category_wise_sales_barchart, category_targetandach_barchart,segment_targetandach_barchart,
-            commitmentCW_barchart,pp_barChart,categoryCW_barchart, isd_selloutP_barchart,isd_category_selloutP_barchart,isd_segment_selloutP_barchart,
-            zone_DSP,category_DSP,segment_DSP;
+    BarChart category_over_ATQ, region_over_ATQ, isd_barChart1, isd_barChart2, segment_sellio_barchart, category_sellio_barchart, sellio_barchart, pdp_barChart1,
+            pdp_barChart2, ar_od_performance, Region_wise_performance, zeroSales_isdCount, state_wise_sales_barchart, barChart1, barChart2,
+            zone_AR_TA, isdTA_cm, isdTA_l1m, isdTA_l2m, category_wise_sales_barchart, category_targetandach_barchart, segment_targetandach_barchart,
+            commitmentCW_barchart, pp_barChart, categoryCW_barchart, isd_selloutP_barchart, isd_category_selloutP_barchart, isd_segment_selloutP_barchart,
+            zone_DSP, category_DSP, segment_DSP;
 
-    LinearLayout llTruck_List,switch_to_YTD,switch_to_YTD_fs,category_targetandach,category_targetandach_fs,state_targetandach_fs,state_targetandach,
-            zonewsp_fs,zone_salesperformance,llFullView,tvfullview,zone_wise_totalSales,categorywisesales_fs,category_salesperformance,
-            state_salesperformance,segmentwisesales_fs;
-    CardView cvswitch_to_YTD,cvcategory_targetandach,cvstate_targetandach,cvzone_salesperformance,cvparent,cvcategory_salesperformance,cvstate_salesperformance;
+    LinearLayout llTruck_List, switch_to_YTD, switch_to_YTD_fs, category_targetandach, category_targetandach_fs, state_targetandach_fs, state_targetandach,
+            zonewsp_fs, zone_salesperformance, llFullView, tvfullview, zone_wise_totalSales, categorywisesales_fs, category_salesperformance,
+            state_salesperformance, segmentwisesales_fs;
+    CardView cvswitch_to_YTD, cvcategory_targetandach, cvstate_targetandach, cvzone_salesperformance, cvparent, cvcategory_salesperformance, cvstate_salesperformance;
     DoubleBarChart doubleBarChart;
     OneBehindAnotherBarchart obarchart;
+    final String[] options = {"CE", "ST", "AQ"};
+    final String[] options1 = {"All", "CE", "ST", "AQ"};
+    final String[] weeks = {"week 1", "week 2", "week 3", "week 4", "week 5"};
 
     @SuppressLint("InflateParams")
     public void initialize() {
@@ -89,55 +88,51 @@ public class MainActivity extends BaseActivity {
         llBody.addView(llTruck_List, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         llHeader.setVisibility(View.VISIBLE);
-        xlabels123 = new ArrayList<>(Arrays.asList(xLabels));
-//        growPercentage1.add(1);growPercentage1.add(-2);growPercentage1.add(3);growPercentage1.add(3);growPercentage1.add(-4);growPercentage1.add(5);growPercentage1.add(6);growPercentage1.add(7);
-//        myColors.add(Color.BLACK);myColors.add(Color.YELLOW);myColors.add(Color.BLUE);myColors.add(Color.DKGRAY);myColors.add(Color.GREEN);myColors.add(Color.GRAY);
-
         initializeVariables();
 
         zoneWiseSalesPieChart(zone_wise_sales_piechart);
         findViewById(R.id.zonewisesales_switchtohiend).setOnClickListener(view -> zoneWiseSalesPieChart(zone_wise_sales_piechart));
         findViewById(R.id.zonewisesales_switchtovolume).setOnClickListener(view -> zoneWiseSalesPieChart(zone_wise_sales_piechart));
 
-        singleBarChart(category_wise_sales_barchart,getBarEntriesOne(),new ArrayList<>(Arrays.asList(xLabels1)),Color.parseColor("#005BAA"),0,iscategoryWSPvalue);
-        findViewById(R.id.categorywisesales_switchtohiend).setOnClickListener(view -> singleBarChart(category_wise_sales_barchart,getBarEntriesOne(),new ArrayList<>(Arrays.asList(xLabels1)),Color.parseColor("#005BAA"),0,iscategoryWSPvalue));
-        findViewById(R.id.categorywisesales_switchtovolume).setOnClickListener(view -> singleBarChart(category_wise_sales_barchart,getBarEntriesOne(),new ArrayList<>(Arrays.asList(xLabels1)),Color.parseColor("#005BAA"),0,iscategoryWSPvalue));
+        singleBarChart(category_wise_sales_barchart, getBarEntriesOne(), new ArrayList<>(Arrays.asList(xLabels1)), Color.parseColor("#005BAA"), 0, iscategoryWSPvalue);
+        findViewById(R.id.categorywisesales_switchtohiend).setOnClickListener(view -> singleBarChart(category_wise_sales_barchart, getBarEntriesOne(), new ArrayList<>(Arrays.asList(xLabels1)), Color.parseColor("#005BAA"), 0, iscategoryWSPvalue));
+        findViewById(R.id.categorywisesales_switchtovolume).setOnClickListener(view -> singleBarChart(category_wise_sales_barchart, getBarEntriesOne(), new ArrayList<>(Arrays.asList(xLabels1)), Color.parseColor("#005BAA"), 0, iscategoryWSPvalue));
 
-        singleBarChart(state_wise_sales_barchart,getBarEntriesOne(),new ArrayList<>(Arrays.asList(xLabels1)),Color.parseColor("#077ADF"),315,iscategoryWSPvalue);
-        findViewById(R.id.segmentwisesales_switchtohiend).setOnClickListener(view -> singleBarChart(state_wise_sales_barchart,getBarEntriesOne(),new ArrayList<>(Arrays.asList(xLabels1)),Color.parseColor("#077ADF"),315,iscategoryWSPvalue));
-        findViewById(R.id.segmentwisesales_switchtovolume).setOnClickListener(view -> singleBarChart(state_wise_sales_barchart,getBarEntriesOne(),new ArrayList<>(Arrays.asList(xLabels1)),Color.parseColor("#077ADF"),315,iscategoryWSPvalue));
+        singleBarChart(state_wise_sales_barchart, getBarEntriesOne(), new ArrayList<>(Arrays.asList(xLabels1)), Color.parseColor("#077ADF"), 315, iscategoryWSPvalue);
+        findViewById(R.id.segmentwisesales_switchtohiend).setOnClickListener(view -> singleBarChart(state_wise_sales_barchart, getBarEntriesOne(), new ArrayList<>(Arrays.asList(xLabels1)), Color.parseColor("#077ADF"), 315, iscategoryWSPvalue));
+        findViewById(R.id.segmentwisesales_switchtovolume).setOnClickListener(view -> singleBarChart(state_wise_sales_barchart, getBarEntriesOne(), new ArrayList<>(Arrays.asList(xLabels1)), Color.parseColor("#077ADF"), 315, iscategoryWSPvalue));
 
-        dualBar(barChart1,barChart2);
-        findViewById(R.id.hiEnd_state_target_And_Ach_Reload).setOnClickListener(view -> dualBar(barChart1,barChart2));
-        findViewById(R.id.volume_state_target_And_Ach_Reload).setOnClickListener(view -> dualBar(barChart1,barChart2));
+        dualBar(barChart1, barChart2);
+        findViewById(R.id.hiEnd_state_target_And_Ach_Reload).setOnClickListener(view -> dualBar(barChart1, barChart2));
+        findViewById(R.id.volume_state_target_And_Ach_Reload).setOnClickListener(view -> dualBar(barChart1, barChart2));
 
 
-        DualBarChart("category_targetandach_barchart",findViewById(R.id.categorytargetandach_switchtohiend),findViewById(R.id.category_targetandach_Reload));
-        DualBarChart("segment_targetandach_barchart",findViewById(R.id.segmenttargetandach_switchtohiend),findViewById(R.id.segment_targetandach_Reload));
+        DualBarChart("category_targetandach_barchart", findViewById(R.id.categorytargetandach_switchtohiend), findViewById(R.id.category_targetandach_Reload));
+        DualBarChart("segment_targetandach_barchart", findViewById(R.id.segmenttargetandach_switchtohiend), findViewById(R.id.segment_targetandach_Reload));
 
-        DualBarChart("commitmentCW_barchart",findViewById(R.id.commitmentCW_switchtohiend),findViewById(R.id.commitmentCW_switchtovolume));
-        DualBarChart("categoryCW_barchart",findViewById(R.id.categoryCW_barchart_switchtohiend),findViewById(R.id.categoryCW_barchart_switchtovolume));
-        DualBarChart("pp_barChart",null,findViewById(R.id.pp_switch_to_YTD));
+        DualBarChart("commitmentCW_barchart", findViewById(R.id.commitmentCW_switchtohiend), findViewById(R.id.commitmentCW_switchtovolume));
+        DualBarChart("categoryCW_barchart", findViewById(R.id.categoryCW_barchart_switchtohiend), findViewById(R.id.categoryCW_barchart_switchtovolume));
+        DualBarChart("pp_barChart", null, findViewById(R.id.pp_switch_to_YTD));
 
-        DualBarChart("isd_selloutP_barchart",findViewById(R.id.isd_selloutP_barchart_switchtohiend),findViewById(R.id.isd_selloutP_switchtovolume));
-        DualBarChart("isd_category_selloutP_barchart",findViewById(R.id.isd_category_selloutP_barchart_switchtohiend),findViewById(R.id.isd_category_selloutP_barchart_switchtovolume));
-        DualBarChart("isd_segment_selloutP_barchart",findViewById(R.id.isd_segment_selloutP_barchart_switchtohiend),findViewById(R.id.isd_segment_selloutP_barchart_switchtovolume));
+        DualBarChart("isd_selloutP_barchart", findViewById(R.id.isd_selloutP_barchart_switchtohiend), findViewById(R.id.isd_selloutP_switchtovolume));
+        DualBarChart("isd_category_selloutP_barchart", findViewById(R.id.isd_category_selloutP_barchart_switchtohiend), findViewById(R.id.isd_category_selloutP_barchart_switchtovolume));
+        DualBarChart("isd_segment_selloutP_barchart", findViewById(R.id.isd_segment_selloutP_barchart_switchtohiend), findViewById(R.id.isd_segment_selloutP_barchart_switchtovolume));
 
-        DualBarChart("isdTA_cm",findViewById(R.id.isdTA_cm_switchtohiend),findViewById(R.id.isdTA_cm_switchtovolume));
-        DualBarChart("isdTA_l1m",findViewById(R.id.isdTA_l1m_switchtohiend),findViewById(R.id.isdTA_l1m_switchtovolume));
-        DualBarChart("isdTA_l2m",findViewById(R.id.isdTA_l2m_switchtohiend),findViewById(R.id.isdTA_l2m_switchtovolume));
+        DualBarChart("isdTA_cm", findViewById(R.id.isdTA_cm_switchtohiend), findViewById(R.id.isdTA_cm_switchtovolume));
+        DualBarChart("isdTA_l1m", findViewById(R.id.isdTA_l1m_switchtohiend), findViewById(R.id.isdTA_l1m_switchtovolume));
+        DualBarChart("isdTA_l2m", findViewById(R.id.isdTA_l2m_switchtohiend), findViewById(R.id.isdTA_l2m_switchtovolume));
 
-        DualBarChart("zone_DSP",null,null);
-        DualBarChart("category_DSP",null,null);
-        DualBarChart("segment_DSP",null,null);
-        DualBarChart("zone_AR_TA",null,null);
+        DualBarChart("zone_DSP", null, null);
+        DualBarChart("category_DSP", null, null);
+        DualBarChart("segment_DSP", null, null);
+        DualBarChart("zone_AR_TA", null, null);
 
         OneBehindAnotherBarChart("zeroSales_isdCount");
         OneBehindAnotherBarChart("Region_wise_performance");
         OneBehindAnotherBarChart("ar_od_performance");
 
-        dualBar(pdp_barChart1,pdp_barChart2);
-        findViewById(R.id.pdp_MTD).setOnClickListener(view -> dualBar(pdp_barChart1,pdp_barChart2));
+        dualBar(pdp_barChart1, pdp_barChart2);
+        findViewById(R.id.pdp_MTD).setOnClickListener(view -> dualBar(pdp_barChart1, pdp_barChart2));
 
 
         TripleBarChart(sellio_barchart, "Sell In", Color.parseColor("#BE9502"), getBarEntriesOne(),
@@ -173,9 +168,9 @@ public class MainActivity extends BaseActivity {
 
         isdSellOutPieChart();
 
-        dualBar(isd_barChart1,isd_barChart2);
-        findViewById(R.id.isd_switchtohiend).setOnClickListener(view -> dualBar(isd_barChart1,isd_barChart2));
-        findViewById(R.id.isd_switchtovolume).setOnClickListener(view -> dualBar(isd_barChart1,isd_barChart2));
+        dualBar(isd_barChart1, isd_barChart2);
+        findViewById(R.id.isd_switchtohiend).setOnClickListener(view -> dualBar(isd_barChart1, isd_barChart2));
+        findViewById(R.id.isd_switchtovolume).setOnClickListener(view -> dualBar(isd_barChart1, isd_barChart2));
 
         competitorDSP();
         marketCoverage();
@@ -184,20 +179,18 @@ public class MainActivity extends BaseActivity {
         OneBehindAnotherBarChart("region_over_ATQ");
         OneBehindAnotherBarChart("category_over_ATQ");
 
-        valueByFGM();qtyByFGM();
+        valueByFGM();
+        qtyByFGM();
         OverDues();
 
-        new Thread(() -> runOnUiThread(this::hideLoader)).start();
+//        new Thread(() -> runOnUiThread(this::hideLoader)).start();
+        runOnUiThread(this::hideLoader);
         findViewById(R.id.segment_dropdown).setOnClickListener(view -> setPopPUP(view, findViewById(R.id.segment_selected_type), Arrays.asList(options)));
         findViewById(R.id.pp_dropdown).setOnClickListener(view -> setPopPUP(view, findViewById(R.id.pp_selected_type), Arrays.asList(options1)));
         findViewById(R.id.commitmentCW_dropdown).setOnClickListener(view -> setPopPUP(view, findViewById(R.id.commitmentCW_selected_type), Arrays.asList(weeks)));
         findViewById(R.id.categoryCW_dropdown).setOnClickListener(view -> setPopPUP(view, findViewById(R.id.categoryCW_selectedtype), Arrays.asList(weeks)));
     }
 
-
-    final String[] options = {"CE","ST","AQ"};
-    final String[] options1 = {"All","CE","ST","AQ"};
-    final String[] weeks = {"week 1","week 2","week 3","week 4","week 5"};
     public void setPopPUP(View anchorView, TextView targetTextView, List<String> options) {
         PopupMenu popupMenu = new PopupMenu(anchorView.getContext(), anchorView);
         for (String option : options)
@@ -212,53 +205,65 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    public void initializeVariables(){
-        frame_layout_container=findViewById(R.id.frame_layout_container);
-        scrollView=findViewById(R.id.scrollView);
+    public void initializeVariables() {
+        frame_layout_container = findViewById(R.id.frame_layout_container);
+        scrollView = findViewById(R.id.scrollView);
 
-        zone_wise_sales_piechart=findViewById(R.id.zone_wise_sales_piechart);
-        zone_wise_totalSales=findViewById(R.id.zone_wise_totalSales);
-        zonewsp_fs=findViewById(R.id.zonewsp_fs);
-        zone_salesperformance=findViewById(R.id.zone_salesperformance);
-        cvzone_salesperformance=findViewById(R.id.cvzone_salesperformance);
+        zone_wise_sales_piechart = findViewById(R.id.zone_wise_sales_piechart);
+        zone_wise_totalSales = findViewById(R.id.zone_wise_totalSales);
+        zonewsp_fs = findViewById(R.id.zonewsp_fs);
+        zone_salesperformance = findViewById(R.id.zone_salesperformance);
+        cvzone_salesperformance = findViewById(R.id.cvzone_salesperformance);
 
-        state_targetandach_fs=findViewById(R.id.state_targetandach_fs);
-        state_targetandach=findViewById(R.id.state_targetandach);
-        cvstate_targetandach=findViewById(R.id.cvstate_targetandach);
-        barChart1=findViewById(R.id.barChart1);
-        barChart2=findViewById(R.id.barChart2);
-        state_targetandach_fs.setOnClickListener(v -> {addRequiredLayout(cvstate_targetandach,state_targetandach,state_targetandach_fs);});
+        state_targetandach_fs = findViewById(R.id.state_targetandach_fs);
+        state_targetandach = findViewById(R.id.state_targetandach);
+        cvstate_targetandach = findViewById(R.id.cvstate_targetandach);
+        barChart1 = findViewById(R.id.barChart1);
+        barChart2 = findViewById(R.id.barChart2);
+        state_targetandach_fs.setOnClickListener(v -> {
+            addRequiredLayout(cvstate_targetandach, state_targetandach, state_targetandach_fs);
+        });
 
-        category_targetandach_barchart=findViewById(R.id.category_targetandach_barchart);
-        category_targetandach_fs=findViewById(R.id.category_targetandach_fs);
-        cvcategory_targetandach=findViewById(R.id.cvcategory_targetandach);
-        category_targetandach=findViewById(R.id.category_targetandach);
-        category_targetandach_fs.setOnClickListener(v -> {addRequiredLayout(cvcategory_targetandach,category_targetandach,category_targetandach_fs);});
-        segment_targetandach_barchart=findViewById(R.id.segment_targetandach_barchart);
+        category_targetandach_barchart = findViewById(R.id.category_targetandach_barchart);
+        category_targetandach_fs = findViewById(R.id.category_targetandach_fs);
+        cvcategory_targetandach = findViewById(R.id.cvcategory_targetandach);
+        category_targetandach = findViewById(R.id.category_targetandach);
+        category_targetandach_fs.setOnClickListener(v -> {
+            addRequiredLayout(cvcategory_targetandach, category_targetandach, category_targetandach_fs);
+        });
+        segment_targetandach_barchart = findViewById(R.id.segment_targetandach_barchart);
 
-        category_wise_sales_barchart=findViewById(R.id.category_wise_sales_barchart);
-        categorywisesales_fs=findViewById(R.id.categorywisesales_fs);
-        category_salesperformance=findViewById(R.id.category_salesperformance);
-        cvcategory_salesperformance=findViewById(R.id.cvcategory_salesperformance);
+        category_wise_sales_barchart = findViewById(R.id.category_wise_sales_barchart);
+        categorywisesales_fs = findViewById(R.id.categorywisesales_fs);
+        category_salesperformance = findViewById(R.id.category_salesperformance);
+        cvcategory_salesperformance = findViewById(R.id.cvcategory_salesperformance);
 
-        state_wise_sales_barchart=findViewById(R.id.state_wise_sales_barchart);
-        cvstate_salesperformance=findViewById(R.id.cvstate_salesperformance);
-        state_salesperformance=findViewById(R.id.state_salesperformance);
-        segmentwisesales_fs=findViewById(R.id.segmentwisesales_fs);
+        state_wise_sales_barchart = findViewById(R.id.state_wise_sales_barchart);
+        cvstate_salesperformance = findViewById(R.id.cvstate_salesperformance);
+        state_salesperformance = findViewById(R.id.state_salesperformance);
+        segmentwisesales_fs = findViewById(R.id.segmentwisesales_fs);
 
-        LinearLayout sellio_fs=findViewById(R.id.sellio_fs);
-        sellio_fs.setOnClickListener(v -> {addRequiredLayout(findViewById(R.id.cv_sellio),findViewById(R.id.ll_sellio),sellio_fs);});
+        LinearLayout sellio_fs = findViewById(R.id.sellio_fs);
+        sellio_fs.setOnClickListener(v -> {
+            addRequiredLayout(findViewById(R.id.cv_sellio), findViewById(R.id.ll_sellio), sellio_fs);
+        });
 
-        zonewsp_fs.setOnClickListener(v -> {addRequiredLayout(cvzone_salesperformance,zone_salesperformance,zonewsp_fs);});
+        zonewsp_fs.setOnClickListener(v -> {
+            addRequiredLayout(cvzone_salesperformance, zone_salesperformance, zonewsp_fs);
+        });
         zone_wise_totalSales.setVisibility(View.VISIBLE);
-        categorywisesales_fs.setOnClickListener(v -> {addRequiredLayout(cvcategory_salesperformance,category_salesperformance,categorywisesales_fs);});
-        segmentwisesales_fs.setOnClickListener(v -> {addRequiredLayout(cvstate_salesperformance,state_salesperformance,segmentwisesales_fs);});
+        categorywisesales_fs.setOnClickListener(v -> {
+            addRequiredLayout(cvcategory_salesperformance, category_salesperformance, categorywisesales_fs);
+        });
+        segmentwisesales_fs.setOnClickListener(v -> {
+            addRequiredLayout(cvstate_salesperformance, state_salesperformance, segmentwisesales_fs);
+        });
 
 
-        isdTA_cm=findViewById(R.id.isdTA_cm);
-        isdTA_l1m=findViewById(R.id.isdTA_l1m);
-        isdTA_l2m=findViewById(R.id.isdTA_l2m);
-        zone_AR_TA=findViewById(R.id.zone_AR_TA);
+        isdTA_cm = findViewById(R.id.isdTA_cm);
+        isdTA_l1m = findViewById(R.id.isdTA_l1m);
+        isdTA_l2m = findViewById(R.id.isdTA_l2m);
+        zone_AR_TA = findViewById(R.id.zone_AR_TA);
 
         isd_selloutP_barchart = findViewById(R.id.isd_selloutP_barchart);
         isd_category_selloutP_barchart = findViewById(R.id.isd_category_selloutP_barchart);
@@ -268,32 +273,34 @@ public class MainActivity extends BaseActivity {
         categoryCW_barchart = findViewById(R.id.categoryCW_barchart);
         pp_barChart = findViewById(R.id.pp_barChart);
 
-        zone_DSP=findViewById(R.id.zone_DSP);
-        category_DSP=findViewById(R.id.category_DSP);
-        segment_DSP=findViewById(R.id.segment_DSP);
+        zone_DSP = findViewById(R.id.zone_DSP);
+        category_DSP = findViewById(R.id.category_DSP);
+        segment_DSP = findViewById(R.id.segment_DSP);
 
         switch_to_YTD_fs = findViewById(R.id.switch_to_YTD_fs);
         cvswitch_to_YTD = findViewById(R.id.cvswitch_to_YTD);
         switch_to_YTD = findViewById(R.id.switch_to_YTD);
-        switch_to_YTD_fs.setOnClickListener(v -> {addRequiredLayout(cvswitch_to_YTD,switch_to_YTD,switch_to_YTD_fs);});
+        switch_to_YTD_fs.setOnClickListener(v -> {
+            addRequiredLayout(cvswitch_to_YTD, switch_to_YTD, switch_to_YTD_fs);
+        });
 
         zeroSales_isdCount = findViewById(R.id.zeroSales_isdCount);
         Region_wise_performance = findViewById(R.id.Region_wise_performance);
         ar_od_performance = findViewById(R.id.ar_od_performance);
-        pdp_barChart1=findViewById(R.id.pdp_barChart1);
-        pdp_barChart2=findViewById(R.id.pdp_barChart2);
+        pdp_barChart1 = findViewById(R.id.pdp_barChart1);
+        pdp_barChart2 = findViewById(R.id.pdp_barChart2);
 
-        sellio_barchart=findViewById(R.id.sellio_barchart);
-        category_sellio_barchart=findViewById(R.id.category_sellio_barchart);
-        segment_sellio_barchart=findViewById(R.id.segment_sellio_barchart);
+        sellio_barchart = findViewById(R.id.sellio_barchart);
+        category_sellio_barchart = findViewById(R.id.category_sellio_barchart);
+        segment_sellio_barchart = findViewById(R.id.segment_sellio_barchart);
 
-        isd_barChart1=findViewById(R.id.isd_barChart1);
-        isd_barChart2=findViewById(R.id.isd_barChart2);
+        isd_barChart1 = findViewById(R.id.isd_barChart1);
+        isd_barChart2 = findViewById(R.id.isd_barChart2);
         region_over_ATQ = findViewById(R.id.region_over_ATQ);
         category_over_ATQ = findViewById(R.id.category_over_ATQ);
 
         llstart_day.setOnClickListener(v -> showCustomDialog(MainActivity.this, getString(R.string.alert), getResources().getString(R.string.do_you_want_to)
-                + " " + (false ? getResources().getString(R.string.end) : getResources().getString(R.string.start)) + " " + getResources().getString(R.string.day),
+                        + " " + (getResources().getString(R.string.start)) + " " + getResources().getString(R.string.day),
                 getString(R.string.Yes), getString(R.string.No), "DepotInOut"));
     }
 
@@ -323,11 +330,11 @@ public class MainActivity extends BaseActivity {
         int customColor4 = Color.parseColor("#E04AA4");
         int customColor5 = Color.parseColor("#9D47E0");
         int customColor6 = Color.parseColor("#E0C546");
-        int[] colors1 = {customColor1,customColor2,customColor3,customColor4, customColor5,customColor6};// Custom colors for each portion
+        int[] colors1 = {customColor1, customColor2, customColor3, customColor4, customColor5, customColor6};// Custom colors for each portion
 
         int[] colors = {Color.parseColor("#227FD0"), Color.parseColor("#F47575"),
                 Color.parseColor("#34B0FD"), Color.parseColor("#E04AA4"), Color.parseColor("#9D47E0"),
-                Color.parseColor("#E0C546") };
+                Color.parseColor("#E0C546")};
 
         String[] labels = {"South", "Central", "North 2", "West", "North 1", "East"};
         ArrayList<PieEntry> entriesNew = new ArrayList<>();
@@ -352,7 +359,7 @@ public class MainActivity extends BaseActivity {
         pieData.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return (int) value+"L";
+                return (int) value + "L";
             }
         });
 
@@ -363,36 +370,38 @@ public class MainActivity extends BaseActivity {
         pieChartView.setDrawEntryLabels(true);
         pieChartView.setEntryLabelColor(Color.BLACK); // Show labels outside the chart with lines pointing to the corresponding portions
         pieChartView.setEntryLabelTextSize(12f);
-        pieChartView.setExtraOffsets(25,0,25,0);
+        pieChartView.setExtraOffsets(25, 0, 25, 0);
         pieChartView.animate();
         ((TextView) findViewById(R.id.zone_wise_sales_total_sales)).setText(total / 100.0f + "Cr");
     }
-    private void singleBarChart(BarChart barChart, ArrayList<BarEntry> entries, ArrayList<String> xlabels,int color,int angle, boolean isvalue)
-    {
-        SingleBarChart customBarChart = new SingleBarChart(barChart,entries,xlabels);
+
+    private void singleBarChart(BarChart barChart, ArrayList<BarEntry> entries, ArrayList<String> xlabels, int color, int angle, boolean isvalue) {
+        SingleBarChart customBarChart = new SingleBarChart(barChart, entries, xlabels);
         customBarChart.setbarColor(color);
         customBarChart.setLabelRotationAngle(angle);
         customBarChart.isValueSelected(isvalue);
         customBarChart.createBarChart();
     }
+
     private void dualBar(BarChart barChart1, BarChart barChart2) {
-        barChart1.clear();barChart2.clear();
-        DualBarCharts dualBarCharts1= new DualBarCharts(getApplicationContext(),barChart1,barChart2,xlabels123);
-        dualBarCharts1.setBarChart1(getBarEntriesSingleValues(),"growth","Degrwoth",Color.parseColor("#50C327"),
+        barChart1.clear();
+        barChart2.clear();
+        DualBarCharts dualBarCharts1 = new DualBarCharts(getApplicationContext(), barChart1, barChart2, xlabels123);
+        dualBarCharts1.setBarChart1(getBarEntriesSingleValues(), "growth", "Degrwoth", Color.parseColor("#50C327"),
                 Color.parseColor("#CB2832"));
-        dualBarCharts1.setBarChart2(getBarEntriesTwo(),getBarEntriesThree(),"Target","Ach",Color.parseColor("#026FCD"),
-                Color.parseColor("#329F0B"),growPercentage1);
+        dualBarCharts1.setBarChart2(getBarEntriesTwo(), getBarEntriesThree(), "Target", "Ach", Color.parseColor("#026FCD"),
+                Color.parseColor("#329F0B"), growPercentage1);
         dualBarCharts1.createDualBarCharts();
     }
+
     private void TripleBarChart(BarChart idBarChart4, String title1, int parseColor1, ArrayList<BarEntry> barEntries1, String title2, int parseColor2,
-                                ArrayList<BarEntry> barEntries2, String title3, int parseColor3, ArrayList<BarEntry> barEntries3)
-    {
+                                ArrayList<BarEntry> barEntries2, String title3, int parseColor3, ArrayList<BarEntry> barEntries3) {
 //        CustomBarChartRender customBarChartRender = new CustomBarChartRender(idBarChart4, idBarChart4.getAnimator(), idBarChart4.getViewPortHandler());
 //        customBarChartRender.setRadius(20);
 //        idBarChart4.setRenderer(customBarChartRender);
 
-        AboveAndCurveCustomBarChart aboveAndCurveCustomBarChart= new AboveAndCurveCustomBarChart(
-                getApplicationContext(),idBarChart4,idBarChart4.getAnimator(),idBarChart4.getViewPortHandler(), myColors,growPercentage1);
+        AboveAndCurveCustomBarChart aboveAndCurveCustomBarChart = new AboveAndCurveCustomBarChart(
+                getApplicationContext(), idBarChart4, idBarChart4.getAnimator(), idBarChart4.getViewPortHandler(), myColors, growPercentage1);
         aboveAndCurveCustomBarChart.setRadius(20);
         aboveAndCurveCustomBarChart.aboveValueTextColor(Color.BLACK);
         aboveAndCurveCustomBarChart.disaplayImage(false);
@@ -414,8 +423,8 @@ public class MainActivity extends BaseActivity {
         barDataSet1.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                if(value>0)
-                    return (int) value+"L";
+                if (value > 0)
+                    return (int) value + "L";
                 else
                     return "";
             }
@@ -423,8 +432,8 @@ public class MainActivity extends BaseActivity {
         barDataSet2.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                if(value>0)
-                    return (int) value+"L";
+                if (value > 0)
+                    return (int) value + "L";
                 else
                     return "";
             }
@@ -432,14 +441,14 @@ public class MainActivity extends BaseActivity {
         barDataSet3.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                if(value>0)
-                    return (int) value+"L";
+                if (value > 0)
+                    return (int) value + "L";
                 else
                     return "";
             }
         });
 
-        BarData data = new BarData(barDataSet1, barDataSet2,barDataSet3);
+        BarData data = new BarData(barDataSet1, barDataSet2, barDataSet3);
         data.setValueTextSize(8f);
         data.setValueTextColor(Color.WHITE);
         data.setValueTypeface(Typeface.DEFAULT_BOLD);
@@ -502,83 +511,83 @@ public class MainActivity extends BaseActivity {
 //        idBarChart4.getXAxis().setAxisMinimum(1.5f);
         data.setBarWidth(barWidth);
         idBarChart4.groupBars(0, groupSpace, barSpace);
-        idBarChart4.setExtraOffsets(0,0,0,10);
+        idBarChart4.setExtraOffsets(0, 0, 0, 10);
         idBarChart4.invalidate();
     }
 
-//    private void DualBarChart(String barChartType){
+    //    private void DualBarChart(String barChartType){
     private void DualBarChartOldWorking(String barChartType, TextView viewById, TextView viewById1) {
-        switch (barChartType){
+        switch (barChartType) {
             case "commitmentCW_barchart":
-                doubleBarChart=new DoubleBarChart(commitmentCW_barchart,xlabels123,growPercentage1);
-                doubleBarChart.setDetails1(getBarEntriesOne(),"Target",Color.parseColor("#227FD0"));
-                doubleBarChart.setDetails2(getBarEntriesTwo(),"Achievement",Color.parseColor("#BE9502"));
+                doubleBarChart = new DoubleBarChart(commitmentCW_barchart, xlabels123, growPercentage1);
+                doubleBarChart.setDetails1(getBarEntriesOne(), "Target", Color.parseColor("#227FD0"));
+                doubleBarChart.setDetails2(getBarEntriesTwo(), "Achievement", Color.parseColor("#BE9502"));
                 doubleBarChart.isValueSelected(true);
                 doubleBarChart.createBarChart();
-                viewById.setOnClickListener(v-> commitmentCW_barchart.invalidate());
-                viewById1.setOnClickListener(v-> commitmentCW_barchart.invalidate());
+                viewById.setOnClickListener(v -> commitmentCW_barchart.invalidate());
+                viewById1.setOnClickListener(v -> commitmentCW_barchart.invalidate());
                 break;
             case "isdTA_cm":
-                doubleBarChart=new DoubleBarChart(isdTA_cm,xlabels123,growPercentage1);
-                doubleBarChart.setDetails1(getBarEntriesOne(),"Oct-2023",Color.parseColor("#3ACA06"));
-                doubleBarChart.setDetails2(getBarEntriesTwo(),"Oct-2022",Color.parseColor("#1F7102"));
+                doubleBarChart = new DoubleBarChart(isdTA_cm, xlabels123, growPercentage1);
+                doubleBarChart.setDetails1(getBarEntriesOne(), "Oct-2023", Color.parseColor("#3ACA06"));
+                doubleBarChart.setDetails2(getBarEntriesTwo(), "Oct-2022", Color.parseColor("#1F7102"));
                 doubleBarChart.isValueSelected(true);
                 doubleBarChart.setAboveImageEnable(false);
                 doubleBarChart.setAboveTextColor(Color.BLACK);
                 doubleBarChart.createBarChart();
-                viewById.setOnClickListener(v-> isdTA_cm.invalidate());
-                viewById1.setOnClickListener(v-> isdTA_cm.invalidate());
+                viewById.setOnClickListener(v -> isdTA_cm.invalidate());
+                viewById1.setOnClickListener(v -> isdTA_cm.invalidate());
                 break;
             case "isdTA_l1m":
-                doubleBarChart=new DoubleBarChart(isdTA_l1m,xlabels123,growPercentage1);
-                doubleBarChart.setDetails1(getBarEntriesOne(),"Oct-2023",Color.parseColor("#BE9502"));
-                doubleBarChart.setDetails2(getBarEntriesTwo(),"Oct-2022",Color.parseColor("#227FD0"));
+                doubleBarChart = new DoubleBarChart(isdTA_l1m, xlabels123, growPercentage1);
+                doubleBarChart.setDetails1(getBarEntriesOne(), "Oct-2023", Color.parseColor("#BE9502"));
+                doubleBarChart.setDetails2(getBarEntriesTwo(), "Oct-2022", Color.parseColor("#227FD0"));
                 doubleBarChart.isValueSelected(true);
                 doubleBarChart.setAboveImageEnable(false);
                 doubleBarChart.setAboveTextColor(Color.BLACK);
                 doubleBarChart.createBarChart();
                 break;
             case "isdTA_l2m":
-                doubleBarChart=new DoubleBarChart(isdTA_l2m,xlabels123,growPercentage1);
-                doubleBarChart.setDetails1(getBarEntriesOne(),"Oct-2023",Color.parseColor("#02B220"));
-                doubleBarChart.setDetails2(getBarEntriesTwo(),"Oct-2022",Color.parseColor("#F2A201"));
+                doubleBarChart = new DoubleBarChart(isdTA_l2m, xlabels123, growPercentage1);
+                doubleBarChart.setDetails1(getBarEntriesOne(), "Oct-2023", Color.parseColor("#02B220"));
+                doubleBarChart.setDetails2(getBarEntriesTwo(), "Oct-2022", Color.parseColor("#F2A201"));
                 doubleBarChart.isValueSelected(true);
                 doubleBarChart.setAboveImageEnable(false);
                 doubleBarChart.setAboveTextColor(Color.BLACK);
                 doubleBarChart.createBarChart();
                 break;
             case "isd_selloutP_barchart":
-                doubleBarChart=new DoubleBarChart(isd_selloutP_barchart,xlabels123,growPercentage1);
-                doubleBarChart.setDetails1(getBarEntriesOne(),"Oct-2023",Color.parseColor("#005BAA"));
-                doubleBarChart.setDetails2(getBarEntriesTwo(),"Oct-2022",Color.parseColor("#98BDDC"));
+                doubleBarChart = new DoubleBarChart(isd_selloutP_barchart, xlabels123, growPercentage1);
+                doubleBarChart.setDetails1(getBarEntriesOne(), "Oct-2023", Color.parseColor("#005BAA"));
+                doubleBarChart.setDetails2(getBarEntriesTwo(), "Oct-2022", Color.parseColor("#98BDDC"));
                 doubleBarChart.isValueSelected(true);
                 doubleBarChart.createBarChart();
                 break;
             case "isd_category_selloutP_barchart":
-                doubleBarChart=new DoubleBarChart(isd_category_selloutP_barchart,xlabels123,growPercentage1);
-                doubleBarChart.setDetails1(getBarEntriesOne(),"Oct-2023",Color.parseColor("#005BAA"));
-                doubleBarChart.setDetails2(getBarEntriesTwo(),"Oct-2022",Color.parseColor("#98BDDC"));
+                doubleBarChart = new DoubleBarChart(isd_category_selloutP_barchart, xlabels123, growPercentage1);
+                doubleBarChart.setDetails1(getBarEntriesOne(), "Oct-2023", Color.parseColor("#005BAA"));
+                doubleBarChart.setDetails2(getBarEntriesTwo(), "Oct-2022", Color.parseColor("#98BDDC"));
                 doubleBarChart.isValueSelected(true);
                 doubleBarChart.createBarChart();
                 break;
             case "isd_segment_selloutP_barchart":
-                doubleBarChart=new DoubleBarChart(isd_segment_selloutP_barchart,xlabels123,growPercentage1);
-                doubleBarChart.setDetails1(getBarEntriesOne(),"Oct-2023",Color.parseColor("#005BAA"));
-                doubleBarChart.setDetails2(getBarEntriesTwo(),"Oct-2022",Color.parseColor("#98BDDC"));
+                doubleBarChart = new DoubleBarChart(isd_segment_selloutP_barchart, xlabels123, growPercentage1);
+                doubleBarChart.setDetails1(getBarEntriesOne(), "Oct-2023", Color.parseColor("#005BAA"));
+                doubleBarChart.setDetails2(getBarEntriesTwo(), "Oct-2022", Color.parseColor("#98BDDC"));
                 doubleBarChart.isValueSelected(true);
                 doubleBarChart.createBarChart();
                 break;
             case "categoryCW_barchart":
-                doubleBarChart=new DoubleBarChart(categoryCW_barchart,xlabels123,growPercentage1);
-                doubleBarChart.setDetails1(getBarEntriesOne(),"Target",Color.parseColor("#227FD0"));
-                doubleBarChart.setDetails2(getBarEntriesTwo(),"Achievement",Color.parseColor("#BE9502"));
+                doubleBarChart = new DoubleBarChart(categoryCW_barchart, xlabels123, growPercentage1);
+                doubleBarChart.setDetails1(getBarEntriesOne(), "Target", Color.parseColor("#227FD0"));
+                doubleBarChart.setDetails2(getBarEntriesTwo(), "Achievement", Color.parseColor("#BE9502"));
                 doubleBarChart.isValueSelected(true);
                 doubleBarChart.createBarChart();
                 break;
             case "pp_barChart":
-                doubleBarChart=new DoubleBarChart(pp_barChart,xlabels123,growPercentage1);
-                doubleBarChart.setDetails1(getBarEntriesOne(),"MTD",Color.parseColor("#227FD0"));
-                doubleBarChart.setDetails2(getBarEntriesTwo(),"LYTD",Color.parseColor("#20C6B2"));
+                doubleBarChart = new DoubleBarChart(pp_barChart, xlabels123, growPercentage1);
+                doubleBarChart.setDetails1(getBarEntriesOne(), "MTD", Color.parseColor("#227FD0"));
+                doubleBarChart.setDetails2(getBarEntriesTwo(), "LYTD", Color.parseColor("#20C6B2"));
                 doubleBarChart.isValueSelected(true);
                 doubleBarChart.setLabelRotationAngle(315);
 //                if(ppTargetEntries.size()<5) doubleBarChart.setAxisMaximum(11);
@@ -586,48 +595,48 @@ public class MainActivity extends BaseActivity {
                 doubleBarChart.createBarChart();
                 break;
             case "zone_AR_TA":
-                doubleBarChart=new DoubleBarChart(zone_AR_TA,xlabels123,growPercentage1);
-                doubleBarChart.setDetails1(getBarEntriesOne(),"Target",Color.parseColor("#FAB901"));
-                doubleBarChart.setDetails2(getBarEntriesTwo(),"Ach",Color.parseColor("#1F7102"));
+                doubleBarChart = new DoubleBarChart(zone_AR_TA, xlabels123, growPercentage1);
+                doubleBarChart.setDetails1(getBarEntriesOne(), "Target", Color.parseColor("#FAB901"));
+                doubleBarChart.setDetails2(getBarEntriesTwo(), "Ach", Color.parseColor("#1F7102"));
                 doubleBarChart.isValueSelected(true);
                 doubleBarChart.setAboveImageEnable(false);
                 doubleBarChart.setAboveTextColor(Color.BLACK);
                 doubleBarChart.createBarChart();
                 break;
             case "category_targetandach_barchart":
-                doubleBarChart=new DoubleBarChart(category_targetandach_barchart,xlabels123,growPercentage1);
-                doubleBarChart.setDetails1(getBarEntriesOne(),"Target",Color.parseColor("#227FD0"));
-                doubleBarChart.setDetails2(getBarEntriesTwo(),"Achievement",Color.parseColor("#20C6B2"));
+                doubleBarChart = new DoubleBarChart(category_targetandach_barchart, xlabels123, growPercentage1);
+                doubleBarChart.setDetails1(getBarEntriesOne(), "Target", Color.parseColor("#227FD0"));
+                doubleBarChart.setDetails2(getBarEntriesTwo(), "Achievement", Color.parseColor("#20C6B2"));
                 doubleBarChart.isValueSelected(iscatTAvalue);
                 doubleBarChart.createBarChart();
                 break;
             case "segment_targetandach_barchart":
-                doubleBarChart=new DoubleBarChart(segment_targetandach_barchart,xlabels123,growPercentage1);
-                doubleBarChart.setDetails1(getBarEntriesOne(),"Target",Color.parseColor("#227FD0"));
-                doubleBarChart.setDetails2(getBarEntriesTwo(),"Achievement",Color.parseColor("#20C6B2"));
+                doubleBarChart = new DoubleBarChart(segment_targetandach_barchart, xlabels123, growPercentage1);
+                doubleBarChart.setDetails1(getBarEntriesOne(), "Target", Color.parseColor("#227FD0"));
+                doubleBarChart.setDetails2(getBarEntriesTwo(), "Achievement", Color.parseColor("#20C6B2"));
                 doubleBarChart.isValueSelected(issegTAvalue);
                 doubleBarChart.createBarChart();
                 break;
 
             case "zone_DSP":
-                doubleBarChart=new DoubleBarChart(zone_DSP,xlabels123,growPercentage1);
-                doubleBarChart.setDetails1(getBarEntriesOne(),"Oct-2023",Color.parseColor("#227FD0"));
-                doubleBarChart.setDetails2(getBarEntriesTwo(),"Sep-2023",Color.parseColor("#50C327"));
+                doubleBarChart = new DoubleBarChart(zone_DSP, xlabels123, growPercentage1);
+                doubleBarChart.setDetails1(getBarEntriesOne(), "Oct-2023", Color.parseColor("#227FD0"));
+                doubleBarChart.setDetails2(getBarEntriesTwo(), "Sep-2023", Color.parseColor("#50C327"));
                 doubleBarChart.isValueSelected(issegTAvalue);
                 doubleBarChart.createBarChart();
                 break;
             case "category_DSP":
-                doubleBarChart=new DoubleBarChart(category_DSP,xlabels123,growPercentage1);
-                doubleBarChart.setDetails1(getBarEntriesOne(),"Oct-2023",Color.parseColor("#227FD0"));
-                doubleBarChart.setDetails2(getBarEntriesTwo(),"Sep-2023",Color.parseColor("#50C327"));
+                doubleBarChart = new DoubleBarChart(category_DSP, xlabels123, growPercentage1);
+                doubleBarChart.setDetails1(getBarEntriesOne(), "Oct-2023", Color.parseColor("#227FD0"));
+                doubleBarChart.setDetails2(getBarEntriesTwo(), "Sep-2023", Color.parseColor("#50C327"));
                 doubleBarChart.isValueSelected(issegTAvalue);
                 doubleBarChart.createBarChart();
                 break;
 
             case "segment_DSP":
-                doubleBarChart=new DoubleBarChart(segment_DSP,xlabels123,growPercentage1);
-                doubleBarChart.setDetails1(getBarEntriesOne(),"Oct-2023",Color.parseColor("#227FD0"));
-                doubleBarChart.setDetails2(getBarEntriesTwo(),"Sep-2023",Color.parseColor("#50C327"));
+                doubleBarChart = new DoubleBarChart(segment_DSP, xlabels123, growPercentage1);
+                doubleBarChart.setDetails1(getBarEntriesOne(), "Oct-2023", Color.parseColor("#227FD0"));
+                doubleBarChart.setDetails2(getBarEntriesTwo(), "Sep-2023", Color.parseColor("#50C327"));
                 doubleBarChart.isValueSelected(issegTAvalue);
                 doubleBarChart.createBarChart();
                 break;
@@ -694,56 +703,56 @@ public class MainActivity extends BaseActivity {
     }
 
 
-
     private void OneBehindAnotherBarChart(String barChartType) {
         switch (barChartType) {
-            case"zeroSales_isdCount":
-                obarchart=new OneBehindAnotherBarchart(zeroSales_isdCount,xlabels123,growPercentage1);
-                obarchart.setDetails1(getBarEntriesOne(),"Sell In",Color.parseColor("#FFAA00"));
-                obarchart.setDetails2(getBarEntriesFour(),"Sell Out",Color.parseColor("#005BAA"));
-                obarchart.setDetails3(getBarEntriesTwo(),"Sell Through",Color.parseColor("#65B948"));
+            case "zeroSales_isdCount":
+                obarchart = new OneBehindAnotherBarchart(zeroSales_isdCount, xlabels123, growPercentage1);
+                obarchart.setDetails1(getBarEntriesOne(), "Sell In", Color.parseColor("#FFAA00"));
+                obarchart.setDetails2(getBarEntriesFour(), "Sell Out", Color.parseColor("#005BAA"));
+                obarchart.setDetails3(getBarEntriesTwo(), "Sell Through", Color.parseColor("#65B948"));
                 obarchart.textNeededBarPosition(1);
                 obarchart.createBarChart();
                 break;
-            case"Region_wise_performance":
-                obarchart=new OneBehindAnotherBarchart(Region_wise_performance,xlabels123,growPercentage1);
-                obarchart.setDetails1(getBarEntriesOne(),"Sell In",Color.parseColor("#FFAA00"));
-                obarchart.setDetails2(getBarEntriesFour(),"Sell Out",Color.parseColor("#005BAA"));
-                obarchart.setDetails3(getBarEntriesTwo(),"Sell Through",Color.parseColor("#65B948"));
+            case "Region_wise_performance":
+                obarchart = new OneBehindAnotherBarchart(Region_wise_performance, xlabels123, growPercentage1);
+                obarchart.setDetails1(getBarEntriesOne(), "Sell In", Color.parseColor("#FFAA00"));
+                obarchart.setDetails2(getBarEntriesFour(), "Sell Out", Color.parseColor("#005BAA"));
+                obarchart.setDetails3(getBarEntriesTwo(), "Sell Through", Color.parseColor("#65B948"));
                 obarchart.textNeededBarPosition(1);
                 obarchart.createBarChart();
                 break;
-            case"ar_od_performance":
-                obarchart=new OneBehindAnotherBarchart(ar_od_performance,xlabels123,growPercentage1);
-                obarchart.setDetails1(getBarEntriesOne(),"Sell In",Color.parseColor("#005BAA"));
-                obarchart.setDetails2(getBarEntriesFour(),"Sell Out",Color.parseColor("#29B0FF"));
+            case "ar_od_performance":
+                obarchart = new OneBehindAnotherBarchart(ar_od_performance, xlabels123, growPercentage1);
+                obarchart.setDetails1(getBarEntriesOne(), "Sell In", Color.parseColor("#005BAA"));
+                obarchart.setDetails2(getBarEntriesFour(), "Sell Out", Color.parseColor("#29B0FF"));
 //                obarchart.setDetails3(getBarEntriesTwo(),"Sell Through",Color.parseColor("#65B948"));
                 obarchart.textNeededBarPosition(2);
                 obarchart.createBarChart();
                 break;
-            case"region_over_ATQ":
-                obarchart=new OneBehindAnotherBarchart(region_over_ATQ,xlabels123,growPercentage1);
-                obarchart.setDetails1(getBarEntriesOne(),"AR",Color.parseColor("#FFAA00"));
-                obarchart.setDetails2(getBarEntriesFour(),"OD",Color.parseColor("#005BAA"));
-                obarchart.setDetails3(getBarEntriesTwo(),"60 Days OD",Color.parseColor("#65B948"));
+            case "region_over_ATQ":
+                obarchart = new OneBehindAnotherBarchart(region_over_ATQ, xlabels123, growPercentage1);
+                obarchart.setDetails1(getBarEntriesOne(), "AR", Color.parseColor("#FFAA00"));
+                obarchart.setDetails2(getBarEntriesFour(), "OD", Color.parseColor("#005BAA"));
+                obarchart.setDetails3(getBarEntriesTwo(), "60 Days OD", Color.parseColor("#65B948"));
                 obarchart.textNeededBarPosition(1);
                 obarchart.createBarChart();
                 break;
-            case"category_over_ATQ":
-                obarchart=new OneBehindAnotherBarchart(category_over_ATQ,xlabels123,growPercentage1);
-                obarchart.setDetails1(getBarEntriesOne(),"AR",Color.parseColor("#FFAA00"));
-                obarchart.setDetails2(getBarEntriesFour(),"OD",Color.parseColor("#005BAA"));
-                obarchart.setDetails3(getBarEntriesTwo(),"60 Days OD",Color.parseColor("#65B948"));
+            case "category_over_ATQ":
+                obarchart = new OneBehindAnotherBarchart(category_over_ATQ, xlabels123, growPercentage1);
+                obarchart.setDetails1(getBarEntriesOne(), "AR", Color.parseColor("#FFAA00"));
+                obarchart.setDetails2(getBarEntriesFour(), "OD", Color.parseColor("#005BAA"));
+                obarchart.setDetails3(getBarEntriesTwo(), "60 Days OD", Color.parseColor("#65B948"));
                 obarchart.textNeededBarPosition(1);
                 obarchart.createBarChart();
                 break;
 
         }
     }
+
     private void isdSellOutPieChart() {
         PieChart pieChartView = findViewById(R.id.isd_sellout_piechart);
         pieChartView.getCenter();
-        pieChartView.setExtraOffsets(25,5,25,0);//to set the padding or margin of the pie chart
+        pieChartView.setExtraOffsets(25, 5, 25, 0);//to set the padding or margin of the pie chart
 
         ArrayList<PieEntry> entries = new ArrayList<>();
         entries.add(new PieEntry(18, "18 ISD"));
@@ -757,7 +766,7 @@ public class MainActivity extends BaseActivity {
         int customColor3 = Color.parseColor("#FFAA00");
         int customColor4 = Color.parseColor("#498CC5");
         int customColor5 = Color.parseColor("#4CD964");
-        int[] colors = {customColor1,customColor2,customColor3,customColor4,customColor5};
+        int[] colors = {customColor1, customColor2, customColor3, customColor4, customColor5};
 
         PieDataSet pieDataSet = new PieDataSet(entries, "");
         pieDataSet.setColors(colors);
@@ -773,7 +782,7 @@ public class MainActivity extends BaseActivity {
         pieData.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return ((int) value)+"%";
+                return ((int) value) + "%";
             }
         });
 
@@ -816,6 +825,7 @@ public class MainActivity extends BaseActivity {
 
         pieChartView.animate();
     }
+
     private void competitorDSP() {
         //go to the link for the label above the value or please enter the text in search in google  in pie chart i want text label above the value
 //        https://stackoverflow.com/questions/69540724/mpandroidchart-piechart-label-on-top-of-the-value
@@ -836,7 +846,7 @@ public class MainActivity extends BaseActivity {
         int customColor3 = Color.parseColor("#1362A7");
         int customColor4 = Color.parseColor("#E89313");
         int customColor5 = Color.parseColor("#2588DE");
-        int[] colors = {customColor1,customColor2,customColor3,customColor4,customColor5};
+        int[] colors = {customColor1, customColor2, customColor3, customColor4, customColor5};
 
         PieDataSet pieDataSet = new PieDataSet(entries, "");
 //        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
@@ -859,7 +869,7 @@ public class MainActivity extends BaseActivity {
         pieData.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return String.valueOf((int) value)+"%";
+                return (int) value + "%";
             }
         });
 
@@ -875,6 +885,7 @@ public class MainActivity extends BaseActivity {
 
         pieChartView.animate();
     }
+
     private void marketCoverage() {
         PieChart pieChartView = findViewById(R.id.marketCoverage_piechart);
         pieChartView.getCenter();
@@ -885,7 +896,7 @@ public class MainActivity extends BaseActivity {
         entries.add(new PieEntry(3250, "Ach   "));
         int customColor1 = Color.parseColor("#498CC5");
         int customColor2 = Color.parseColor("#FFAA00");
-        int[] colors = {customColor1,customColor2};
+        int[] colors = {customColor1, customColor2};
 
         PieDataSet pieDataSet = new PieDataSet(entries, "");
         pieDataSet.setColors(colors);
@@ -903,7 +914,7 @@ public class MainActivity extends BaseActivity {
         pieData.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return ((int) value)+"";
+                return ((int) value) + "";
             }
         });
 
@@ -928,17 +939,18 @@ public class MainActivity extends BaseActivity {
         // Create custom entries for the legend
         LegendEntry[] customEntries = new LegendEntry[]{
                 new LegendEntry("Target", Legend.LegendForm.SQUARE, 10f, 2f, null, Color.parseColor("#FFAA00")),
-                createGapEntry(),createGapEntry(),createGapEntry(),createGapEntry(),
+                createGapEntry(), createGapEntry(), createGapEntry(), createGapEntry(),
                 new LegendEntry("Ach", Legend.LegendForm.SQUARE, 10f, 2f, null, Color.parseColor("#498CC5")),
         };
         legend.setCustom(customEntries);// Set custom entries for the legend
 
-        pieChartView.setExtraOffsets(25,0,25,0);
+        pieChartView.setExtraOffsets(25, 0, 25, 0);
         pieChartView.animate();
     }
+
     private void overATQ() {
         LineChart lineChart = findViewById(R.id.over_ATQ);
-        lineChart.setExtraOffsets(10,0,10,13);
+        lineChart.setExtraOffsets(10, 0, 10, 13);
         lineChart.setDoubleTapToZoomEnabled(false);
         lineChart.setClickable(false);
         lineChart.getDescription().setEnabled(false);// Remove description label on X-axis
@@ -947,7 +959,9 @@ public class MainActivity extends BaseActivity {
         ArrayList<Entry> values = generateRandomData(50);
         ArrayList<Entry> values2 = generateRandomData(50);
         ArrayList<Entry> values3 = generateRandomData(50);
-        Log.d("values", values.toString());Log.d("values1", values2.toString());Log.d("values3", values3.toString());
+        Log.d("values", values.toString());
+        Log.d("values1", values2.toString());
+        Log.d("values3", values3.toString());
 
         int customColor1 = Color.parseColor("#3EA81A");
         int customColor2 = Color.parseColor("#005BAA");
@@ -979,7 +993,7 @@ public class MainActivity extends BaseActivity {
         dataSet2.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return (int)value+"%";
+                return (int) value + "%";
             }
         });
         LineDataSet dataSet3 = new LineDataSet(values3, "FWD Ageing");
@@ -1045,6 +1059,7 @@ public class MainActivity extends BaseActivity {
         lineChart.setLayoutParams(layoutParams);
         lineChart.invalidate();
     }
+
     private void valueByFGM() {
         PieChart pieChartView = findViewById(R.id.fgm_value);
         pieChartView.getCenter();
@@ -1054,7 +1069,7 @@ public class MainActivity extends BaseActivity {
         entries.add(new PieEntry(110, "model1"));
         entries.add(new PieEntry(120, "model2"));
         entries.add(new PieEntry(112, "model3"));
-        entries.add(new PieEntry( 70, "model4"));
+        entries.add(new PieEntry(70, "model4"));
         entries.add(new PieEntry(250, "model5"));
 
 
@@ -1063,7 +1078,7 @@ public class MainActivity extends BaseActivity {
         int customColor3 = Color.parseColor("#1362A7");
         int customColor4 = Color.parseColor("#E89313");
         int customColor5 = Color.parseColor("#2588DE");
-        int[] colors = {customColor1,customColor2,customColor3,customColor4,customColor5};
+        int[] colors = {customColor1, customColor2, customColor3, customColor4, customColor5};
 
         PieDataSet pieDataSet = new PieDataSet(entries, "");
 //        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
@@ -1086,7 +1101,7 @@ public class MainActivity extends BaseActivity {
         pieData.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return (int) value+"(99%)";
+                return (int) value + "(99%)";
             }
         });
 
@@ -1102,6 +1117,7 @@ public class MainActivity extends BaseActivity {
 
         pieChartView.animate();
     }
+
     private void qtyByFGM() {
         PieChart pieChartView = findViewById(R.id.fgm_qty);
         pieChartView.getCenter();
@@ -1111,7 +1127,7 @@ public class MainActivity extends BaseActivity {
         entries.add(new PieEntry(110, "model1"));
         entries.add(new PieEntry(120, "model2"));
         entries.add(new PieEntry(112, "model3"));
-        entries.add(new PieEntry( 70, "model4"));
+        entries.add(new PieEntry(70, "model4"));
         entries.add(new PieEntry(250, "model5"));
 
         int customColor1 = Color.parseColor("#E5B610");
@@ -1119,7 +1135,7 @@ public class MainActivity extends BaseActivity {
         int customColor3 = Color.parseColor("#1362A7");
         int customColor4 = Color.parseColor("#E89313");
         int customColor5 = Color.parseColor("#2588DE");
-        int[] colors = {customColor1,customColor2,customColor3,customColor4,customColor5};
+        int[] colors = {customColor1, customColor2, customColor3, customColor4, customColor5};
 
         PieDataSet pieDataSet = new PieDataSet(entries, "");
 //        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
@@ -1142,7 +1158,7 @@ public class MainActivity extends BaseActivity {
         pieData.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return String.valueOf((int) value)+"%";
+                return (int) value + "%";
             }
         });
 
@@ -1158,6 +1174,7 @@ public class MainActivity extends BaseActivity {
 
         pieChartView.animate();
     }
+
     private void OverDues() {
         PieChart pieChartView = findViewById(R.id.high_overdues);
         pieChartView.getCenter();
@@ -1167,7 +1184,7 @@ public class MainActivity extends BaseActivity {
         entries.add(new PieEntry(110, "model1"));
         entries.add(new PieEntry(120, "model2"));
         entries.add(new PieEntry(112, "model3"));
-        entries.add(new PieEntry( 70, "model4"));
+        entries.add(new PieEntry(70, "model4"));
         entries.add(new PieEntry(250, "model5"));
 
 
@@ -1176,7 +1193,7 @@ public class MainActivity extends BaseActivity {
         int customColor3 = Color.parseColor("#1362A7");
         int customColor4 = Color.parseColor("#E89313");
         int customColor5 = Color.parseColor("#2588DE");
-        int[] colors = {customColor1,customColor2,customColor3,customColor4,customColor5};
+        int[] colors = {customColor1, customColor2, customColor3, customColor4, customColor5};
 
         PieDataSet pieDataSet = new PieDataSet(entries, "");
 //        pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
@@ -1199,7 +1216,7 @@ public class MainActivity extends BaseActivity {
         pieData.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return (int) value+"(99%)";
+                return (int) value + "(99%)";
             }
         });
 
@@ -1228,6 +1245,7 @@ public class MainActivity extends BaseActivity {
         barEntries.add(new BarEntry(7f, 100));
         return barEntries;
     }
+
     private ArrayList<BarEntry> getBarEntriesTwo() {
         ArrayList barEntries = new ArrayList<>();
 
@@ -1240,6 +1258,7 @@ public class MainActivity extends BaseActivity {
         barEntries.add(new BarEntry(7f, 80));
         return barEntries;
     }
+
     private ArrayList<BarEntry> getBarEntriesThree() {
         ArrayList barEntries = new ArrayList<>();
 
@@ -1252,6 +1271,7 @@ public class MainActivity extends BaseActivity {
         barEntries.add(new BarEntry(7f, 60));
         return barEntries;
     }
+
     private ArrayList<BarEntry> getBarEntriesFour() {
         ArrayList barEntries = new ArrayList<>();
 
@@ -1264,6 +1284,7 @@ public class MainActivity extends BaseActivity {
         barEntries.add(new BarEntry(7f, 60));
         return barEntries;
     }
+
     private String[] generateDates(int length) {
         String[] dates = new String[length];
         SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMM", Locale.getDefault());
@@ -1275,31 +1296,34 @@ public class MainActivity extends BaseActivity {
         }
         return dates;
     }
+
     private ArrayList<Entry> generateRandomData(int length) {
         ArrayList<Entry> randomData = new ArrayList<>();
         Random random = new Random();
-        randomData.add(new Entry(0,0));
+        randomData.add(new Entry(0, 0));
         for (int i = 1; i < length; i++) {
             randomData.add(new Entry(i, random.nextInt(10))); // Adjust the range as needed
         }
         return randomData;
     }
+
     private ArrayList<BarEntry> getBarEntriesSingleValues() {
         ArrayList barEntries = new ArrayList<>();
 
         barEntries.add(new BarEntry(1f, 2));
-        barEntries.add(new BarEntry(2f,-5 ));
+        barEntries.add(new BarEntry(2f, -5));
         barEntries.add(new BarEntry(3f, 4));
         barEntries.add(new BarEntry(4f, -2));
         barEntries.add(new BarEntry(5f, 1));
-        barEntries.add(new BarEntry(6f,3));
-        barEntries.add(new BarEntry(7f,-3));
+        barEntries.add(new BarEntry(6f, 3));
+        barEntries.add(new BarEntry(7f, -3));
         return barEntries;
     }
+
     private LegendEntry createGapEntry() {
-        //is used to set the space between the legends
         return new LegendEntry("", Legend.LegendForm.NONE, 0f, 0f, null, Color.TRANSPARENT);
-    }
+    }// is used to set the space between the legends
+
     private void addRequiredLayout(CardView cardViewP, LinearLayout linearLayoutP, LinearLayout textViewP) {
         cvparent = cardViewP;
         llFullView = linearLayoutP;
@@ -1311,7 +1335,8 @@ public class MainActivity extends BaseActivity {
         frame_layout_container.setVisibility(View.VISIBLE);
         LayoutInflater inflater = LayoutInflater.from(this);
 
-        if (llFullView.getParent() != null) ((ViewGroup) llFullView.getParent()).removeView(llFullView);
+        if (llFullView.getParent() != null)
+            ((ViewGroup) llFullView.getParent()).removeView(llFullView);
 
         View requiredLayout = inflater.inflate(R.layout.fragment_custom, null);
         CardView cardView = requiredLayout.findViewById(R.id.cv_fs);
@@ -1325,10 +1350,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if(false) super.onBackPressed();
+        if (false) super.onBackPressed();
 
         if (frame_layout_container.getChildCount() > 0) {
-            if (llFullView.getParent() != null)  ((ViewGroup) llFullView.getParent()).removeView(llFullView); // <- fix
+            if (llFullView.getParent() != null)
+                ((ViewGroup) llFullView.getParent()).removeView(llFullView); // <- fix
             HeaderAndBottomNavigationVisible();
             tvfullview.setVisibility(View.VISIBLE);
             tvfullview.setClickable(true);
@@ -1338,9 +1364,6 @@ public class MainActivity extends BaseActivity {
             frame_layout_container.removeAllViews();
 
 //            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
-        else clickLogOut();
+        } else clickLogOut();
     }
-
-
 }

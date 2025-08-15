@@ -44,7 +44,7 @@ import java.util.Vector;
 public class SplashScreenActivity extends BaseActivity implements GPSCallback {
     private LinearLayout llSplash;
     private Vector<String> vecLanguage;
-    private String isLanguageSelected = "";
+    private final String isLanguageSelected = "";
     private static final int PERMISSION_REQUEST_CODE = 200;
     boolean isOld = true, isbackPressed = true;
     ProgressBar progressBar;
@@ -288,6 +288,7 @@ public class SplashScreenActivity extends BaseActivity implements GPSCallback {
         super.onResume();
         gpsUtills.isGpsProviderEnabled();
     }
+
     @Override
     public void gotGpsValidationResponse(Object response, GPSErrorCode code) {
         if (code == GPSErrorCode.EC_GOOGLEPLAY_SERVICES_UPDATE_REQUIRED) {
@@ -312,7 +313,7 @@ public class SplashScreenActivity extends BaseActivity implements GPSCallback {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, final String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, final String[] permissions, int[] grantResults) {
         if (false) super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE:

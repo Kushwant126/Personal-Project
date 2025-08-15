@@ -22,33 +22,47 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DualBarCharts {
-    public BarChart barChart1,barChart2,barChart3;
-    public ArrayList<BarEntry> barEntries1,barEntries2,barEntries3;
-    public String label1,label2,label3,label4;
-    public int growthColor,degrowthColor,barColor1,barColor2,barColor4;
-    private float setAxisMaximumBC1=11;
-    private List<String> xlabels;
-    Context context;
+    public BarChart barChart1, barChart2, barChart3;
+    public ArrayList<BarEntry> barEntries1, barEntries2, barEntries3;
+    public String label1, label2, label3, label4;
+    public int growthColor, degrowthColor, barColor1, barColor2, barColor4;
     public ArrayList<Integer> barPercentage;
+    public ScrollView scrollView1, scrollView2;
+    Context context;
     HashMap<Float, Integer> valueCounts;
-    boolean AQW=true;
-    int valuecount=0;
-    public ScrollView scrollView1,scrollView2;
-    public DualBarCharts(Context context, BarChart singleBarchart, BarChart doubleBarChart, List<String> xlabels){
+    boolean AQW = true;
+    int valuecount = 0;
+    float growth = 0, Doublebar = 0, leftXvisibility = 3.5f, rightXvisibility = 0;
+    float adjustleft = growth;
+    float extraOffAdjustment = 0;
+    int i = 1, positivehigh = 0, negativehigh = 0;
+    boolean hasPositive = false;
+    boolean hasNegative = false, hasPositiveNegative = false;
+    float mostCommonValue = Float.MIN_VALUE;
+    float highestValue = Float.MIN_VALUE;
+    int maxCount = 0;
+    int barEntrySize = 0; // Counter to track consecutive occurrences of the same mostCommonValue
+    float maxVisibleRange = 0f;
+    float startY = 0;
+    private final float setAxisMaximumBC1 = 11;
+    private final List<String> xlabels;
+    public DualBarCharts(Context context, BarChart singleBarchart, BarChart doubleBarChart, List<String> xlabels) {
         this.context = context;
         this.barChart1 = singleBarchart;
         this.barChart2 = doubleBarChart;
         this.xlabels = xlabels;
     }
-    public void setBarChart1(ArrayList<BarEntry> growthDegrowthList,String growth,String degrowth,int growthColor,int degrowthColor){
+
+    public void setBarChart1(ArrayList<BarEntry> growthDegrowthList, String growth, String degrowth, int growthColor, int degrowthColor) {
         this.barEntries1 = growthDegrowthList;
         this.label1 = growth;
         this.label2 = degrowth;
         this.growthColor = growthColor;
         this.degrowthColor = degrowthColor;
     }
-    public void setBarChart2(ArrayList<BarEntry> BarEntries1,ArrayList<BarEntry> BarEntries2,String label3,String label4,int color1,int color2,
-                             ArrayList<Integer> barPercentage){
+
+    public void setBarChart2(ArrayList<BarEntry> BarEntries1, ArrayList<BarEntry> BarEntries2, String label3, String label4, int color1, int color2,
+                             ArrayList<Integer> barPercentage) {
         this.barEntries2 = BarEntries1;
         this.barEntries3 = BarEntries2;
         this.label3 = label3;
@@ -57,27 +71,21 @@ public class DualBarCharts {
         this.barColor2 = color2;
         this.barPercentage = barPercentage;
     }
-    public void ScrollView1(ScrollView scrollView1){
-        this.scrollView1=scrollView1;
+
+    public void ScrollView1(ScrollView scrollView1) {
+        this.scrollView1 = scrollView1;
     }
-    float growth=0,Doublebar=0,leftXvisibility=3.5f,rightXvisibility=0;
-    float adjustleft=growth;
-    public void newBarID(BarChart barChart){ this.barChart3=barChart;}
-    float extraOffAdjustment=0;
-    int i=1,positivehigh=0,negativehigh=0;
-    boolean hasPositive = false;
-    boolean hasNegative = false,hasPositiveNegative=false;
-    float mostCommonValue = Float.MIN_VALUE;
-    float highestValue = Float.MIN_VALUE;
-    int maxCount = 0;
-    int barEntrySize = 0; // Counter to track consecutive occurrences of the same mostCommonValue
-    float maxVisibleRange =0f;
-    float startY = 0;
+
+    public void newBarID(BarChart barChart) {
+        this.barChart3 = barChart;
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     //createDualBarChartsPractice
     //createDualBarCharts
-    public void createDualBarCharts(){
-        barChart1.clear();barChart2.clear();
+    public void createDualBarCharts() {
+        barChart1.clear();
+        barChart2.clear();
 //        barChart3.clear();
         valueCounts = new HashMap<>();
         barChart1(barChart1);
@@ -87,31 +95,30 @@ public class DualBarCharts {
     public void barChart1(BarChart barChart) {
 //        barChart.setTouchEnabled(false);
         barChart.clear();
-        barChart.setExtraOffsets(10,0,0,15);
+        barChart.setExtraOffsets(10, 0, 0, 15);
 
-        CustomHorizontalBarChartRenderer customRenderer = new CustomHorizontalBarChartRenderer(barChart,barChart.getAnimator(), barChart.getViewPortHandler());
+        CustomHorizontalBarChartRenderer customRenderer = new CustomHorizontalBarChartRenderer(barChart, barChart.getAnimator(), barChart.getViewPortHandler());
         customRenderer.setRadius(20);
         barChart.setRenderer(customRenderer);
 
 
         List<Integer> colors = new ArrayList<>();
-        ArrayList<String> xLabels=new ArrayList<>();
+        ArrayList<String> xLabels = new ArrayList<>();
         xLabels.add("");
         xLabels.addAll(xlabels);
         for (BarEntry entry : barEntries1) {
-            int value=(int) entry.getY();
+            int value = (int) entry.getY();
             if (value >= 0) colors.add(growthColor);
             else colors.add(degrowthColor);
 
-            if(positivehigh <= value) positivehigh=value;
-            if(negativehigh > value) negativehigh=value;
+            if (positivehigh <= value) positivehigh = value;
+            if (negativehigh > value) negativehigh = value;
             if (value >= 0) hasPositive = true;
             else if (value < 0) hasNegative = true;
         }
 
 
-
-        String[] labelsArray =xLabels.toArray(new String[0]);// Convert ArrayList to array
+        String[] labelsArray = xLabels.toArray(new String[0]);// Convert ArrayList to array
 
         BarDataSet barDataSet = new BarDataSet(barEntries1, "label");
         barDataSet.setColors(colors);
@@ -125,16 +132,16 @@ public class DualBarCharts {
             }
         });
 
-        int actualEntryCount=barEntries1.size();
-        float dummyValue=0f;
+        int actualEntryCount = barEntries1.size();
+        float dummyValue = 0f;
         if (hasPositive && hasNegative) {
-            if(positivehigh < 4) dummyValue=4f;
-        } else if (hasPositive) dummyValue=-0f;
+            if (positivehigh < 4) dummyValue = 4f;
+        } else if (hasPositive) dummyValue = -0f;
         else if (hasNegative) {
-            if (negativehigh<-50) dummyValue=17f;
-            else dummyValue=4f;
+            if (negativehigh < -50) dummyValue = 17f;
+            else dummyValue = 4f;
         }
-        BarEntry dummyEntry = new BarEntry(actualEntryCount +1, dummyValue);
+        BarEntry dummyEntry = new BarEntry(actualEntryCount + 1, dummyValue);
         barDataSet.addEntry(dummyEntry);
 
         BarData barData = new BarData(barDataSet);
@@ -147,8 +154,8 @@ public class DualBarCharts {
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setDrawInside(false);
         LegendEntry[] customEntries = new LegendEntry[]{
-                new LegendEntry(label2, Legend.LegendForm.SQUARE,10f,2f, null,degrowthColor),
-                new LegendEntry(label1, Legend.LegendForm.SQUARE,10f,2f, null,growthColor),
+                new LegendEntry(label2, Legend.LegendForm.SQUARE, 10f, 2f, null, degrowthColor),
+                new LegendEntry(label1, Legend.LegendForm.SQUARE, 10f, 2f, null, growthColor),
         };
         legend.setCustom(customEntries);
         legend.setTextSize(8f);
@@ -172,7 +179,7 @@ public class DualBarCharts {
         xAxis.setGranularityEnabled(true);
         xAxis.setTextColor(Color.BLACK);
         xAxis.setGridColor(Color.WHITE);
-        xAxis.setAxisMaximum(barEntries2.size()+.5f);
+        xAxis.setAxisMaximum(barEntries2.size() + .5f);
 //        xAxis.setLabelCount(barData.getEntryCount(), true); // Set the number of labels to be displayed
 //        xAxis.setAxisMaximum(barEntries2.size());
 //        barChart.setVisibleXRange(0, barEntries2.size()); // Show only the first 77 entries on the x-axis
@@ -191,13 +198,14 @@ public class DualBarCharts {
         barChart.setDrawValueAboveBar(false);
         barChart.invalidate();
     }
+
     public void barChart2(BarChart barChart) {
 //        barChart.setTouchEnabled(false);
         barChart2.clear();
-        barChart2.animateXY(1500,1500);
-        barChart.setExtraOffsets(0,0,20,16);
+        barChart2.animateXY(1500, 1500);
+        barChart.setExtraOffsets(0, 0, 20, 16);
 
-        CustomHorizonatalOneSideBCRenderer customRenderer = new CustomHorizonatalOneSideBCRenderer(barChart,barChart.getAnimator(),barChart.getViewPortHandler());
+        CustomHorizonatalOneSideBCRenderer customRenderer = new CustomHorizonatalOneSideBCRenderer(barChart, barChart.getAnimator(), barChart.getViewPortHandler());
         customRenderer.setRadius(20);
         customRenderer.setGroupPercentage(barPercentage);
         customRenderer.getContextF(context);
@@ -235,14 +243,14 @@ public class DualBarCharts {
         barDataSet1.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                if(value>0) return (int) value+"";
+                if (value > 0) return (int) value + "";
                 else return "";
             }
         });
         barDataSet2.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                if(value>0) return (int) value+"";
+                if (value > 0) return (int) value + "";
                 else return "";
             }
         });

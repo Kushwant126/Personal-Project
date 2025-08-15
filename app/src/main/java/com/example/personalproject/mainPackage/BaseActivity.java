@@ -90,13 +90,13 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
     SimpleDateFormat dateFormat;
     private static final int PERMISSION_REQUEST_CODE = 1;
     TextView tvEndtrip;
-    CustomDialog subMenuPopUP,customDialog;
+    CustomDialog subMenuPopUP, customDialog;
     MenuAdapter subMenuAdapter;
     private Toast toast;
     public static float px;
     private int groupPos = 0;
     public PopupWindow customKeyBoardpopup;
-    private View customKeyBoard,globalView;
+    private View customKeyBoard, globalView;
     public LayoutInflater inflater;
     private TextView tvDone, tvNext, tvOne, tvTwo, tvThree, tvFour, tvFive, tvSix, tvSeven, tvEight, tvNine, tvZero, tvClear, tvDot, tvUserADID, tvUsername;
     private ExpandableListView lvDashBoard;
@@ -105,16 +105,18 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
     public Button btnMenu;
     Vector<MenuDO> vecMenus = null;
     public Preference preference;
-    public LinearLayout llHeader, llBody,llMenuOne, llMenuTwo, llMenuThree, llOthers,llNavigationBar, llstart_day, llnon_start_day;
-    public ImageView ivMenuOne, ivMenuTwo, ivMenuThree, ivOthers,ivOutsideImage, ImageView01,keyBack,ivprofile;
+    public LinearLayout llHeader, llBody, llMenuOne, llMenuTwo, llMenuThree, llOthers, llNavigationBar, llstart_day, llnon_start_day;
+    public ImageView ivMenuOne, ivMenuTwo, ivMenuThree, ivOthers, ivOutsideImage, ImageView01, keyBack, ivprofile;
     public TextView tvMenuOne, tvMenuTwo, tvMenuThree, tvOthers;
     public View v1, v2, v3, v4;
     public CardView cvBottomNavigationBar;
     public static int selectedBar = 1;
-    int textSize_b = 12,textSize_s = 9,count = 0,userType=100;
+    int textSize_b = 12, textSize_s = 9, count = 0, userType = 100;
     String[] menus;
     Integer[] menuIcons;
+
     public abstract void initialize();
+
     public PendingIntent pIntent;
     protected Dialog dialog;
     private Animation rotateXaxis;
@@ -150,7 +152,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         gpsUtills.setPackegeName(getPackageName());
 
         ivprofile.setOnClickListener(v -> {
-            Intent profile=new Intent(BaseActivity.this,UserProfile.class);
+            Intent profile = new Intent(BaseActivity.this, UserProfile.class);
             startActivity(profile);
 //            finish();
         });
@@ -190,7 +192,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
             hideKeyBoard(v);
             hideCustomKeyBoard();
             TopBarMenuClick();
-            if (adapter != null){
+            if (adapter != null) {
 //                    adapter.refreshDashBoardOptionsCustomAdapter(new MenuClass(BaseActivity.this).loadMenu(userType, isCheckin()));
                 adapter.refreshDashBoardOptionsCustomAdapter(new MenuClass(BaseActivity.this).loadMenu(userType, false));
 //                    adapter.refreshDashBoardOptionsCustomAdapter(new MenuClass(BaseActivity.this).loadMenu(100, true));
@@ -206,7 +208,6 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         closeDrawer();
         logDeviceInfo();
     }
-
 
 
     public void logDeviceInfo() {
@@ -265,14 +266,15 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
 
         preference.saveStringInPreference(Preference.DEVICE_MODEL, deviceModel);
         preference.saveStringInPreference(Preference.DEVICE_MODEL_MANUFACTURER, manufacturer);
-        preference.saveStringInPreference(Preference.DEVICE_OS,osName);
-        preference.saveStringInPreference(Preference.DEVICE_OS_VERSION,osVersion);
+        preference.saveStringInPreference(Preference.DEVICE_OS, osName);
+        preference.saveStringInPreference(Preference.DEVICE_OS_VERSION, osVersion);
         preference.commitPreference();
     }
 
 
     String selectedLanguage = "";
     private ImageView ivBuildImage, ivSignal;
+
     private void setSignalResource() {
         if (ivSignal != null) {
             if (isNetworkConnectionAvailable(BaseActivity.this))
@@ -281,6 +283,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
                 ivSignal.setImageResource(R.drawable.nosignal);
         }
     }
+
     public boolean isNetworkConnectionAvailable(Context context) {
         boolean isNetworkConnectionAvailable = false;
         // checking the Internet availability
@@ -292,6 +295,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
             isNetworkConnectionAvailable = activeNetworkInfo.getState() == NetworkInfo.State.CONNECTED;
         return isNetworkConnectionAvailable;
     }
+
     public void setLanguage() {
         Locale locale = null;
         try {
@@ -314,7 +318,9 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
             e.printStackTrace();
         }
     }
+
     public FrameLayout flMenu;
+
     public void toggleDrawer() {
         if (drawerLayout.isDrawerOpen(flMenu)) {
             drawerLayout.closeDrawer(flMenu);
@@ -322,16 +328,19 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
             drawerLayout.openDrawer(flMenu);
         }
     }
+
     public void closeDrawer() {
         drawerLayout.closeDrawer(flMenu);
     }
-    public boolean isStartDayDone=false, isEOTDoneNew, isCanStartDayNew = true, isShortRoute, isPreviousDayEOTDone;
+
+    public boolean isStartDayDone = false, isEOTDoneNew, isCanStartDayNew = true, isShortRoute, isPreviousDayEOTDone;
+
     protected void onResume() {
         super.onResume();
 
         setSignalResource();
         setLanguage();
-        isStartDayDone=preference.getbooleanFromPreference(Preference.START_DAY,false);//test
+        isStartDayDone = preference.getbooleanFromPreference(Preference.START_DAY, false);//test
 //        ServiceURLs.setImageURL(preference);
         selectedLanguage = preference.getStringFromPreference(Preference.LANGUAGE, "");
 
@@ -368,24 +377,25 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
 //            if(isCanStartDayNew && !isStartDayDone){
 
 //        isStartDayDone = true; //by Kush remove this only for testing purpose..
-        if(isStartDayDone){
+        if (isStartDayDone) {
             llstart_day.setVisibility(View.GONE);
             llnon_start_day.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             llstart_day.setVisibility(View.VISIBLE);
             llnon_start_day.setVisibility(View.GONE);
         }
         btnMenu.setVisibility(View.GONE);
     }
+
     private void setdrawerLayoutVisibile() {
-        if(BaseActivity.this instanceof SplashScreenActivity
-                || BaseActivity.this instanceof LoginAcivity){
+        if (BaseActivity.this instanceof SplashScreenActivity
+                || BaseActivity.this instanceof LoginAcivity) {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         } else {
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
     }
+
     private void setBottomNavigationVisible() {
         if (BaseActivity.this instanceof MainActivity
                 || BaseActivity.this instanceof LeaderBoard) {
@@ -396,6 +406,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
             llHeader.setVisibility(View.GONE);
         }
     }
+
     public void showLoader(String str) {
         runOnUiThread(new RunShowLoaderCustom(str));
     }
@@ -407,7 +418,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
 
     class RunShowLoaderCustom implements Runnable {
         private String title;
-        private String strMsg;
+        private final String strMsg;
 
         public RunShowLoaderCustom(String strMsg) {
             this.strMsg = strMsg;
@@ -421,7 +432,8 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         @Override
         public void run() {
             try {
-                if (dialog == null) dialog = new Dialog(BaseActivity.this, R.style.Theme_Dialog_Translucent);
+                if (dialog == null)
+                    dialog = new Dialog(BaseActivity.this, R.style.Theme_Dialog_Translucent);
 
                 dialog.setContentView(R.layout.loading);
 //                if (!isCancelableLoader) dialog.setCancelable(false); else dialog.setCancelable(true);
@@ -438,10 +450,10 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
                 params.gravity = Gravity.CENTER; // Center both horizontally and vertically
                 llPopup.setLayoutParams(params);
 
-                ivOutsideImage =  dialog.findViewById(R.id.ivOutsideImage);
-                ImageView01 =  dialog.findViewById(R.id.ImageView01);
+                ivOutsideImage = dialog.findViewById(R.id.ivOutsideImage);
+                ImageView01 = dialog.findViewById(R.id.ImageView01);
 
-                TextView tvLoading =  dialog.findViewById(R.id.tvLoading);
+                TextView tvLoading = dialog.findViewById(R.id.tvLoading);
                 if (!strMsg.equalsIgnoreCase("")) tvLoading.setText(strMsg);
                 else tvLoading.setVisibility(View.GONE);
 
@@ -450,7 +462,8 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
 
                 ivOutsideImage.setAnimation(rotateXaxis);
                 applyRotation();
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
         }
     }
 
@@ -466,18 +479,19 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         rotation.setInterpolator(new LinearInterpolator());
         ImageView01.startAnimation(rotation);
     }
+
     private void initializeControle() {
         llHeader = findViewById(R.id.llHeader);
         llBody = findViewById(R.id.llBody);
         lvDashBoard = findViewById(R.id.lvDashBoard);
         lvDashBoard.setGroupIndicator(null);
-        drawerLayout =  findViewById(R.id.drawerLayout);
-        btnMenu =  findViewById(R.id.btnMenu);
+        drawerLayout = findViewById(R.id.drawerLayout);
+        btnMenu = findViewById(R.id.btnMenu);
         flMenu = findViewById(R.id.flMenu);
-        ivprofile =  findViewById(R.id.ivprofile);
+        ivprofile = findViewById(R.id.ivprofile);
         ivSignal = findViewById(R.id.ivSignal);
-        llstart_day =  findViewById(R.id.llstart_day);
-        TextView start_day =  findViewById(R.id.start_day);
+        llstart_day = findViewById(R.id.llstart_day);
+        TextView start_day = findViewById(R.id.start_day);
         start_day.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
         dateFormat = new SimpleDateFormat("h:mm a, dd-MMM-yyyy", Locale.getDefault());
         //getting preference for start day
@@ -485,17 +499,23 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
             @Override
             public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
                 TopBarMenuClick();
-                if (adapter != null){
+                if (adapter != null) {
 //                    adapter.refreshDashBoardOptionsCustomAdapter(new MenuClass(getBaseActivityContext()).loadMenu(userType,isCheckin()));
                     adapter.refreshDashBoardOptionsCustomAdapter(new MenuClass(BaseActivity.this).loadMenu(userType, false));
                 }
             }
+
             @Override
-            public void onDrawerOpened(@NonNull View drawerView) {}
+            public void onDrawerOpened(@NonNull View drawerView) {
+            }
+
             @Override
-            public void onDrawerClosed(@NonNull View drawerView) {}
+            public void onDrawerClosed(@NonNull View drawerView) {
+            }
+
             @Override
-            public void onDrawerStateChanged(int newState) {}
+            public void onDrawerStateChanged(int newState) {
+            }
         }); //by kush for loading the on swipe of the menu options
 
         px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics());
@@ -505,7 +525,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
 
         preference.saveStringInPreference(Preference.USER_NAME, "Kushwant M");
         preference.commitPreference();
-        isStartDayDone=preference.getbooleanFromPreference(Preference.START_DAY,false);
+        isStartDayDone = preference.getbooleanFromPreference(Preference.START_DAY, false);
     }
 
     private void bottomNavigationOperation() {
@@ -553,8 +573,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
             tvOthers.setText(getMenuDO1(menus[3]));
             ivOthers.setImageDrawable(getResources().getDrawable(menuIcons[3]));
             ivOthers.setTag(menuIcons[3]);
-        }
-        else {
+        } else {
             tvMenuOne.setText("");
             ivMenuOne.setImageDrawable(getResources().getDrawable(R.drawable.dashboard_1));
 
@@ -570,11 +589,10 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         Log.i("selectedBar", "onCreate: selectedBar ::" + selectedBar);
 
 
-
         llMenuOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(selectedBar != 1){
+                if (selectedBar != 1) {
 //                    callMenuOne();
                     callMenu(1);
                 }
@@ -582,7 +600,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
             }
         });
         llMenuTwo.setOnClickListener(view -> {
-            if(selectedBar != 2) {
+            if (selectedBar != 2) {
 //                    callMenuTwo();
                 callMenu(2);
             }
@@ -598,20 +616,24 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
             Log.i("selectedBar", "onCreate: selectedBar ::" + selectedBar);
         });
         llOthers.setOnClickListener(view -> {
-            if(selectedBar != 4) {}
+            if (selectedBar != 4) {
+            }
 //            callOthers();
             callMenu(4);
             Log.i("selectedBar", "onCreate: selectedBar ::" + selectedBar);
         });
     }
-    public void HeaderAndBottomNavigationVisible(){
+
+    public void HeaderAndBottomNavigationVisible() {
         llHeader.setVisibility(View.VISIBLE);
         cvBottomNavigationBar.setVisibility(View.VISIBLE);
     }
-    public void HeaderAndBottomNavigationGone(){
+
+    public void HeaderAndBottomNavigationGone() {
         llHeader.setVisibility(View.GONE);
         cvBottomNavigationBar.setVisibility(View.GONE);
     }
+
     public void setBottomNavigationDrawables() {
         switch (selectedBar) {
             case 1:
@@ -670,6 +692,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         tvMenuThree.setTypeface(AppConstants.SanFranciscoDisplay_Medium);
         tvOthers.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
     }
+
     private void setMenuThree() {
         Object tag = ivMenuThree.getTag();
         if (tag instanceof Integer) {
@@ -711,6 +734,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         tvOthers.setTypeface(AppConstants.SanFranciscoDisplay_Medium);
         tvMenuThree.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
     }
+
     private void setMenuTwo() {
         Object tag = ivMenuTwo.getTag();
         if (tag instanceof Integer) {
@@ -752,6 +776,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         tvOthers.setTypeface(AppConstants.SanFranciscoDisplay_Medium);
         tvMenuTwo.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
     }
+
     private void setMenuOne() {
         Object tag = ivMenuOne.getTag();
 
@@ -796,9 +821,8 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
     }
 
 
-
     private void callMenu(int i) {
-        switch (i){
+        switch (i) {
             case 1:
                 if (count == 0 || selectedBar != 1) {
                     count++;
@@ -824,9 +848,11 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
                     callFragments();
                 }
                 break;
-            default: break;
+            default:
+                break;
         }
     }
+
     private void callFragments() {
 
         switch (selectedBar) {
@@ -857,6 +883,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
                 break;
         }
     }
+
     public void showMenuPopup() {  // final Object object
         try {
             if (customDialog != null && customDialog.isShowing())
@@ -908,12 +935,14 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
             e.printStackTrace();
         }
     }
+
     public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyHolder> {
         Context context;
         int row_index = 0;
         ArrayList<String> menu;
         ArrayList<Integer> menu_icon;
         private Vector<MenuDO> vecMenuDOs;
+
         public MenuAdapter(Vector<MenuDO> vecMenuDOs) {
             this.vecMenuDOs = vecMenuDOs;
         }
@@ -955,12 +984,11 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
 //                                    navigateToActivity(menuDO);
                             showToast("Under Development...!!!");
                         }, 400);
-                    }
-                    else showSubMenuPopUp(menuDO.vecMenuDOs);
+                    } else showSubMenuPopUp(menuDO.vecMenuDOs);
                 });
                 holder.itemView.setBackgroundColor(Color.TRANSPARENT);
             } catch (Exception e) {
-                Log.i("menuAdapter", "onBindViewHolder: menu Adapter Exception :" + e.toString());
+                Log.i("menuAdapter", "onBindViewHolder: menu Adapter Exception :" + e);
                 e.printStackTrace();
             }
         }
@@ -1043,24 +1071,26 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
 
 
     public String getMenuDO1(String field) {
-        String asd="";
+        String asd = "";
         switch (field) {
             case "Dashboard":
-                asd = getString(R.string.dashboard); break;
+                asd = getString(R.string.dashboard);
+                break;
             case "Leaderboard":
-                asd =  getString(R.string.leaderboard1); break;
+                asd = getString(R.string.leaderboard1);
+                break;
             case "JP":
-                asd = getString(R.string.jp); break;
+                asd = getString(R.string.jp);
+                break;
             case "Menu":
-                asd =  getString(R.string.others_new); break;
-            default: asd =  "";break;
+                asd = getString(R.string.others_new);
+                break;
+            default:
+                asd = "";
+                break;
         }
         return asd;
     }
-
-
-
-
 
 
     public class DashBoardOptionsCustomAdapter extends BaseExpandableListAdapter {
@@ -1113,13 +1143,13 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
 
         @Override
         public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-            convertView = (LinearLayout) inflater.inflate(R.layout.dashboard_options_cell, null);
-            ImageView ivOptionIcon =  convertView.findViewById(R.id.ivOptionIcon);
-            ImageView ivArrowIcon =  convertView.findViewById(R.id.ivArrowIcon);
-            TextView tvOptionName =  convertView.findViewById(R.id.tvOptionName);
-            LinearLayout llMenu = (LinearLayout) convertView.findViewById(R.id.llMenu);
-            LinearLayout rlCalender = (LinearLayout) convertView.findViewById(R.id.rlCalender);
-            ImageView ivFooter =  convertView.findViewById(R.id.ivFooter);
+            convertView = inflater.inflate(R.layout.dashboard_options_cell, null);
+            ImageView ivOptionIcon = convertView.findViewById(R.id.ivOptionIcon);
+            ImageView ivArrowIcon = convertView.findViewById(R.id.ivArrowIcon);
+            TextView tvOptionName = convertView.findViewById(R.id.tvOptionName);
+            LinearLayout llMenu = convertView.findViewById(R.id.llMenu);
+            LinearLayout rlCalender = convertView.findViewById(R.id.rlCalender);
+            ImageView ivFooter = convertView.findViewById(R.id.ivFooter);
 
             ivOptionIcon.setImageResource(vecMenuDOs.get(groupPosition).menuImage);
             tvOptionName.setText(vecMenuDOs.get(groupPosition).menuName);
@@ -1191,13 +1221,13 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             final Vector<MenuDO> vecDos = vecMenuDOs.get(groupPosition).vecMenuDOs;
 
-            convertView = (LinearLayout) inflater.inflate(R.layout.dashboard_options_cell, null);
+            convertView = inflater.inflate(R.layout.dashboard_options_cell, null);
             //			convertView.setBackgroundResource(R.color.dark_menu);
-            ImageView ivOptionIcon =  convertView.findViewById(R.id.ivOptionIcon);
-            TextView tvOptionName =  convertView.findViewById(R.id.tvOptionName);
-            LinearLayout rlCalender = (LinearLayout) convertView.findViewById(R.id.rlCalender);
-            ImageView ivFooter =  convertView.findViewById(R.id.ivFooter);
-            ImageView ivArrowIcon =  convertView.findViewById(R.id.ivArrowIcon);
+            ImageView ivOptionIcon = convertView.findViewById(R.id.ivOptionIcon);
+            TextView tvOptionName = convertView.findViewById(R.id.tvOptionName);
+            LinearLayout rlCalender = convertView.findViewById(R.id.rlCalender);
+            ImageView ivFooter = convertView.findViewById(R.id.ivFooter);
+            ImageView ivArrowIcon = convertView.findViewById(R.id.ivArrowIcon);
 
             ivOptionIcon.setImageResource(vecDos.get(childPosition).menuImage);
             ivArrowIcon.setVisibility(View.GONE);
@@ -1240,6 +1270,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         }
 
     }
+
     public Context getBaseActivityContext() {
         return this;
     }
@@ -1248,18 +1279,22 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
     public void onScrollStateChanged(AbsListView view, int scrollState) {
 
     }
+
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         hideCustomKeyBoard();
     }
+
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
     }
+
     @Override
     public void onPageSelected(int position) {
 
     }
+
     @Override
     public void onPageScrollStateChanged(int state) {
 
@@ -1352,21 +1387,21 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
                 }
 
                 if (parent.isScrollContainer()) {
-                    int location[] = new int[2];
+                    int[] location = new int[2];
                     etFocus.getLocationOnScreen(location);
 
-                    int parentLocation[] = new int[2];
+                    int[] parentLocation = new int[2];
                     parent.getLocationOnScreen(parentLocation);
 
                     int delta = location[1] - parentLocation[1];
                     if (parent instanceof ExpandableListView || parent instanceof ListView) {
                         ((ListView) parent).smoothScrollBy(delta, 450);
-                        ((ListView) parent).invalidate();
+                        parent.invalidate();
                     } else if (parent instanceof ScrollView) {
                         ((ScrollView) parent).smoothScrollBy(delta, 450);
-                        ((ScrollView) parent).invalidate();
+                        parent.invalidate();
                     } else {
-                        Log.i("Class Info", "" + parent.getClass().getName());
+                        Log.i("Class Info", parent.getClass().getName());
                     }
                 }
 
@@ -1398,6 +1433,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
             }
         });
     }
+
     public void hideCustomKeyBoard() {
         if (customKeyBoardpopup != null && customKeyBoardpopup.isShowing())
             customKeyBoardpopup.dismiss();
@@ -1428,7 +1464,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
 //            preference.saveStringInPreference(Preference.SETTINGS_URL, params);
 //            preference.saveStringInPreference(Preference.TEMP_EMP_NO, "");
 //            preference.commitPreference();
-            showToast("Successfully updated settings!");
+        showToast("Successfully updated settings!");
 //        }
 
         if (from.equalsIgnoreCase("Settings")) {
@@ -1436,6 +1472,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
             startActivity(intent);
         }
     }
+
     public void onButtonYesClick(String from) {
         if (from.equalsIgnoreCase("logout")) {
             Intent intentBrObj = new Intent();
@@ -1445,22 +1482,23 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_right1, R.anim.slide_left1);
-        }
-        else if (from.equalsIgnoreCase("DepotInOut")) {
+        } else if (from.equalsIgnoreCase("DepotInOut")) {
             Intent intent = new Intent(BaseActivity.this, StartDayPreRequisiteActivityNew.class);
             startActivity(intent);
-        }
-        else if (from.equalsIgnoreCase("Settings")) {
+        } else if (from.equalsIgnoreCase("Settings")) {
             Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(intent);
         }
     }
 
-    public void onButtonYesClick(String from, Object params) {}
+    public void onButtonYesClick(String from, Object params) {
+    }
 
-    public void onButtonNoClick(String from, Object params) {}
+    public void onButtonNoClick(String from, Object params) {
+    }
 
-    public void onButtonNoClick(String from) {}
+    public void onButtonNoClick(String from) {
+    }
 
     public void showToast(String message) {
         if (toast != null) toast.cancel();
@@ -1476,6 +1514,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         }
     }
+
     public void TopBarMenuClick() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -1496,6 +1535,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
                 setTypeFaceRobotoOriginalBold((ViewGroup) v);
         }
     }
+
     public void setTypeFaceRobotoOriginalSemibold(ViewGroup group) {
         int count = group.getChildCount();
         View v;
@@ -1507,6 +1547,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
                 setTypeFaceRobotoOriginalSemibold((ViewGroup) v);
         }
     }
+
     public void setTypeFaceRobotoOriginalRegular(ViewGroup group) {
         int count = group.getChildCount();
         View v;
@@ -1518,6 +1559,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
                 setTypeFaceRobotoOriginalRegular((ViewGroup) v);
         }
     }
+
     public void setTypeFaceRobotoOriginalMedium(ViewGroup group) {
         int count = group.getChildCount();
         View v;
@@ -1529,6 +1571,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
                 setTypeFaceRobotoOriginalMedium((ViewGroup) v);
         }
     }
+
     public void setTypeFaceRobotoOriginalLight(ViewGroup group) {
         int count = group.getChildCount();
         View v;
@@ -1545,9 +1588,11 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
     public void clickLogOut() {
         showCustomDialog(BaseActivity.this, getResources().getString(R.string.warning), getResources().getString(R.string.do_you_want_to_logout), getResources().getString(R.string.Yes), getResources().getString(R.string.No), "logout");
     }
+
     public void showCustomDialog(Context context, String strTitle, String strMessage, String firstBtnName, String secondBtnName, String from) {
         runOnUiThread(new RunshowCustomDialogs(context, strTitle, strMessage, firstBtnName, secondBtnName, from, true));
     }
+
     public void showCustomDialog(Context context, String strTitle, String strMessage, String firstBtnName, String secondBtnName, String from, boolean isCancelable) {
         runOnUiThread(new RunshowCustomDialogs(context, strTitle, strMessage, firstBtnName, secondBtnName, from, isCancelable));
     }
@@ -1555,11 +1600,11 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
 
     // For showing Dialog message.
     class RunshowCustomDialogs implements Runnable {
-        private String strTitle;// Title of the dialog
-        private String strMessage;// Message to be shown in dialog
-        private String firstBtnName;
-        private String secondBtnName;
-        private String from;
+        private final String strTitle;// Title of the dialog
+        private final String strMessage;// Message to be shown in dialog
+        private final String firstBtnName;
+        private final String secondBtnName;
+        private final String from;
         private String params;
         private Object paramateres;
         private boolean isCancelable = false;
@@ -1640,32 +1685,31 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
                         customDialog.showCustomDialog();
                 } catch (Exception e) {
                 }
-            }
-            else if (from.equalsIgnoreCase("Without_MSL_Items")) {
+            } else if (from.equalsIgnoreCase("Without_MSL_Items")) {
                 view = inflater.inflate(R.layout.custom_common_popup_msl, null);
 
                 customDialog = new CustomDialog(BaseActivity.this, view, preference
                         .getIntFromPreference(Preference.DEVICE_DISPLAY_WIDTH, 320) - 20,
                         ViewGroup.LayoutParams.WRAP_CONTENT, true);
                 customDialog.setCancelable(isCancelable);
-                TextView tvTitle =  view.findViewById(R.id.tvTitlePopup);
-                TextView tvMessage =  view.findViewById(R.id.tvMessagePopup);
-                Button btnYes = (Button) view.findViewById(R.id.btnYesPopup);
-                Button btnNo = (Button) view.findViewById(R.id.btnNoPopup);
+                TextView tvTitle = view.findViewById(R.id.tvTitlePopup);
+                TextView tvMessage = view.findViewById(R.id.tvMessagePopup);
+                Button btnYes = view.findViewById(R.id.btnYesPopup);
+                Button btnNo = view.findViewById(R.id.btnNoPopup);
                 tvTitle.setTypeface(AppConstants.SanFranciscoDisplay_Semibold);
                 tvMessage.setTypeface(AppConstants.SanFranciscoDisplay_Regular);
                 btnYes.setTypeface(AppConstants.SanFranciscoDisplay_Semibold);
                 btnNo.setTypeface(AppConstants.SanFranciscoDisplay_Semibold);
 
-                tvTitle.setText("" + strTitle);
-                tvMessage.setText("" + strMessage);
-                btnYes.setText("" + firstBtnName);
+                tvTitle.setText(strTitle);
+                tvMessage.setText(strMessage);
+                btnYes.setText(firstBtnName);
 
 //                if (strTitle.toLowerCase().contains("success"))
                 //tvTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.paymode_checked, 0, 0, 0);
 
                 if (secondBtnName != null && !secondBtnName.equalsIgnoreCase(""))
-                    btnNo.setText("" + secondBtnName);
+                    btnNo.setText(secondBtnName);
                 else {
                     btnNo.setVisibility(View.GONE);
                     btnYes.setBackground(getResources().getDrawable(R.drawable.roundcorner_new_app_color_one));
@@ -1702,29 +1746,28 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
                         customDialog.showCustomDialog();
                 } catch (Exception e) {
                 }
-            }
-            else {
+            } else {
                 view = inflater.inflate(R.layout.custom_common_popup, null);
 
                 customDialog = new CustomDialog(BaseActivity.this, view, preference
                         .getIntFromPreference(Preference.DEVICE_DISPLAY_WIDTH, 320) - 20,
                         ViewGroup.LayoutParams.WRAP_CONTENT, true);
                 customDialog.setCancelable(isCancelable);
-                TextView tvTitle =  view.findViewById(R.id.tvTitlePopup);
-                TextView tvMessage =  view.findViewById(R.id.tvMessagePopup);
-                Button btnYes =  view.findViewById(R.id.btnYesPopup);
-                Button btnNo =  view.findViewById(R.id.btnNoPopup);
+                TextView tvTitle = view.findViewById(R.id.tvTitlePopup);
+                TextView tvMessage = view.findViewById(R.id.tvMessagePopup);
+                Button btnYes = view.findViewById(R.id.btnYesPopup);
+                Button btnNo = view.findViewById(R.id.btnNoPopup);
 
                 tvTitle.setTypeface(AppConstants.SanFranciscoDisplay_Semibold);
                 tvMessage.setTypeface(AppConstants.SanFranciscoDisplay_Regular);
                 btnYes.setTypeface(AppConstants.SanFranciscoDisplay_Semibold);
                 btnNo.setTypeface(AppConstants.SanFranciscoDisplay_Semibold);
 
-                tvTitle.setText("" + strTitle);
-                tvMessage.setText("" + strMessage);
-                btnYes.setText("" + firstBtnName);
+                tvTitle.setText(strTitle);
+                tvMessage.setText(strMessage);
+                btnYes.setText(firstBtnName);
                 if (secondBtnName != null && !secondBtnName.equalsIgnoreCase("")) {
-                    btnNo.setText("" + secondBtnName);
+                    btnNo.setText(secondBtnName);
                 } else {
                     btnNo.setVisibility(View.GONE);
                     btnYes.setBackground(getResources().getDrawable(R.drawable.roundcorner_new_app_color_one));
@@ -1734,7 +1777,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
                     //   tvTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.paymode_checked, 0, 0, 0);
 
                     if (secondBtnName != null && !secondBtnName.equalsIgnoreCase("")) {
-                        btnNo.setText("" + secondBtnName);
+                        btnNo.setText(secondBtnName);
                     } else {
                         btnNo.setVisibility(View.GONE);
                         btnYes.setBackground(getResources().getDrawable(R.drawable.roundcorner_new_app_color_one));
@@ -1806,6 +1849,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
             myAndroidDeviceId = myAndroidDeviceId.toUpperCase();
         return myAndroidDeviceId;
     }
+
     @SuppressLint("HardwareIds")
     public String getUniqueID() {
         String myAndroidDeviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -1816,7 +1860,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
     }
 
     public HttpImageManager getHttpImageManager() {
-        return ((MyApplicationNew) ((Activity) BaseActivity.this).getApplication()).getHttpImageManager();
+        return ((MyApplicationNew) BaseActivity.this.getApplication()).getHttpImageManager();
     }
 
     public File getOutputMediaFile() {
@@ -1835,6 +1879,7 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
     }
 
     private Dialog updateGooglePlayServiceDialog = null;
+
     public void showGoogleUpdateServiceAlert() {
         updateGooglePlayServiceDialog = null;
 
@@ -1842,9 +1887,10 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         if (status != ConnectionResult.SUCCESS) {
             updateGooglePlayServiceDialog = GooglePlayServicesUtil.getErrorDialog(status, this, 1);
             if (!isFinishing()) updateGooglePlayServiceDialog.show();
-        }
-        else Toast.makeText(BaseActivity.this, "You have updated googlePlayservice already", Toast.LENGTH_SHORT).show();
+        } else
+            Toast.makeText(BaseActivity.this, "You have updated googlePlayservice already", Toast.LENGTH_SHORT).show();
     }
+
     public void cancelGoogleUpdateServiceAlert() {
         if (updateGooglePlayServiceDialog != null && updateGooglePlayServiceDialog.isShowing()) {
             updateGooglePlayServiceDialog.dismiss();
@@ -1854,12 +1900,9 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
     public void showSettingsAlert() {
         showCustomDialog(BaseActivity.this, getString(R.string.GPS_Settings), getString(R.string.GPS_not_enabled), "Settings", null, "Settings");
     }
+
     public boolean isDeviceSupportCamera() {
-        if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-            return true;
-        } else {
-            return false;
-        }
+        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
     }
 
     public boolean isGPSEnable(Context context) {

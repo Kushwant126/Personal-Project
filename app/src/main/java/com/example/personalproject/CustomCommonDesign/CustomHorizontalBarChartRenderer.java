@@ -16,17 +16,20 @@ import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 public class CustomHorizontalBarChartRenderer extends HorizontalBarChartRenderer {
-    private RectF mBarShadowRectBuffer = new RectF();
-    private int mRadius;
     float x;
+    boolean isPositive;
+    float barWidth;
+    private final RectF mBarShadowRectBuffer = new RectF();
+    private int mRadius;
 
     public CustomHorizontalBarChartRenderer(BarDataProvider chart, ChartAnimator animator, ViewPortHandler viewPortHandler) {
         super(chart, animator, viewPortHandler);
     }
 
-    public void setRadius(int radius) {  this.mRadius = radius; }
-    boolean isPositive;
-    float barWidth;
+    public void setRadius(int radius) {
+        this.mRadius = radius;
+    }
+
     @Override
     protected void drawDataSet(Canvas c, IBarDataSet dataSet, int index) {
         Transformer trans = mChart.getTransformer(dataSet.getAxisDependency());
@@ -129,6 +132,7 @@ public class CustomHorizontalBarChartRenderer extends HorizontalBarChartRenderer
             j += 4;
         }
     }
+
     private Path roundRectRight1(RectF rect, float rx, float ry, boolean tl, boolean tr, boolean br, boolean bl) {
         float top = rect.top;
         float left = rect.left;

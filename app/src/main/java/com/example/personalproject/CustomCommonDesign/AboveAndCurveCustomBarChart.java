@@ -29,16 +29,16 @@ import java.util.ArrayList;
 public class AboveAndCurveCustomBarChart extends BarChartRenderer {
     // used for both TOP CORNER CURVES and the VALUES & IMAGE ON THE TOP of the bar
 
-    private Paint myPaint;
-    private ArrayList<Integer> myColors;
-    private ArrayList<Integer> growPercentage;
     Context context;
-    private RectF mBarShadowRectBuffer = new RectF();
+    private final Paint myPaint;
+    private ArrayList<Integer> myColors;
+    private final ArrayList<Integer> growPercentage;
+    private final RectF mBarShadowRectBuffer = new RectF();
 
     private int mRadius;
-    private boolean imageDisplay=true;
-    private int abovetextColor=0;
-    private int barPosition=1;
+    private boolean imageDisplay = true;
+    private int abovetextColor = 0;
+    private int barPosition = 1;
 
     public AboveAndCurveCustomBarChart(Context context, BarDataProvider chart, ChartAnimator animator,
                                        ViewPortHandler viewPortHandler, ArrayList<Integer> myColors,
@@ -49,6 +49,7 @@ public class AboveAndCurveCustomBarChart extends BarChartRenderer {
         this.context = context;
         this.growPercentage = growPercentage;
     }
+
     public AboveAndCurveCustomBarChart(Context context, BarDataProvider chart, ChartAnimator animator,
                                        ViewPortHandler viewPortHandler,
                                        ArrayList<Integer> growPercentage) {
@@ -59,17 +60,24 @@ public class AboveAndCurveCustomBarChart extends BarChartRenderer {
     }
 
     // to show whether the image display is needed or not
-    public void disaplayImage(boolean imageDisplay) { this.imageDisplay = imageDisplay; }
+    public void disaplayImage(boolean imageDisplay) {
+        this.imageDisplay = imageDisplay;
+    }
 
     //to keep the text color display as needed
-    public void aboveValueTextColor(int textColor) { this.abovetextColor = textColor; }
-    public void textNeededBarPosition(int barPosition) { this.barPosition = barPosition-1; }
+    public void aboveValueTextColor(int textColor) {
+        this.abovetextColor = textColor;
+    }
+
+    public void textNeededBarPosition(int barPosition) {
+        this.barPosition = barPosition - 1;
+    }
 
     @Override
     public void drawValues(Canvas c) {
         super.drawValues(c);
         int colorIndex = 0;
-        int Listindex=0;
+        int Listindex = 0;
         for (int i = 0; i < mChart.getBarData().getDataSetCount(); i++) {
             BarBuffer buffer = mBarBuffers[i];
             float left, right, top, bottom;
@@ -87,7 +95,7 @@ public class AboveAndCurveCustomBarChart extends BarChartRenderer {
                     int index = (int) buffer.buffer[j] % growPercentage.size(); // Use modulo to ensure a valid index
 //                        int valueAtIndex = growPercentage.get(index); // Get the value from ArrayList
 //                    int valueAtIndex = growPercentage.get(Listindex);
-                    int valueAtIndex=0;
+                    int valueAtIndex = 0;
                     if (Listindex >= 0 && Listindex < growPercentage.size()) {
                         valueAtIndex = growPercentage.get(Listindex);
                     }
@@ -96,8 +104,8 @@ public class AboveAndCurveCustomBarChart extends BarChartRenderer {
 
 //                        drawBitmapAndTextAboveBar(c, left, top, right, bottom, "5%");
 //                        drawBitmapAndTextAboveBar(c, left, top, right, bottom, customText+"%");
-                    if (valueAtIndex!=0)
-                        drawBitmapAndTextAboveBar(c, left, top, right, bottom,valueAtIndex);
+                    if (valueAtIndex != 0)
+                        drawBitmapAndTextAboveBar(c, left, top, right, bottom, valueAtIndex);
                 }
                 colorIndex++;
             }
@@ -107,23 +115,23 @@ public class AboveAndCurveCustomBarChart extends BarChartRenderer {
     private void drawBitmapAndTextAboveBar(Canvas c, float left, float top, float right, float bottom,
                                            int valueAtIndex) {
 
-        int setDiableCustom=25;
+        int setDiableCustom = 25;
         if (mViewPortHandler.isInBoundsTop(top) && mViewPortHandler.isInBoundsBottom(bottom)
-                && mViewPortHandler.isInBoundsLeft(left+setDiableCustom) &&
-                mViewPortHandler.isInBoundsRight(right-setDiableCustom)){
+                && mViewPortHandler.isInBoundsLeft(left + setDiableCustom) &&
+                mViewPortHandler.isInBoundsRight(right - setDiableCustom)) {
 
             Bitmap bitmap;
-            int textColor=0;
+            int textColor = 0;
 
             int convertedValue = Math.abs(valueAtIndex);
-            String customText= convertedValue+"%";
+            String customText = convertedValue + "%";
 
-            if (valueAtIndex>0){
+            if (valueAtIndex > 0) {
                 bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.green_arrow_up_1x);
                 textColor = Color.parseColor("#3EA81A");
-            }else{
+            } else {
                 bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.pink_arrow_down_1x);
-                textColor =Color.parseColor("#E57676");
+                textColor = Color.parseColor("#E57676");
             }
             // Calculate the center position above the bar
             float centerX = (left + right) / 2f;
@@ -137,14 +145,14 @@ public class AboveAndCurveCustomBarChart extends BarChartRenderer {
             textPaint.setTextSize(30f); // Adjust text size as needed
             textPaint.setFakeBoldText(true); // Set text to bold
 
-            if(abovetextColor!=0)
+            if (abovetextColor != 0)
                 textPaint.setColor(abovetextColor);
-            else if (textColor!=0)
+            else if (textColor != 0)
                 textPaint.setColor(textColor);
             else textPaint.setColor(Color.BLACK);
 
-            if(imageDisplay)
-                c.drawBitmap(bitmap, centerX - bitmap.getWidth() / 2f, centerY - bitmap.getHeight()+10, null);
+            if (imageDisplay)
+                c.drawBitmap(bitmap, centerX - bitmap.getWidth() / 2f, centerY - bitmap.getHeight() + 10, null);
 
             float textWidth = textPaint.measureText(customText);
             float textX = centerX - textWidth / 2f;
@@ -153,7 +161,6 @@ public class AboveAndCurveCustomBarChart extends BarChartRenderer {
             c.drawText(customText, textX, textY, textPaint);
         }
     }
-
 
 
     private void drawBitmapAndTextAboveBar(Canvas c, float left, float top, float right,
@@ -302,6 +309,7 @@ public class AboveAndCurveCustomBarChart extends BarChartRenderer {
             j += 4;
         }
     }
+
     private Path roundRect(RectF rect, float rx, float ry, boolean tl,
                            boolean tr, boolean br, boolean bl) {
         float top = rect.top;

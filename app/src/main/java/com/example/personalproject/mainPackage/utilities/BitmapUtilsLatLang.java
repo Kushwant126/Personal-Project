@@ -1,16 +1,5 @@
 package com.example.personalproject.mainPackage.utilities;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -33,271 +22,276 @@ import com.example.personalproject.mainPackage.common.AppConstants;
 import com.example.personalproject.mainPackage.common.Preference;
 import com.example.personalproject.mainPackage.gpsutills.common.GPSPreference;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class BitmapUtilsLatLang {
 
-	public static Bitmap BitmapUtilsLatLangbyurl(String url, String lat,
-			String lng, String altitude) {
-		Bitmap bmpOrig = BitmapFactory.decodeFile(url);
-		if (lat.equalsIgnoreCase("") || (lat.equalsIgnoreCase("0.0") && lng.equalsIgnoreCase("0.0"))) {
-			lat = AppConstants.currentLat;
-			lng = AppConstants.currentLng;
-		}
-		int width = 2;
-		Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
-				+ (width * 2), bmpOrig.getHeight() + (width * 2),
-				bmpOrig.getConfig());
+    public static Bitmap BitmapUtilsLatLangbyurl(String url, String lat,
+                                                 String lng, String altitude) {
+        Bitmap bmpOrig = BitmapFactory.decodeFile(url);
+        if (lat.equalsIgnoreCase("") || (lat.equalsIgnoreCase("0.0") && lng.equalsIgnoreCase("0.0"))) {
+            lat = AppConstants.currentLat;
+            lng = AppConstants.currentLng;
+        }
+        int width = 2;
+        Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
+                        + (width * 2), bmpOrig.getHeight() + (width * 2),
+                bmpOrig.getConfig());
 
-		Paint paint = new Paint();
-		Canvas canvas = new Canvas(bmpProcessed);
+        Paint paint = new Paint();
+        Canvas canvas = new Canvas(bmpProcessed);
 
-		paint.setColor(Color.WHITE);
-		paint.setAntiAlias(true);
-		if (AppConstants.DEVICE_DENSITY <= 0.75)
-			paint.setTextSize(50);
-		else
-			paint.setTextSize(40);
+        paint.setColor(Color.WHITE);
+        paint.setAntiAlias(true);
+        if (AppConstants.DEVICE_DENSITY <= 0.75)
+            paint.setTextSize(50);
+        else
+            paint.setTextSize(40);
 
-		canvas.drawBitmap(bmpOrig, width, width, paint);
+        canvas.drawBitmap(bmpOrig, width, width, paint);
 
-		String strDate= new SimpleDateFormat("dd MMM, yyyy").format(new Date());
-		  canvas.drawText("Date: "+strDate, bmpOrig.getWidth()*2/3 - 110, bmpOrig.getHeight() - 240, paint);
-		//  if(AppConstants.DEVICE_DENSITY <= 0.75)
-		//   paint.setTextSize(12);
-		//  else
-		//   paint.setTextSize(30);
-		  canvas.drawText("Latitude: " + lat, bmpOrig.getWidth()*2/3 - 110, bmpOrig.getHeight()-170, paint);
-		  canvas.drawText("Langitude: " + lng , bmpOrig.getWidth()*2/3 - 110, bmpOrig.getHeight()-100, paint);
+        String strDate = new SimpleDateFormat("dd MMM, yyyy").format(new Date());
+        canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 3 - 110, bmpOrig.getHeight() - 240, paint);
+        //  if(AppConstants.DEVICE_DENSITY <= 0.75)
+        //   paint.setTextSize(12);
+        //  else
+        //   paint.setTextSize(30);
+        canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3 - 110, bmpOrig.getHeight() - 170, paint);
+        canvas.drawText("Langitude: " + lng, bmpOrig.getWidth() * 2 / 3 - 110, bmpOrig.getHeight() - 100, paint);
 
-		if (bmpOrig != null && !bmpOrig.isRecycled()) {
-			WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
-					bmpOrig);
-			if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
-				weakBitmap.get().recycle();
-			}
-		}
+        if (bmpOrig != null && !bmpOrig.isRecycled()) {
+            WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
+                    bmpOrig);
+            if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
+                weakBitmap.get().recycle();
+            }
+        }
 
-		try {
-			test(bmpProcessed, url);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return bmpProcessed;
-	}
+        try {
+            test(bmpProcessed, url);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return bmpProcessed;
+    }
 
-	static void test(Bitmap bitmap, String url) throws FileNotFoundException {
-		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+    static void test(Bitmap bitmap, String url) throws FileNotFoundException {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
 
-		try {
-			File photo = new File(url);
+        try {
+            File photo = new File(url);
 
-			photo.createNewFile();
-			FileOutputStream fo = new FileOutputStream(photo);
-			fo.write(bytes.toByteArray());
-			fo.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+            photo.createNewFile();
+            FileOutputStream fo = new FileOutputStream(photo);
+            fo.write(bytes.toByteArray());
+            fo.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-	}
-	
-	
-	//====================== newly added merchandiser==============
-		public static Bitmap processBitmapMer(Bitmap bmpOrig, String lat, String lng,
-				String altitude) {
-			if (lat.equalsIgnoreCase("")) {
-				lat = AppConstants.currentLat;
-				lng = AppConstants.currentLng;
-			}
-			int width = 2;
-			Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
-					+ (width * 2), bmpOrig.getHeight() + (width * 2),
-					bmpOrig.getConfig());
+    }
 
-			Paint paint = new Paint();
-			Canvas canvas = new Canvas(bmpProcessed);
 
-			paint.setColor(Color.WHITE);
-			paint.setAntiAlias(true);
-			paint.setTextSize(5);
+    //====================== newly added merchandiser==============
+    public static Bitmap processBitmapMer(Bitmap bmpOrig, String lat, String lng,
+                                          String altitude) {
+        if (lat.equalsIgnoreCase("")) {
+            lat = AppConstants.currentLat;
+            lng = AppConstants.currentLng;
+        }
+        int width = 2;
+        Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
+                        + (width * 2), bmpOrig.getHeight() + (width * 2),
+                bmpOrig.getConfig());
 
-			canvas.drawBitmap(bmpOrig, width, width, paint);
+        Paint paint = new Paint();
+        Canvas canvas = new Canvas(bmpProcessed);
 
-			String strDate = new SimpleDateFormat("dd MMM, yyyy HH:MM")
-					.format(new Date());
-			canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 3 - 50,
-					bmpOrig.getHeight() - 80, paint);
-			// if(AppConstants.DEVICE_DENSITY <= 0.75)
-			// paint.setTextSize(12);
-			// else
-			// paint.setTextSize(30);
-			canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3 - 50,
-					bmpOrig.getHeight() - 65, paint);
-			canvas.drawText("Langitude: " + lng, bmpOrig.getWidth() * 2 / 3 - 50,
-					bmpOrig.getHeight() - 50, paint);
+        paint.setColor(Color.WHITE);
+        paint.setAntiAlias(true);
+        paint.setTextSize(5);
 
-			if (bmpOrig != null && !bmpOrig.isRecycled()) {
-				WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
-						bmpOrig);
-				if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
-					weakBitmap.get().recycle();
-				}
-			}
+        canvas.drawBitmap(bmpOrig, width, width, paint);
 
-			return bmpProcessed;
-		}
-	 public static String saveVerifySignature(Bitmap bitmap, String filePath)
-	 {
-			File file = new File (filePath);
-			try
-			{
-				
-		       FileOutputStream out = new FileOutputStream(file);
-		       bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-		       out.flush();
-		       out.close();
-			} 
-			catch (Exception e) 
-			{
-		       e.printStackTrace();
-			}
-			
-			return file.getAbsolutePath();
-	 }
-	public static Bitmap decodeSampledBitmapFromResource(File f, int reqWidth, int reqHeight, Context context, float density) {
-		try {
-			// First decode with inJustDecodeBounds=true to check dimensions
-			final BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inJustDecodeBounds = true;
+        String strDate = new SimpleDateFormat("dd MMM, yyyy HH:MM")
+                .format(new Date());
+        canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 3 - 50,
+                bmpOrig.getHeight() - 80, paint);
+        // if(AppConstants.DEVICE_DENSITY <= 0.75)
+        // paint.setTextSize(12);
+        // else
+        // paint.setTextSize(30);
+        canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3 - 50,
+                bmpOrig.getHeight() - 65, paint);
+        canvas.drawText("Langitude: " + lng, bmpOrig.getWidth() * 2 / 3 - 50,
+                bmpOrig.getHeight() - 50, paint);
 
-			BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+        if (bmpOrig != null && !bmpOrig.isRecycled()) {
+            WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
+                    bmpOrig);
+            if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
+                weakBitmap.get().recycle();
+            }
+        }
 
-			// Calculate inSampleSize
-			options.inSampleSize = 1;
+        return bmpProcessed;
+    }
 
-			// Decode bitmap with inSampleSize set
+    public static String saveVerifySignature(Bitmap bitmap, String filePath) {
+        File file = new File(filePath);
+        try {
 
-			options.inJustDecodeBounds = false;
-			Bitmap tmpBitmap = BitmapFactory.decodeStream(
-					new FileInputStream(f), null, options);
-			tmpBitmap = getResizedBitmap(tmpBitmap, reqWidth, reqHeight);
-			float rotation = rotationForImage(null, Uri.fromFile(f));
-			
-			if (rotation != 0f) {
-				Matrix matrix = new Matrix();
-				matrix.preRotate(rotation);
-				tmpBitmap = Bitmap.createBitmap(tmpBitmap, 0, 0,
-						tmpBitmap.getWidth(), tmpBitmap.getHeight(), matrix,
-						true);
-			}
-			tmpBitmap = processBitmap2(tmpBitmap, "", context,density);
-			if (f.exists ()) f.delete (); 
-			   try
-			   {
-			    
-			         FileOutputStream out = new FileOutputStream(f);
-			         tmpBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-			         out.flush();
-			         out.close();
-			   } 
-			   catch (Exception e) 
-			   {
-			         e.printStackTrace();
-			   }
-			
-			return tmpBitmap;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	public static Bitmap decodeSampledBitmapFromResource1(File f, int reqWidth, int reqHeight, Context context, float density) {
-		try {
-			// First decode with inJustDecodeBounds=true to check dimensions
-			final BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inJustDecodeBounds = true;
-			
-			BitmapFactory.decodeStream(new FileInputStream(f), null, options);
-			
-			// Calculate inSampleSize
-			options.inSampleSize = 1;
-			
-			// Decode bitmap with inSampleSize set
-			
-			options.inJustDecodeBounds = false;
-			Bitmap tmpBitmap = BitmapFactory.decodeStream(
-					new FileInputStream(f), null, options);
-			tmpBitmap = getResizedBitmap(tmpBitmap, reqWidth, reqHeight);
-			float rotation = rotationForImage(null, Uri.fromFile(f));
-			
-			if (rotation != 0f) {
-				Matrix matrix = new Matrix();
-				matrix.preRotate(rotation);
-				tmpBitmap = Bitmap.createBitmap(tmpBitmap, 0, 0,
-						tmpBitmap.getWidth(), tmpBitmap.getHeight(), matrix,
-						true);
-			}
-			tmpBitmap = processBitmap3(tmpBitmap, "", context,density);
-			if (f.exists ()) f.delete (); 
-			try
-			{
-				
-				FileOutputStream out = new FileOutputStream(f);
-				tmpBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-				out.flush();
-				out.close();
-			} 
-			catch (Exception e) 
-			{
-				e.printStackTrace();
-			}
-			
-			return tmpBitmap;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	public static Bitmap processBitmap2(Bitmap bmpOrig,String altitude, Context context, float density) {
+            FileOutputStream out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return file.getAbsolutePath();
+    }
+
+    public static Bitmap decodeSampledBitmapFromResource(File f, int reqWidth, int reqHeight, Context context, float density) {
+        try {
+            // First decode with inJustDecodeBounds=true to check dimensions
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+
+            BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+
+            // Calculate inSampleSize
+            options.inSampleSize = 1;
+
+            // Decode bitmap with inSampleSize set
+
+            options.inJustDecodeBounds = false;
+            Bitmap tmpBitmap = BitmapFactory.decodeStream(
+                    new FileInputStream(f), null, options);
+            tmpBitmap = getResizedBitmap(tmpBitmap, reqWidth, reqHeight);
+            float rotation = rotationForImage(null, Uri.fromFile(f));
+
+            if (rotation != 0f) {
+                Matrix matrix = new Matrix();
+                matrix.preRotate(rotation);
+                tmpBitmap = Bitmap.createBitmap(tmpBitmap, 0, 0,
+                        tmpBitmap.getWidth(), tmpBitmap.getHeight(), matrix,
+                        true);
+            }
+            tmpBitmap = processBitmap2(tmpBitmap, "", context, density);
+            if (f.exists()) f.delete();
+            try {
+
+                FileOutputStream out = new FileOutputStream(f);
+                tmpBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                out.flush();
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return tmpBitmap;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Bitmap decodeSampledBitmapFromResource1(File f, int reqWidth, int reqHeight, Context context, float density) {
+        try {
+            // First decode with inJustDecodeBounds=true to check dimensions
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+
+            BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+
+            // Calculate inSampleSize
+            options.inSampleSize = 1;
+
+            // Decode bitmap with inSampleSize set
+
+            options.inJustDecodeBounds = false;
+            Bitmap tmpBitmap = BitmapFactory.decodeStream(
+                    new FileInputStream(f), null, options);
+            tmpBitmap = getResizedBitmap(tmpBitmap, reqWidth, reqHeight);
+            float rotation = rotationForImage(null, Uri.fromFile(f));
+
+            if (rotation != 0f) {
+                Matrix matrix = new Matrix();
+                matrix.preRotate(rotation);
+                tmpBitmap = Bitmap.createBitmap(tmpBitmap, 0, 0,
+                        tmpBitmap.getWidth(), tmpBitmap.getHeight(), matrix,
+                        true);
+            }
+            tmpBitmap = processBitmap3(tmpBitmap, "", context, density);
+            if (f.exists()) f.delete();
+            try {
+
+                FileOutputStream out = new FileOutputStream(f);
+                tmpBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                out.flush();
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return tmpBitmap;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Bitmap processBitmap2(Bitmap bmpOrig, String altitude, Context context, float density) {
 //		if (TextUtils.isEmpty(lat)) {
-		String lat = "", lng="";
-			   Preference preference = new Preference(context);
-			   lat = StringUtils.getStringFromDouble(preference.getDoubleFromPreference(GPSPreference.CURRENT_LOCATION_LATTITUDE, 0.00));
-			   lng = StringUtils.getStringFromDouble(preference.getDoubleFromPreference(GPSPreference.CURRENT_LOCATION_LONGITUDE, 0.00));
+        String lat = "", lng = "";
+        Preference preference = new Preference(context);
+        lat = StringUtils.getStringFromDouble(preference.getDoubleFromPreference(GPSPreference.CURRENT_LOCATION_LATTITUDE, 0.00));
+        lng = StringUtils.getStringFromDouble(preference.getDoubleFromPreference(GPSPreference.CURRENT_LOCATION_LONGITUDE, 0.00));
 //			  }
 //			  else if (!TextUtils.isEmpty(lat) && lat.toLowerCase().equalsIgnoreCase("null")) {
 //			   Preference preference = new Preference(context);
 //			   lat = StringUtils.getStringFromDouble(preference.getDoubleFromPreference(Preference.CUREENT_LATTITUDE, 0.00));
 //			   lng = StringUtils.getStringFromDouble(preference.getDoubleFromPreference(Preference.CUREENT_LONGITUDE, 0.00));
 //			  }
-		int width = 2;
-		Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
-				+ (width * 2), bmpOrig.getHeight() + (width * 2),
-				bmpOrig.getConfig());
+        int width = 2;
+        Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
+                        + (width * 2), bmpOrig.getHeight() + (width * 2),
+                bmpOrig.getConfig());
 
-		Paint paint = new Paint();
-		Canvas canvas = new Canvas(bmpProcessed);
+        Paint paint = new Paint();
+        Canvas canvas = new Canvas(bmpProcessed);
 
-		paint.setColor(Color.WHITE);
-		paint.setAntiAlias(true);
-		if (density <= 0.75)
-			paint.setTextSize(16);
-		else
-			paint.setTextSize(14);
+        paint.setColor(Color.WHITE);
+        paint.setAntiAlias(true);
+        if (density <= 0.75)
+            paint.setTextSize(16);
+        else
+            paint.setTextSize(14);
 
-		canvas.drawBitmap(bmpOrig, width, width, paint);
+        canvas.drawBitmap(bmpOrig, width, width, paint);
 
-		String strDate = new SimpleDateFormat("dd MMM, yyyy HH:mm")
-				.format(new Date());
-		canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 3 ,bmpOrig.getHeight() - 50, paint);
-		// if(AppConstants.DEVICE_DENSITY <= 0.75)
-		// paint.setTextSize(12);
-		// else
-		// paint.setTextSize(30);
-		canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3 ,bmpOrig.getHeight() - 30, paint);
-		canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2 / 3 ,
-				bmpOrig.getHeight() - 10, paint);
+        String strDate = new SimpleDateFormat("dd MMM, yyyy HH:mm")
+                .format(new Date());
+        canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 3, bmpOrig.getHeight() - 50, paint);
+        // if(AppConstants.DEVICE_DENSITY <= 0.75)
+        // paint.setTextSize(12);
+        // else
+        // paint.setTextSize(30);
+        canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3, bmpOrig.getHeight() - 30, paint);
+        canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2 / 3,
+                bmpOrig.getHeight() - 10, paint);
 
 //		if (bmpOrig != null && !bmpOrig.isRecycled()) {
 //			WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
@@ -307,47 +301,48 @@ public class BitmapUtilsLatLang {
 //			}
 //		}
 
-		return bmpProcessed;
-	}
-	public static Bitmap processBitmap3(Bitmap bmpOrig,String altitude, Context context, float density) {
+        return bmpProcessed;
+    }
+
+    public static Bitmap processBitmap3(Bitmap bmpOrig, String altitude, Context context, float density) {
 //		if (TextUtils.isEmpty(lat)) {
-		String lat = "", lng="";
-			   Preference preference = new Preference(context);
-			   lat = StringUtils.getStringFromDouble(preference.getDoubleFromPreference(GPSPreference.CURRENT_LOCATION_LATTITUDE, 0.00));
-			   lng = StringUtils.getStringFromDouble(preference.getDoubleFromPreference(GPSPreference.CURRENT_LOCATION_LONGITUDE, 0.00));
+        String lat = "", lng = "";
+        Preference preference = new Preference(context);
+        lat = StringUtils.getStringFromDouble(preference.getDoubleFromPreference(GPSPreference.CURRENT_LOCATION_LATTITUDE, 0.00));
+        lng = StringUtils.getStringFromDouble(preference.getDoubleFromPreference(GPSPreference.CURRENT_LOCATION_LONGITUDE, 0.00));
 //			  }
 //			  else if (!TextUtils.isEmpty(lat) && lat.toLowerCase().equalsIgnoreCase("null")) {
 //			   Preference preference = new Preference(context);
 //			   lat = StringUtils.getStringFromDouble(preference.getDoubleFromPreference(Preference.CUREENT_LATTITUDE, 0.00));
 //			   lng = StringUtils.getStringFromDouble(preference.getDoubleFromPreference(Preference.CUREENT_LONGITUDE, 0.00));
 //			  }
-		int width = 2;
-		Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
-				+ (width * 2), bmpOrig.getHeight() + (width * 2),
-				bmpOrig.getConfig());
+        int width = 2;
+        Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
+                        + (width * 2), bmpOrig.getHeight() + (width * 2),
+                bmpOrig.getConfig());
 
-		Paint paint = new Paint();
-		Canvas canvas = new Canvas(bmpProcessed);
+        Paint paint = new Paint();
+        Canvas canvas = new Canvas(bmpProcessed);
 
-		paint.setColor(Color.WHITE);
-		paint.setAntiAlias(true);
-		if (density <= 0.75)
-			paint.setTextSize(16);
-		else
-			paint.setTextSize(14);
+        paint.setColor(Color.WHITE);
+        paint.setAntiAlias(true);
+        if (density <= 0.75)
+            paint.setTextSize(16);
+        else
+            paint.setTextSize(14);
 
-		canvas.drawBitmap(bmpOrig, width, width, paint);
+        canvas.drawBitmap(bmpOrig, width, width, paint);
 
-		String strDate = new SimpleDateFormat("dd MMM, yyyy HH:mm")
-				.format(new Date());
-		canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 3 - 60 ,bmpOrig.getHeight() - 50, paint);
-		// if(AppConstants.DEVICE_DENSITY <= 0.75)
-		// paint.setTextSize(12);
-		// else
-		// paint.setTextSize(30);
-		canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3 - 60 ,bmpOrig.getHeight() - 30, paint);
-		canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2 / 3 - 60 ,
-				bmpOrig.getHeight() - 10, paint);
+        String strDate = new SimpleDateFormat("dd MMM, yyyy HH:mm")
+                .format(new Date());
+        canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 3 - 60, bmpOrig.getHeight() - 50, paint);
+        // if(AppConstants.DEVICE_DENSITY <= 0.75)
+        // paint.setTextSize(12);
+        // else
+        // paint.setTextSize(30);
+        canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3 - 60, bmpOrig.getHeight() - 30, paint);
+        canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2 / 3 - 60,
+                bmpOrig.getHeight() - 10, paint);
 
 //		if (bmpOrig != null && !bmpOrig.isRecycled()) {
 //			WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
@@ -357,470 +352,471 @@ public class BitmapUtilsLatLang {
 //			}
 //		}
 
-		return bmpProcessed;
-	}
-	public static Bitmap processBitmap2(Bitmap bmpOrig, String lat, String lng, String altitude) {
-		
-		if (lat.equalsIgnoreCase("") || (lat.equalsIgnoreCase("0.0") && lng.equalsIgnoreCase("0.0"))) {
-			lat = AppConstants.currentLat;
-			lng = AppConstants.currentLng;
-		}
-		
-		int width = 2;
-		Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth() + (width * 2), bmpOrig.getHeight() + (width * 2), bmpOrig.getConfig());
-
-		Paint paint = new Paint();
-		Canvas canvas = new Canvas(bmpProcessed);
-
-		paint.setColor(Color.WHITE);
-		paint.setAntiAlias(true);
-		if (AppConstants.DEVICE_DENSITY <= 0.75)
-			paint.setTextSize(16);
-		else
-			paint.setTextSize(14);
-
-		canvas.drawBitmap(bmpOrig, width, width, paint);
-
-		String strDate = new SimpleDateFormat("dd MMMM, yyyy HH:mm").format(new Date());
-		canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 3 ,bmpOrig.getHeight() - 50, paint);
-		canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3 ,bmpOrig.getHeight() - 30, paint);
-		canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2 / 3 ,
-				bmpOrig.getHeight() - 10, paint);
-
-		if (bmpOrig != null && !bmpOrig.isRecycled()) {
-			WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
-					bmpOrig);
-			if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
-				weakBitmap.get().recycle();
-			}
-		}
-
-		return bmpProcessed;
-	}
-	
-	public static Bitmap processBitmap3(Bitmap bmpOrig, String lat, String lng,
-			String altitude) {
-		if (lat.equalsIgnoreCase("") || (lat.equalsIgnoreCase("0.0") && lng.equalsIgnoreCase("0.0"))) {
-			lat = AppConstants.currentLat;
-			lng = AppConstants.currentLng;
-		}
-		int width = 2;
-		Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
-				+ (width * 2), bmpOrig.getHeight() + (width * 2),
-				bmpOrig.getConfig());
-
-		Paint paint = new Paint();
-		Canvas canvas = new Canvas(bmpProcessed);
-
-		paint.setColor(Color.WHITE);
-		paint.setAntiAlias(true);
-		if (AppConstants.DEVICE_DENSITY <= 0.75)
-			paint.setTextSize(16);
-		else
-			paint.setTextSize(14);
-
-		canvas.drawBitmap(bmpOrig, width, width, paint);
-
-		String strDate = new SimpleDateFormat("dd MMM, yyyy HH:mm")
-				.format(new Date());
-		canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 3 - 60 ,bmpOrig.getHeight() - 50, paint);
-		canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3 - 60 ,bmpOrig.getHeight() - 30, paint);
-		canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2 / 3 - 60 ,
-				bmpOrig.getHeight() - 10, paint);
-
-		if (bmpOrig != null && !bmpOrig.isRecycled()) {
-			WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
-					bmpOrig);
-			if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
-				weakBitmap.get().recycle();
-			}
-		}
-
-		return bmpProcessed;
-	}
-	
-	public static Bitmap processBitmapPlanogram(Bitmap bmpOrig, String lat, String lng,
-			String altitude) {
-		if (lat.equalsIgnoreCase("") || (lat.equalsIgnoreCase("0.0") && lng.equalsIgnoreCase("0.0"))) {
-			lat = AppConstants.currentLat;
-			lng = AppConstants.currentLng;
-		}
-		int width = 2;
-		Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
-				+ (width * 2), bmpOrig.getHeight() + (width * 2),
-				bmpOrig.getConfig());
-
-		Paint paint = new Paint();
-		Canvas canvas = new Canvas(bmpProcessed);
-
-		paint.setColor(Color.WHITE);
-		paint.setAntiAlias(true);
-		if (AppConstants.DEVICE_DENSITY <= 0.75)
-			paint.setTextSize(24);
-		else
-			paint.setTextSize(20);
-
-		canvas.drawBitmap(bmpOrig, width, width, paint);
-
-		String strDate = new SimpleDateFormat("dd MMM, yyyy")
-				.format(new Date());
-		canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2/5 ,bmpOrig.getHeight() - 100, paint);
-		// if(AppConstants.DEVICE_DENSITY <= 0.75)
-		// paint.setTextSize(12);
-		// else
-		// paint.setTextSize(30);
-		canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2/5 ,bmpOrig.getHeight() - 65, paint);
-		canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2/5 ,	bmpOrig.getHeight() - 30, paint);
-
-		if (bmpOrig != null && !bmpOrig.isRecycled()) {
-			WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
-					bmpOrig);
-			if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
-				weakBitmap.get().recycle();
-			}
-		}
-
-		return bmpProcessed;
-	}
-	
-	public static Bitmap processBitmapAssets(Bitmap bmpOrig, String lat, String lng,
-			String altitude,String siteId) {
-		if (lat.equalsIgnoreCase("") || (lat.equalsIgnoreCase("0.0") && lng.equalsIgnoreCase("0.0"))) {
-			lat = AppConstants.currentLat;
-			lng = AppConstants.currentLng;
-		}
-		int width = 2;
-		Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
-				+ (width * 2), bmpOrig.getHeight() + (width * 2),
-				bmpOrig.getConfig());
-		
-		Paint paint = new Paint();
-		Canvas canvas = new Canvas(bmpProcessed);
-		
-		paint.setColor(Color.WHITE);
-		paint.setAntiAlias(true);
-		if (AppConstants.DEVICE_DENSITY <= 0.75)
-			paint.setTextSize(24);
-		else
-			paint.setTextSize(20);
-		
-		canvas.drawBitmap(bmpOrig, width, width, paint);
-		
-		String strDate = new SimpleDateFormat("dd MMM, yyyy")
-		.format(new Date());
-		canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2/5 ,bmpOrig.getHeight() - 130, paint);
-		// if(AppConstants.DEVICE_DENSITY <= 0.75)
-		// paint.setTextSize(12);
-		// else
-		// paint.setTextSize(30);
-		canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2/5 ,bmpOrig.getHeight() - 95, paint);
-		canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2/5 ,	bmpOrig.getHeight() - 60, paint);
-		canvas.drawText("Customer: " + siteId, bmpOrig.getWidth() * 2/5 ,	bmpOrig.getHeight() - 30, paint);
-		
-		if (bmpOrig != null && !bmpOrig.isRecycled()) {
-			WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
-					bmpOrig);
-			if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
-				weakBitmap.get().recycle();
-			}
-		}
-		
-		return bmpProcessed;
-	}
-	
-	public static Bitmap processBitmap22(Bitmap bmpOrig, String lat, String lng,
-			String altitude) {
-		if (lat.equalsIgnoreCase("") || (lat.equalsIgnoreCase("0.0") && lng.equalsIgnoreCase("0.0"))) {
-			lat = AppConstants.currentLat;
-			lng = AppConstants.currentLng;
-		}
-		int width = 2;
-		Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
-				+ (width * 2), bmpOrig.getHeight() + (width * 2),
-				bmpOrig.getConfig());
-
-		Paint paint = new Paint();
-		Canvas canvas = new Canvas(bmpProcessed);
-
-		paint.setColor(Color.WHITE);
-		paint.setAntiAlias(true);
-		if (AppConstants.DEVICE_DENSITY <= 0.75)
-			paint.setTextSize(10);
-		else
-			paint.setTextSize(20);
-
-		canvas.drawBitmap(bmpOrig, width, width, paint);
-
-		String strDate = new SimpleDateFormat("dd MMM, yyyy HH:mm")
-				.format(new Date());
-		canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 3 - 50,
-				bmpOrig.getHeight() - 80, paint);
-		// if(AppConstants.DEVICE_DENSITY <= 0.75)
-		// paint.setTextSize(12);
-		// else
-		// paint.setTextSize(30);
-		canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3 - 50,
-				bmpOrig.getHeight() - 65, paint);
-		canvas.drawText("Langitude: " + lng, bmpOrig.getWidth() * 2 / 3 - 50,
-				bmpOrig.getHeight() - 50, paint);
-
-		if (bmpOrig != null && !bmpOrig.isRecycled()) {
-			WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
-					bmpOrig);
-			if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
-				weakBitmap.get().recycle();
-			}
-		}
-
-		return bmpProcessed;
-	}
-	
-	public static Bitmap processBitmapforCompetitor(Bitmap bmpOrig, String lat, String lng,
-			String altitude) {
-		if (lat.equalsIgnoreCase("") || (lat.equalsIgnoreCase("0.0") && lng.equalsIgnoreCase("0.0"))) {
-			lat = AppConstants.currentLat;
-			lng = AppConstants.currentLng;
-		}
-		int width = 2;
-		Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
-				+ (width * 2), bmpOrig.getHeight() + (width * 2),
-				bmpOrig.getConfig());
-
-		Paint paint = new Paint();
-		Canvas canvas = new Canvas(bmpProcessed);
-
-		paint.setColor(Color.WHITE);
-		paint.setAntiAlias(true);
-		if (AppConstants.DEVICE_DENSITY <= 0.75)
-			paint.setTextSize(16);
-		else
-			paint.setTextSize(14);
-
-		canvas.drawBitmap(bmpOrig, width, width, paint);
-
-		canvas.drawText("Date: " + altitude, bmpOrig.getWidth() * 2 / 3 ,bmpOrig.getHeight() - 50, paint);
-		// if(AppConstants.DEVICE_DENSITY <= 0.75)
-		// paint.setTextSize(12);
-		// else
-		// paint.setTextSize(30);
-		canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3 ,bmpOrig.getHeight() - 30, paint);
-		canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2 / 3 ,
-				bmpOrig.getHeight() - 10, paint);
-
-		if (bmpOrig != null && !bmpOrig.isRecycled()) {
-			WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
-					bmpOrig);
-			if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
-				weakBitmap.get().recycle();
-			}
-		}
-
-		return bmpProcessed;
-	}
-
-	public static Bitmap processBitmap(Bitmap bmpOrig) {
-		int width = 2;
-		Bitmap bmpProcessed = Bitmap
-				.createBitmap(100, 120, bmpOrig.getConfig());
-		Paint paint = new Paint();
-		paint.setColor(Color.WHITE);
-		Canvas canvas = new Canvas(bmpProcessed);
-
-		Rect rectSrc = new Rect(0, 0, bmpOrig.getWidth(), bmpOrig.getHeight());
-		Rect rectDest = new Rect(0, 0, 100, 120);
-
-		paint.setAntiAlias(true);
-		// canvas.drawRect(0, 0, 100, 120, paint);
-		canvas.drawBitmap(bmpOrig, rectSrc, rectDest, paint);
-
-		if (bmpOrig != null && !bmpOrig.isRecycled()) {
-			WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
-					bmpOrig);
-			if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
-				weakBitmap.get().recycle();
-			}
-		}
-
-		// paint.setColor(Color.WHITE);
-		// paint.setTextSize(15);
-		// paint.setColor(Color.BLACK);
-		// canvas.drawText("IMG", 30, 115, paint);
-
-		return bmpProcessed;
-	}
-
-	public static Bitmap getRoundedCornerBitmap(Bitmap bitmap,
-			float roundPxRadius) {
-
-		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-				bitmap.getHeight(), Config.ARGB_8888);
-		Canvas canvas = new Canvas(output);
-
-		final int color = 0xff424242;
-		final Paint paint = new Paint();
-		final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-		final RectF rectF = new RectF(rect);
-		final float roundPx = roundPxRadius;
-
-		paint.setAntiAlias(true);
-		canvas.drawARGB(0, 0, 0, 0);
-		paint.setColor(color);
-		canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
-
-		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
-		canvas.drawBitmap(bitmap, rect, rect, paint);
-
-		return output;
-	}
-
-	public static Bitmap resizeBitmap(Bitmap bitmapOrg, int newWidth,
-			int newHeight) {
-		Bitmap resizedBitmap = null;
-		try {
-
-			int width = bitmapOrg.getWidth();
-			int height = bitmapOrg.getHeight();
-
-			/**
-			 * calculate the scale - in this case = 0.4f
-			 */
-			float scaleWidth = ((float) newWidth) / width;
-			float scaleHeight = ((float) newHeight) / height;
-
-			/**
-			 * createa matrix for the manipulation
-			 */
-			Matrix matrix = new Matrix();
-			/**
-			 * resize the bit map
-			 */
-			matrix.postScale(scaleWidth, scaleHeight);
-			/**
-			 * rotate the Bitmap
-			 */
-			resizedBitmap = Bitmap.createBitmap(bitmapOrg, 0, 0, width, height,
-					matrix, true);
-
-		} catch (Throwable e) {
-		}
-
-		return resizedBitmap;
-	}
-
-	public static Bitmap resizeWithoutBitmap(Bitmap bitmapOrg, int newWidth,
-			int newHeight) {
-		Bitmap resizedBitmap = null;
-		try {
-
-			int width = bitmapOrg.getWidth();
-			int height = bitmapOrg.getHeight();
-
-			/**
-			 * calculate the scale - in this case = 0.4f
-			 */
-			float scaleWidth = ((float) newWidth) / width;
-			float scaleHeight = ((float) newHeight) / height;
-
-			/**
-			 * createa matrix for the manipulation
-			 */
-			Matrix matrix = new Matrix();
-			/**
-			 * resize the bit map
-			 */
-			matrix.postScale(scaleWidth, scaleHeight);
-			/**
-			 * rotate the Bitmap
-			 */
-			resizedBitmap = Bitmap.createBitmap(bitmapOrg, 0, 0, width, height,
-					matrix, true);
-
-		} catch (Throwable e) {
-		}
-
-		return resizedBitmap;
-	}
-
-	public static Bitmap getResizedBmp(Bitmap bitmap, float width, float height) {
-
-		float bmpHieght = 600;
-		float bmpWidth = 1024;
-		Log.i("bmpHieght ", bmpHieght + " bmpWidth " + bmpWidth);
-
-		int scaledWidth = 0;
-		int scaledHeight = 0;
-		Bitmap scaledBitmap = null;
-		// if(bmpWidth/width > bmpHieght/ height)
-		// {
-		scaledWidth = (int) width;
-		scaledHeight = (int) (bmpHieght * width / bmpWidth);
-		scaledBitmap = Bitmap.createScaledBitmap(bitmap, scaledWidth,
-				scaledHeight, true);
-		// }
-		// else
-		// {
-		// scaledWidth = (int)(bmpWidth * height/ bmpHieght);
-		// scaledHeight = (int)height;
-		// scaledBitmap = Bitmap.createScaledBitmap(bitmap, scaledWidth,
-		// scaledHeight, true);
-		// }
-
-		return scaledBitmap;
-	}
-
-	public static Bitmap decodeSampledBitmapFromResource(File f, int reqWidth, int reqHeight) {
-		try {
-			reqWidth = AppConstants.CAPTURE_IMAGE_WIDTH;
-			reqHeight = AppConstants.CAPTURE_IMAGE_HEIGHT;
-			// First decode with inJustDecodeBounds=true to check dimensions
-			final BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inJustDecodeBounds = true;
-
-			BitmapFactory.decodeStream(new FileInputStream(f), null, options);
-
-			// Calculate inSampleSize
-			options.inSampleSize = 1;
-
-			// Decode bitmap with inSampleSize set
-
-			options.inJustDecodeBounds = false;
-			Bitmap tmpBitmap = BitmapFactory.decodeStream(new FileInputStream(f), null, options);
-			tmpBitmap = getResizedBitmap(tmpBitmap, reqWidth, reqHeight);
-			float rotation = rotationForImage(null, Uri.fromFile(f));
-			if (rotation != 0f) {
-				Matrix matrix = new Matrix();
-				matrix.preRotate(rotation);
-				tmpBitmap = Bitmap.createBitmap(tmpBitmap, 0, 0,
-						tmpBitmap.getWidth(), tmpBitmap.getHeight(), matrix,
-						true);
-			}
-			return tmpBitmap;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public static Bitmap getResizedBitmap(Bitmap bitmap, float width,
-			float height) {
-		if (bitmap != null) {
-
-		}
-		float bmpHieght = bitmap.getHeight();
-		float bmpWidth = bitmap.getWidth();
-
-		Bitmap scaledBitmap = null;
-		if (bmpHieght < height && bmpWidth < width) {
-			return bitmap;
-		}
-
-		int scaledWidth = 0;
-		int scaledHeight = 0;
-
-		scaledWidth = convertPixelToDp((int)width);
-		scaledHeight = convertPixelToDp((int) height);
-		scaledBitmap = Bitmap.createScaledBitmap(bitmap, scaledWidth,
-				scaledHeight, true);
+        return bmpProcessed;
+    }
+
+    public static Bitmap processBitmap2(Bitmap bmpOrig, String lat, String lng, String altitude) {
+
+        if (lat.equalsIgnoreCase("") || (lat.equalsIgnoreCase("0.0") && lng.equalsIgnoreCase("0.0"))) {
+            lat = AppConstants.currentLat;
+            lng = AppConstants.currentLng;
+        }
+
+        int width = 2;
+        Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth() + (width * 2), bmpOrig.getHeight() + (width * 2), bmpOrig.getConfig());
+
+        Paint paint = new Paint();
+        Canvas canvas = new Canvas(bmpProcessed);
+
+        paint.setColor(Color.WHITE);
+        paint.setAntiAlias(true);
+        if (AppConstants.DEVICE_DENSITY <= 0.75)
+            paint.setTextSize(16);
+        else
+            paint.setTextSize(14);
+
+        canvas.drawBitmap(bmpOrig, width, width, paint);
+
+        String strDate = new SimpleDateFormat("dd MMMM, yyyy HH:mm").format(new Date());
+        canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 3, bmpOrig.getHeight() - 50, paint);
+        canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3, bmpOrig.getHeight() - 30, paint);
+        canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2 / 3,
+                bmpOrig.getHeight() - 10, paint);
+
+        if (bmpOrig != null && !bmpOrig.isRecycled()) {
+            WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
+                    bmpOrig);
+            if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
+                weakBitmap.get().recycle();
+            }
+        }
+
+        return bmpProcessed;
+    }
+
+    public static Bitmap processBitmap3(Bitmap bmpOrig, String lat, String lng,
+                                        String altitude) {
+        if (lat.equalsIgnoreCase("") || (lat.equalsIgnoreCase("0.0") && lng.equalsIgnoreCase("0.0"))) {
+            lat = AppConstants.currentLat;
+            lng = AppConstants.currentLng;
+        }
+        int width = 2;
+        Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
+                        + (width * 2), bmpOrig.getHeight() + (width * 2),
+                bmpOrig.getConfig());
+
+        Paint paint = new Paint();
+        Canvas canvas = new Canvas(bmpProcessed);
+
+        paint.setColor(Color.WHITE);
+        paint.setAntiAlias(true);
+        if (AppConstants.DEVICE_DENSITY <= 0.75)
+            paint.setTextSize(16);
+        else
+            paint.setTextSize(14);
+
+        canvas.drawBitmap(bmpOrig, width, width, paint);
+
+        String strDate = new SimpleDateFormat("dd MMM, yyyy HH:mm")
+                .format(new Date());
+        canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 3 - 60, bmpOrig.getHeight() - 50, paint);
+        canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3 - 60, bmpOrig.getHeight() - 30, paint);
+        canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2 / 3 - 60,
+                bmpOrig.getHeight() - 10, paint);
+
+        if (bmpOrig != null && !bmpOrig.isRecycled()) {
+            WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
+                    bmpOrig);
+            if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
+                weakBitmap.get().recycle();
+            }
+        }
+
+        return bmpProcessed;
+    }
+
+    public static Bitmap processBitmapPlanogram(Bitmap bmpOrig, String lat, String lng,
+                                                String altitude) {
+        if (lat.equalsIgnoreCase("") || (lat.equalsIgnoreCase("0.0") && lng.equalsIgnoreCase("0.0"))) {
+            lat = AppConstants.currentLat;
+            lng = AppConstants.currentLng;
+        }
+        int width = 2;
+        Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
+                        + (width * 2), bmpOrig.getHeight() + (width * 2),
+                bmpOrig.getConfig());
+
+        Paint paint = new Paint();
+        Canvas canvas = new Canvas(bmpProcessed);
+
+        paint.setColor(Color.WHITE);
+        paint.setAntiAlias(true);
+        if (AppConstants.DEVICE_DENSITY <= 0.75)
+            paint.setTextSize(24);
+        else
+            paint.setTextSize(20);
+
+        canvas.drawBitmap(bmpOrig, width, width, paint);
+
+        String strDate = new SimpleDateFormat("dd MMM, yyyy")
+                .format(new Date());
+        canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 5, bmpOrig.getHeight() - 100, paint);
+        // if(AppConstants.DEVICE_DENSITY <= 0.75)
+        // paint.setTextSize(12);
+        // else
+        // paint.setTextSize(30);
+        canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 5, bmpOrig.getHeight() - 65, paint);
+        canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2 / 5, bmpOrig.getHeight() - 30, paint);
+
+        if (bmpOrig != null && !bmpOrig.isRecycled()) {
+            WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
+                    bmpOrig);
+            if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
+                weakBitmap.get().recycle();
+            }
+        }
+
+        return bmpProcessed;
+    }
+
+    public static Bitmap processBitmapAssets(Bitmap bmpOrig, String lat, String lng,
+                                             String altitude, String siteId) {
+        if (lat.equalsIgnoreCase("") || (lat.equalsIgnoreCase("0.0") && lng.equalsIgnoreCase("0.0"))) {
+            lat = AppConstants.currentLat;
+            lng = AppConstants.currentLng;
+        }
+        int width = 2;
+        Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
+                        + (width * 2), bmpOrig.getHeight() + (width * 2),
+                bmpOrig.getConfig());
+
+        Paint paint = new Paint();
+        Canvas canvas = new Canvas(bmpProcessed);
+
+        paint.setColor(Color.WHITE);
+        paint.setAntiAlias(true);
+        if (AppConstants.DEVICE_DENSITY <= 0.75)
+            paint.setTextSize(24);
+        else
+            paint.setTextSize(20);
+
+        canvas.drawBitmap(bmpOrig, width, width, paint);
+
+        String strDate = new SimpleDateFormat("dd MMM, yyyy")
+                .format(new Date());
+        canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 5, bmpOrig.getHeight() - 130, paint);
+        // if(AppConstants.DEVICE_DENSITY <= 0.75)
+        // paint.setTextSize(12);
+        // else
+        // paint.setTextSize(30);
+        canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 5, bmpOrig.getHeight() - 95, paint);
+        canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2 / 5, bmpOrig.getHeight() - 60, paint);
+        canvas.drawText("Customer: " + siteId, bmpOrig.getWidth() * 2 / 5, bmpOrig.getHeight() - 30, paint);
+
+        if (bmpOrig != null && !bmpOrig.isRecycled()) {
+            WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
+                    bmpOrig);
+            if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
+                weakBitmap.get().recycle();
+            }
+        }
+
+        return bmpProcessed;
+    }
+
+    public static Bitmap processBitmap22(Bitmap bmpOrig, String lat, String lng,
+                                         String altitude) {
+        if (lat.equalsIgnoreCase("") || (lat.equalsIgnoreCase("0.0") && lng.equalsIgnoreCase("0.0"))) {
+            lat = AppConstants.currentLat;
+            lng = AppConstants.currentLng;
+        }
+        int width = 2;
+        Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
+                        + (width * 2), bmpOrig.getHeight() + (width * 2),
+                bmpOrig.getConfig());
+
+        Paint paint = new Paint();
+        Canvas canvas = new Canvas(bmpProcessed);
+
+        paint.setColor(Color.WHITE);
+        paint.setAntiAlias(true);
+        if (AppConstants.DEVICE_DENSITY <= 0.75)
+            paint.setTextSize(10);
+        else
+            paint.setTextSize(20);
+
+        canvas.drawBitmap(bmpOrig, width, width, paint);
+
+        String strDate = new SimpleDateFormat("dd MMM, yyyy HH:mm")
+                .format(new Date());
+        canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 3 - 50,
+                bmpOrig.getHeight() - 80, paint);
+        // if(AppConstants.DEVICE_DENSITY <= 0.75)
+        // paint.setTextSize(12);
+        // else
+        // paint.setTextSize(30);
+        canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3 - 50,
+                bmpOrig.getHeight() - 65, paint);
+        canvas.drawText("Langitude: " + lng, bmpOrig.getWidth() * 2 / 3 - 50,
+                bmpOrig.getHeight() - 50, paint);
+
+        if (bmpOrig != null && !bmpOrig.isRecycled()) {
+            WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
+                    bmpOrig);
+            if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
+                weakBitmap.get().recycle();
+            }
+        }
+
+        return bmpProcessed;
+    }
+
+    public static Bitmap processBitmapforCompetitor(Bitmap bmpOrig, String lat, String lng,
+                                                    String altitude) {
+        if (lat.equalsIgnoreCase("") || (lat.equalsIgnoreCase("0.0") && lng.equalsIgnoreCase("0.0"))) {
+            lat = AppConstants.currentLat;
+            lng = AppConstants.currentLng;
+        }
+        int width = 2;
+        Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth()
+                        + (width * 2), bmpOrig.getHeight() + (width * 2),
+                bmpOrig.getConfig());
+
+        Paint paint = new Paint();
+        Canvas canvas = new Canvas(bmpProcessed);
+
+        paint.setColor(Color.WHITE);
+        paint.setAntiAlias(true);
+        if (AppConstants.DEVICE_DENSITY <= 0.75)
+            paint.setTextSize(16);
+        else
+            paint.setTextSize(14);
+
+        canvas.drawBitmap(bmpOrig, width, width, paint);
+
+        canvas.drawText("Date: " + altitude, bmpOrig.getWidth() * 2 / 3, bmpOrig.getHeight() - 50, paint);
+        // if(AppConstants.DEVICE_DENSITY <= 0.75)
+        // paint.setTextSize(12);
+        // else
+        // paint.setTextSize(30);
+        canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3, bmpOrig.getHeight() - 30, paint);
+        canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2 / 3,
+                bmpOrig.getHeight() - 10, paint);
+
+        if (bmpOrig != null && !bmpOrig.isRecycled()) {
+            WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
+                    bmpOrig);
+            if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
+                weakBitmap.get().recycle();
+            }
+        }
+
+        return bmpProcessed;
+    }
+
+    public static Bitmap processBitmap(Bitmap bmpOrig) {
+        int width = 2;
+        Bitmap bmpProcessed = Bitmap
+                .createBitmap(100, 120, bmpOrig.getConfig());
+        Paint paint = new Paint();
+        paint.setColor(Color.WHITE);
+        Canvas canvas = new Canvas(bmpProcessed);
+
+        Rect rectSrc = new Rect(0, 0, bmpOrig.getWidth(), bmpOrig.getHeight());
+        Rect rectDest = new Rect(0, 0, 100, 120);
+
+        paint.setAntiAlias(true);
+        // canvas.drawRect(0, 0, 100, 120, paint);
+        canvas.drawBitmap(bmpOrig, rectSrc, rectDest, paint);
+
+        if (bmpOrig != null && !bmpOrig.isRecycled()) {
+            WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(
+                    bmpOrig);
+            if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
+                weakBitmap.get().recycle();
+            }
+        }
+
+        // paint.setColor(Color.WHITE);
+        // paint.setTextSize(15);
+        // paint.setColor(Color.BLACK);
+        // canvas.drawText("IMG", 30, 115, paint);
+
+        return bmpProcessed;
+    }
+
+    public static Bitmap getRoundedCornerBitmap(Bitmap bitmap,
+                                                float roundPxRadius) {
+
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+        final float roundPx = roundPxRadius;
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+
+        return output;
+    }
+
+    public static Bitmap resizeBitmap(Bitmap bitmapOrg, int newWidth,
+                                      int newHeight) {
+        Bitmap resizedBitmap = null;
+        try {
+
+            int width = bitmapOrg.getWidth();
+            int height = bitmapOrg.getHeight();
+
+            /**
+             * calculate the scale - in this case = 0.4f
+             */
+            float scaleWidth = ((float) newWidth) / width;
+            float scaleHeight = ((float) newHeight) / height;
+
+            /**
+             * createa matrix for the manipulation
+             */
+            Matrix matrix = new Matrix();
+            /**
+             * resize the bit map
+             */
+            matrix.postScale(scaleWidth, scaleHeight);
+            /**
+             * rotate the Bitmap
+             */
+            resizedBitmap = Bitmap.createBitmap(bitmapOrg, 0, 0, width, height,
+                    matrix, true);
+
+        } catch (Throwable e) {
+        }
+
+        return resizedBitmap;
+    }
+
+    public static Bitmap resizeWithoutBitmap(Bitmap bitmapOrg, int newWidth,
+                                             int newHeight) {
+        Bitmap resizedBitmap = null;
+        try {
+
+            int width = bitmapOrg.getWidth();
+            int height = bitmapOrg.getHeight();
+
+            /**
+             * calculate the scale - in this case = 0.4f
+             */
+            float scaleWidth = ((float) newWidth) / width;
+            float scaleHeight = ((float) newHeight) / height;
+
+            /**
+             * createa matrix for the manipulation
+             */
+            Matrix matrix = new Matrix();
+            /**
+             * resize the bit map
+             */
+            matrix.postScale(scaleWidth, scaleHeight);
+            /**
+             * rotate the Bitmap
+             */
+            resizedBitmap = Bitmap.createBitmap(bitmapOrg, 0, 0, width, height,
+                    matrix, true);
+
+        } catch (Throwable e) {
+        }
+
+        return resizedBitmap;
+    }
+
+    public static Bitmap getResizedBmp(Bitmap bitmap, float width, float height) {
+
+        float bmpHieght = 600;
+        float bmpWidth = 1024;
+        Log.i("bmpHieght ", bmpHieght + " bmpWidth " + bmpWidth);
+
+        int scaledWidth = 0;
+        int scaledHeight = 0;
+        Bitmap scaledBitmap = null;
+        // if(bmpWidth/width > bmpHieght/ height)
+        // {
+        scaledWidth = (int) width;
+        scaledHeight = (int) (bmpHieght * width / bmpWidth);
+        scaledBitmap = Bitmap.createScaledBitmap(bitmap, scaledWidth,
+                scaledHeight, true);
+        // }
+        // else
+        // {
+        // scaledWidth = (int)(bmpWidth * height/ bmpHieght);
+        // scaledHeight = (int)height;
+        // scaledBitmap = Bitmap.createScaledBitmap(bitmap, scaledWidth,
+        // scaledHeight, true);
+        // }
+
+        return scaledBitmap;
+    }
+
+    public static Bitmap decodeSampledBitmapFromResource(File f, int reqWidth, int reqHeight) {
+        try {
+            reqWidth = AppConstants.CAPTURE_IMAGE_WIDTH;
+            reqHeight = AppConstants.CAPTURE_IMAGE_HEIGHT;
+            // First decode with inJustDecodeBounds=true to check dimensions
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+
+            BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+
+            // Calculate inSampleSize
+            options.inSampleSize = 1;
+
+            // Decode bitmap with inSampleSize set
+
+            options.inJustDecodeBounds = false;
+            Bitmap tmpBitmap = BitmapFactory.decodeStream(new FileInputStream(f), null, options);
+            tmpBitmap = getResizedBitmap(tmpBitmap, reqWidth, reqHeight);
+            float rotation = rotationForImage(null, Uri.fromFile(f));
+            if (rotation != 0f) {
+                Matrix matrix = new Matrix();
+                matrix.preRotate(rotation);
+                tmpBitmap = Bitmap.createBitmap(tmpBitmap, 0, 0,
+                        tmpBitmap.getWidth(), tmpBitmap.getHeight(), matrix,
+                        true);
+            }
+            return tmpBitmap;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Bitmap getResizedBitmap(Bitmap bitmap, float width,
+                                          float height) {
+        if (bitmap != null) {
+
+        }
+        float bmpHieght = bitmap.getHeight();
+        float bmpWidth = bitmap.getWidth();
+
+        Bitmap scaledBitmap = null;
+        if (bmpHieght < height && bmpWidth < width) {
+            return bitmap;
+        }
+
+        int scaledWidth = 0;
+        int scaledHeight = 0;
+
+        scaledWidth = convertPixelToDp((int) width);
+        scaledHeight = convertPixelToDp((int) height);
+        scaledBitmap = Bitmap.createScaledBitmap(bitmap, scaledWidth,
+                scaledHeight, true);
 
 //		if (bmpWidth / width < bmpHieght / height) {
 //			scaledWidth = convertPixelToDp((int) (bmpWidth * height / bmpHieght));
@@ -833,74 +829,74 @@ public class BitmapUtilsLatLang {
 //			scaledBitmap = Bitmap.createScaledBitmap(bitmap, scaledWidth,
 //					scaledHeight, true);
 //		}
-		return scaledBitmap;
-	}
+        return scaledBitmap;
+    }
 
-	public static float rotationForImage(Context context, Uri uri) {
-		try {
-			if (context != null && uri.getScheme().equals("content")) {
-				String[] projection = { Images.ImageColumns.ORIENTATION };
-				Cursor c = context.getContentResolver().query(uri, projection,
-						null, null, null);
-				if (c.moveToFirst()) {
-					return c.getInt(0);
-				}
-			} else if (uri.getScheme().equals("file")) {
-				try {
-					ExifInterface exif = new ExifInterface(uri.getPath());
-					int rotation = (int) exifOrientationToDegrees(exif
-							.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-									ExifInterface.ORIENTATION_NORMAL));
-					return rotation;
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    public static float rotationForImage(Context context, Uri uri) {
+        try {
+            if (context != null && uri.getScheme().equals("content")) {
+                String[] projection = {Images.ImageColumns.ORIENTATION};
+                Cursor c = context.getContentResolver().query(uri, projection,
+                        null, null, null);
+                if (c.moveToFirst()) {
+                    return c.getInt(0);
+                }
+            } else if (uri.getScheme().equals("file")) {
+                try {
+                    ExifInterface exif = new ExifInterface(uri.getPath());
+                    int rotation = (int) exifOrientationToDegrees(exif
+                            .getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                                    ExifInterface.ORIENTATION_NORMAL));
+                    return rotation;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		return 0f;
-	}
+        return 0f;
+    }
 
-	public static int convertPixelToDp(int px) {
-		return (int) (px * (160 / 160f));
-	}
+    public static int convertPixelToDp(int px) {
+        return (int) (px * (160 / 160f));
+    }
 
-	private static float exifOrientationToDegrees(int exifOrientation) {
-		if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
-			return 90;
-		} else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
-			return 180;
-		} else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
-			return 270;
-		}
-		return 0;
-	}
-	public static Bitmap getBitMap(Bitmap bmp,String date, String lat, String lang)
-	{
-		Bitmap mBtBitmap = null;
-		if(bmp != null)
-		{
-			mBtBitmap = BitmapUtilsLatLang.processBitmap22(bmp, lat, lang, date);
-			if(bmp!=null && !bmp.isRecycled())
-				bmp.recycle();
+    private static float exifOrientationToDegrees(int exifOrientation) {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            return 90;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            return 180;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            return 270;
+        }
+        return 0;
+    }
 
-			return mBtBitmap;
-		}
-		return mBtBitmap;
-	}
-	public static Bitmap processBitmap24(Bitmap bmpOrig, String lat, String lng, String altitude, String code, String name) {
-		if (lat.equalsIgnoreCase("")) {
-			lat = AppConstants.currentLat;
-			lng = AppConstants.currentLng;
-		}
-		int width = 2;
-		Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth() + (width * 2), bmpOrig.getHeight() + (width * 2),
-				bmpOrig.getConfig());
+    public static Bitmap getBitMap(Bitmap bmp, String date, String lat, String lang) {
+        Bitmap mBtBitmap = null;
+        if (bmp != null) {
+            mBtBitmap = BitmapUtilsLatLang.processBitmap22(bmp, lat, lang, date);
+            if (bmp != null && !bmp.isRecycled())
+                bmp.recycle();
 
-		Paint paint = new Paint();
-		Canvas canvas = new Canvas(bmpProcessed);
+            return mBtBitmap;
+        }
+        return mBtBitmap;
+    }
+
+    public static Bitmap processBitmap24(Bitmap bmpOrig, String lat, String lng, String altitude, String code, String name) {
+        if (lat.equalsIgnoreCase("")) {
+            lat = AppConstants.currentLat;
+            lng = AppConstants.currentLng;
+        }
+        int width = 2;
+        Bitmap bmpProcessed = Bitmap.createBitmap(bmpOrig.getWidth() + (width * 2), bmpOrig.getHeight() + (width * 2),
+                bmpOrig.getConfig());
+
+        Paint paint = new Paint();
+        Canvas canvas = new Canvas(bmpProcessed);
 
 //		paint.setColor(Color.WHITE);//////////////// commented 19/12/2018
 //		paint.setAntiAlias(true);
@@ -920,30 +916,30 @@ public class BitmapUtilsLatLang {
 //		canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2 / 3 - 140, bmpOrig.getHeight() - 40, paint);
 
 
-		paint.setColor(Color.WHITE);
-		paint.setAntiAlias(true);
-		if (AppConstants.DEVICE_DENSITY <= 0.75)
-			paint.setTextSize(20);
-		else
-			paint.setTextSize(23);
+        paint.setColor(Color.WHITE);
+        paint.setAntiAlias(true);
+        if (AppConstants.DEVICE_DENSITY <= 0.75)
+            paint.setTextSize(20);
+        else
+            paint.setTextSize(23);
 
-		canvas.drawBitmap(bmpOrig, width, width, paint);
+        canvas.drawBitmap(bmpOrig, width, width, paint);
 
-		String strDate = DateFormat.getDateTimeInstance().format(new Date());
+        String strDate = DateFormat.getDateTimeInstance().format(new Date());
 //		String strDate = new SimpleDateFormat("dd MMM, yyyy HH:MM").format(new Date());
-		canvas.drawText("["+code+"]", bmpOrig.getWidth() * 2 / 3 - 250, bmpOrig.getHeight() - 160, paint);
-		canvas.drawText(name, bmpOrig.getWidth() * 2 / 3 - 250, bmpOrig.getHeight() - 130, paint);
-		canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 3 - 250, bmpOrig.getHeight() - 100, paint);
-		canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3 - 250, bmpOrig.getHeight() - 70, paint);
-		canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2 / 3 - 250, bmpOrig.getHeight() - 40, paint);
-		if (bmpOrig != null && !bmpOrig.isRecycled()) {
-			WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(bmpOrig);
-			if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
-				weakBitmap.get().recycle();
-			}
-		}
+        canvas.drawText("[" + code + "]", bmpOrig.getWidth() * 2 / 3 - 250, bmpOrig.getHeight() - 160, paint);
+        canvas.drawText(name, bmpOrig.getWidth() * 2 / 3 - 250, bmpOrig.getHeight() - 130, paint);
+        canvas.drawText("Date: " + strDate, bmpOrig.getWidth() * 2 / 3 - 250, bmpOrig.getHeight() - 100, paint);
+        canvas.drawText("Latitude: " + lat, bmpOrig.getWidth() * 2 / 3 - 250, bmpOrig.getHeight() - 70, paint);
+        canvas.drawText("Longitude: " + lng, bmpOrig.getWidth() * 2 / 3 - 250, bmpOrig.getHeight() - 40, paint);
+        if (bmpOrig != null && !bmpOrig.isRecycled()) {
+            WeakReference<Bitmap> weakBitmap = new WeakReference<Bitmap>(bmpOrig);
+            if (weakBitmap.get() != null && !weakBitmap.get().isRecycled()) {
+                weakBitmap.get().recycle();
+            }
+        }
 
-		return bmpProcessed;
-	}
+        return bmpProcessed;
+    }
 
 }

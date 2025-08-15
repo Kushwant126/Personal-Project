@@ -57,7 +57,7 @@ public class LeaderBoard extends BaseActivity {
         }).start();*/
 
         tvCountryTab.setOnClickListener(view -> {
-            isCountrySelected=true;
+            isCountrySelected = true;
             loadData();
             tvCountryTab.setBackground(getResources().getDrawable(R.drawable.rounded_textview_bg));
             tvCountryTab.setTextColor(getResources().getColor(R.color.new_app_color));
@@ -65,7 +65,7 @@ public class LeaderBoard extends BaseActivity {
             tvRegionTab.setTextColor(getResources().getColor(R.color.background_tab_pressed));
         });
         tvRegionTab.setOnClickListener(view -> {
-            isCountrySelected=false;
+            isCountrySelected = false;
             loadData();
             tvRegionTab.setBackground(getResources().getDrawable(R.drawable.rounded_textview_bg));
             tvRegionTab.setTextColor(getResources().getColor(R.color.new_app_color));
@@ -75,66 +75,66 @@ public class LeaderBoard extends BaseActivity {
         loadData();
     }
 
-    boolean isCountrySelected=true;
+    boolean isCountrySelected = true;
+
     private void loadData() {
         if (hashMapWinner != null && hashMapWinner.size() > 0) {
-            if(isCountrySelected) {
+            if (isCountrySelected) {
                 if (hashMapWinner.get("Country_1") != null) {
                     LeaderBoardDO leaderBoardDO = hashMapWinner.get("Country_1");
                     bindImageNew(leaderBoardDO.UserimagePath, ivFirstRankImage);
 //										bindImage(leaderBoardDO.UserimagePath,ivLeader1stW);
-                    tvFirstrankName.setText("" + leaderBoardDO.UserName);
-                    tvFirstrankVisitedCount.setText("" + leaderBoardDO.Points);
+                    tvFirstrankName.setText(leaderBoardDO.UserName);
+                    tvFirstrankVisitedCount.setText(leaderBoardDO.Points);
                 }
                 if (hashMapWinner.get("Country_2") != null) {
                     LeaderBoardDO leaderBoardDO = hashMapWinner.get("Country_2");
                     bindImageNew(leaderBoardDO.UserimagePath, ivSecondRankImage);
 //										bindImage(leaderBoardDO.UserimagePath,ivLeader2ndW);
-                    tvSecondrankName.setText("" + leaderBoardDO.UserName);
-                    tvSecondrankVisitedCount.setText("" + leaderBoardDO.Points);
+                    tvSecondrankName.setText(leaderBoardDO.UserName);
+                    tvSecondrankVisitedCount.setText(leaderBoardDO.Points);
                 }
                 if (hashMapWinner.get("Country_3") != null) {
                     LeaderBoardDO leaderBoardDO = hashMapWinner.get("Country_3");
                     bindImageNew(leaderBoardDO.UserimagePath, ivThirdRankImage);
 //										bindImage(leaderBoardDO.UserimagePath,ivLeader3rdW);
-                    tvThirdrankName.setText("" + leaderBoardDO.UserName);
-                    tvThirdrankVisitedCount.setText("" + leaderBoardDO.Points);
+                    tvThirdrankName.setText(leaderBoardDO.UserName);
+                    tvThirdrankVisitedCount.setText(leaderBoardDO.Points);
                 }
 
                 if (hashMapWinner.get("Country_USER") != null) {
                     LeaderBoardDO leaderBoardDO = hashMapWinner.get("Country_USER");
 //										bindImage(leaderBoardDO.UserimagePath,ivLeader3rdAreaW);
-                    userRank.setText("" + leaderBoardDO.Rank);
+                    userRank.setText(leaderBoardDO.Rank);
 //                    tvCountrywise_w.setText(getResources().getString(R.string.country_wise)+"(" + leaderBoardDO.Area + ")");
                 }
-            }
-            else {
+            } else {
                 if (hashMapWinner.get("Region_1") != null) {
                     LeaderBoardDO leaderBoardDO = hashMapWinner.get("Region_1");
                     bindImageNew(leaderBoardDO.UserimagePath, ivFirstRankImage);
 //										bindImage(leaderBoardDO.UserimagePath,ivLeader1stW);
-                    tvFirstrankName.setText("" + leaderBoardDO.UserName);
-                    tvFirstrankVisitedCount.setText("" + leaderBoardDO.Points);
+                    tvFirstrankName.setText(leaderBoardDO.UserName);
+                    tvFirstrankVisitedCount.setText(leaderBoardDO.Points);
                 }
                 if (hashMapWinner.get("Region_2") != null) {
                     LeaderBoardDO leaderBoardDO = hashMapWinner.get("Region_2");
                     bindImageNew(leaderBoardDO.UserimagePath, ivSecondRankImage);
 //										bindImage(leaderBoardDO.UserimagePath,ivLeader2ndW);
-                    tvSecondrankName.setText("" + leaderBoardDO.UserName);
-                    tvSecondrankVisitedCount.setText("" + leaderBoardDO.Points);
+                    tvSecondrankName.setText(leaderBoardDO.UserName);
+                    tvSecondrankVisitedCount.setText(leaderBoardDO.Points);
                 }
                 if (hashMapWinner.get("Region_3") != null) {
                     LeaderBoardDO leaderBoardDO = hashMapWinner.get("Region_3");
                     bindImageNew(leaderBoardDO.UserimagePath, ivThirdRankImage);
 //										bindImage(leaderBoardDO.UserimagePath,ivLeader3rdW);
-                    tvThirdrankName.setText("" + leaderBoardDO.UserName);
-                    tvThirdrankVisitedCount.setText("" + leaderBoardDO.Points);
+                    tvThirdrankName.setText(leaderBoardDO.UserName);
+                    tvThirdrankVisitedCount.setText(leaderBoardDO.Points);
                 }
 
                 if (hashMapWinner.get("Region_USER") != null) {
                     LeaderBoardDO leaderBoardDO = hashMapWinner.get("Region_USER");
 //										bindImage(leaderBoardDO.UserimagePath,ivLeader3rdAreaW);
-                    userRank.setText("" + leaderBoardDO.Rank);
+                    userRank.setText(leaderBoardDO.Rank);
 //                    tvregionwise_W.setText(getString(R.string.region_wise)+"(" + leaderBoardDO.Area + ")");
                 }
             }
@@ -170,42 +170,41 @@ public class LeaderBoard extends BaseActivity {
 
 
     private void initControls() {
-        TextView your_rank    = linearlayout.findViewById(R.id.your_rank);
+        TextView your_rank = linearlayout.findViewById(R.id.your_rank);
         your_rank.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
-        TextView tvTitle    = linearlayout.findViewById(R.id.tvTitle);
+        TextView tvTitle = linearlayout.findViewById(R.id.tvTitle);
         tvTitle.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
-        userCategory    = linearlayout.findViewById(R.id.userCategory);
+        userCategory = linearlayout.findViewById(R.id.userCategory);
         userSubCategory = linearlayout.findViewById(R.id.userSubCategory);
-        tvBranchTab     = linearlayout.findViewById(R.id.tvBranchTab);
-        tvRegionTab     = linearlayout.findViewById(R.id.tvRegionTab);
-        tvCountryTab    = linearlayout.findViewById(R.id.tvCountryTab);
+        tvBranchTab = linearlayout.findViewById(R.id.tvBranchTab);
+        tvRegionTab = linearlayout.findViewById(R.id.tvRegionTab);
+        tvCountryTab = linearlayout.findViewById(R.id.tvCountryTab);
 
-        ivSecondRankImage= linearlayout.findViewById(R.id.ivSecondRankImage);
+        ivSecondRankImage = linearlayout.findViewById(R.id.ivSecondRankImage);
         ivFirstRankImage = linearlayout.findViewById(R.id.ivFirstRankImage);
         ivThirdRankImage = linearlayout.findViewById(R.id.ivThirdRankImage);
-        ivUserImage      = linearlayout.findViewById(R.id.ivUserImage);
+        ivUserImage = linearlayout.findViewById(R.id.ivUserImage);
 
 
-        tvSecondrankName         = linearlayout.findViewById(R.id.tvSecondrankName);
-        tvSecondrankId           = linearlayout.findViewById(R.id.tvSecondrankId);
+        tvSecondrankName = linearlayout.findViewById(R.id.tvSecondrankName);
+        tvSecondrankId = linearlayout.findViewById(R.id.tvSecondrankId);
         tvSecondrankVisitedCount = linearlayout.findViewById(R.id.tvSecondrankVisitedCount);
 
         tvFirstrankName = linearlayout.findViewById(R.id.tvFirstrankName);
-        tvFirstrankId   = linearlayout.findViewById(R.id.tvFirstrankId);
+        tvFirstrankId = linearlayout.findViewById(R.id.tvFirstrankId);
         tvFirstrankVisitedCount = linearlayout.findViewById(R.id.tvFirstrankVisitedCount);
 
         tvThirdrankName = linearlayout.findViewById(R.id.tvThirdrankName);
-        tvThirdrankId   = linearlayout.findViewById(R.id.tvThirdrankId);
+        tvThirdrankId = linearlayout.findViewById(R.id.tvThirdrankId);
         tvThirdrankVisitedCount = linearlayout.findViewById(R.id.tvThirdrankVisitedCount);
 
         userRankid = linearlayout.findViewById(R.id.userRankid);
         tvUserName = linearlayout.findViewById(R.id.tvUserName);
-        tvUserId   = linearlayout.findViewById(R.id.tvUserId);
-        userRank   = linearlayout.findViewById(R.id.userRank);
+        tvUserId = linearlayout.findViewById(R.id.tvUserId);
+        userRank = linearlayout.findViewById(R.id.userRank);
 
         rvUserList = linearlayout.findViewById(R.id.rvUserList);
     }
-
 
 
     @Override

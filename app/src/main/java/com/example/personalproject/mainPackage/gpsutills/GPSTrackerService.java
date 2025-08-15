@@ -30,14 +30,14 @@ public class GPSTrackerService extends Service implements
         GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = "GPSTrack";
     public GPSPreference gpsPreference;
-    private Context mContext;
+    private final Context mContext;
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
     private Location mCurrentLocation;
 
     private Timer timer;
     private TimerTask timerTask;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
 
 
     public GPSTrackerService(Context mContext) {
@@ -78,12 +78,10 @@ public class GPSTrackerService extends Service implements
                     // for ActivityCompat#requestPermissions for more details.
                     //					return;
 
-                }
-                else {
+                } else {
                     LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
                 }
-            }
-            else {
+            } else {
                 LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
             }
 
@@ -172,8 +170,7 @@ public class GPSTrackerService extends Service implements
             gpsPreference.saveString(GPSPreference.CURRENT_LOCATION_LATTITUDE, lat);
             gpsPreference.saveString(GPSPreference.CURRENT_LOCATION_LONGITUDE, lng);
             GPSLogutils.error(TAG, "location lat: " + lat + " long: " + lng);
-        }
-        else {
+        } else {
             GPSLogutils.error(TAG, "location is null ");
 
         }

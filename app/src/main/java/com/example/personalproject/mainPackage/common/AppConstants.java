@@ -16,8 +16,6 @@ import java.util.Set;
 import java.util.Vector;
 
 public class AppConstants {
-
-
     public static final String NORMAL_PERMISSIONS =
             "android.permission.SYSTEM_ALERT_WINDOW" +
                     "android.permission.WRITE_SETTINGS," +
@@ -121,7 +119,7 @@ public class AppConstants {
     public static String DEFAULT_TIME_BACKEND = "1900-01-01T00:00:00";
     public static String FCM_SERVER_KEY = "AAAA6l7Mx2Q:APA91bHgrkwiYOyCwXPp3S0Z3_S-NUcUAhE9-miD5L-ZFDHjvyKLCaQVBFsQ4jxHwmY8BeFxtOe0-1pXUTMATs_GBSWbvy98L5j7Y0h09Xw-Z2Rd9mpjx2KurYH0nqMxGiTyUXeXB1iM";
     public static Typeface SanFranciscoDisplay_Regular, SanFranciscoDisplay_Medium, SanFranciscoDisplay_Semibold, SanFranciscoDisplay_Bold;
-    public static Typeface montserrat_black, montserrat_light,montserrat_extralight, montserrat_thin, montserrat_extrabold;
+    public static Typeface montserrat_black, montserrat_light, montserrat_extralight, montserrat_thin, montserrat_extrabold;
 
 
     //for store close
@@ -223,7 +221,7 @@ public class AppConstants {
     public static String Type_SOS = "SOS";
     public static String Type_COMPETITOR = "COMP";
     public static String Status_Planogram = "Planogram Check";
-	public static final int STATUS_TYPE_SURVEYSUMMARY 	= 1008;
+    public static final int STATUS_TYPE_SURVEYSUMMARY = 1008;
 
     public static String Name_StoreCheck = "Store Check";
     public static String Name_Tasks = "Tasks";
@@ -499,7 +497,7 @@ public class AppConstants {
     public static final String SupervisorUser = "SupervisorUser";
 
 
-    public static String CollectorSalesMenuOptions[] = {
+    public static String[] CollectorSalesMenuOptions = {
             "My Customers",
             "Blocked Customers",
             "Execution Summary",
@@ -507,7 +505,7 @@ public class AppConstants {
             "Logout",
             "Footer"
     };
-    public static int CollectorMenuOptionIcons[] = {
+    public static int[] CollectorMenuOptionIcons = {
             R.drawable.mycustomer_icon,
             R.drawable.mycustomer_icon,
             R.drawable.orders_summary_icon,
@@ -519,7 +517,7 @@ public class AppConstants {
 
     /* ==============================VanSales User Menu Options ====================================*/
 
-    public static String vanSalesMenuOptions[] = {
+    public static String[] vanSalesMenuOptions = {
             "Today's Journey Plan",
             "Next Day's Journey Plan",
             "My Customers",
@@ -552,7 +550,7 @@ public class AppConstants {
 
 //			,"Chat"
     };
-    public static int vanSalesMenuOptionIcons[] = {
+    public static int[] vanSalesMenuOptionIcons = {
             R.drawable.journey_plan_icon,
             R.drawable.next_journey_plan_icon,
             R.drawable.mycustomer_icon,
@@ -585,7 +583,7 @@ public class AppConstants {
 
     /*==================================== Customer Menu Options ===============================*/
 
-    public static String customerMenuOptions[] = {"Customer Dashboard",
+    public static String[] customerMenuOptions = {"Customer Dashboard",
 //			"Agreement/Contract",
 //			"Rebates", 
             "Execution Summary",
@@ -598,7 +596,7 @@ public class AppConstants {
 //			"",
             "Footer"
     };
-    public static int customerMenuOptionIcons[] = {R.drawable.today_dashboard_icon,
+    public static int[] customerMenuOptionIcons = {R.drawable.today_dashboard_icon,
 //			R.drawable.arcollection_icon,
 //			R.drawable.product_catalog_icon,
             R.drawable.orders_summary_icon,
@@ -616,7 +614,7 @@ public class AppConstants {
 
     /*=========================================== Presales Menu Options=====================================================*/
 
-    public static String presellerMenuOption[] = {"Journey Plan",
+    public static String[] presellerMenuOption = {"Journey Plan",
 //			"Next Day Journey Plan",
 //			"My Customers",
 ////			"Warehouse Stock",
@@ -635,7 +633,7 @@ public class AppConstants {
     };
 
 
-    public static int presellerMenuOptionIcon[] = {R.drawable.journey_plan_icon,
+    public static int[] presellerMenuOptionIcon = {R.drawable.journey_plan_icon,
 //			R.drawable.next_journey_plan_icon,
 //			R.drawable.mycustomer_icon,
 ////			R.drawable.load_management_icon,
@@ -656,7 +654,7 @@ public class AppConstants {
 
     /*********************************************Pre Sales Customer Menu Options********************************************/
 
-    public static String presellerCheckedInMenuOption[] = {"Customer Dashboard",
+    public static String[] presellerCheckedInMenuOption = {"Customer Dashboard",
             /*"Agreement/Contract",
             "Rebates",
             "Warehouse Stock", */
@@ -667,7 +665,7 @@ public class AppConstants {
             "Check out",
             "Footer"
     };
-    public static int presellerCheckedInMenuOptionIcon[] = {R.drawable.today_dashboard_icon,
+    public static int[] presellerCheckedInMenuOptionIcon = {R.drawable.today_dashboard_icon,
             /*R.drawable.arcollection_icon,
             R.drawable.product_catalog_icon,
             R.drawable.load_management_icon,*/
@@ -679,15 +677,15 @@ public class AppConstants {
             R.drawable.footer_new
     };
     /*======================================================================================================================*/
-    public static String vanSalesMenuOption[] = {"Journey Plan", "Next Day Journey Plan", "My Customers", "Load Management", "Execution Summary",
+    public static String[] vanSalesMenuOption = {"Journey Plan", "Next Day Journey Plan", "My Customers", "Load Management", "Execution Summary",
             "Add New Customers", "Collection Settlement", "Messaging", "EOT", "End Journey", "Others", "Things to Focus", "Auditor Login", "Audit Receipts", "Office Check-In/Out", "Logout", "footer"};
 
-    public static int vanSalesMenuOptionIcon[] = {R.drawable.journey_plan_icon, R.drawable.next_journey_plan_icon, R.drawable.mycustomer_icon, R.drawable.load_management_icon, R.drawable.orders_summary_icon,
+    public static int[] vanSalesMenuOptionIcon = {R.drawable.journey_plan_icon, R.drawable.next_journey_plan_icon, R.drawable.mycustomer_icon, R.drawable.load_management_icon, R.drawable.orders_summary_icon,
             R.drawable.add_necustomer_icon, R.drawable.order_summary, R.drawable.messege, R.drawable.eot_icon, R.drawable.eot_icon, R.drawable.about_application_icon, R.drawable.thingstofocus_icon, R.drawable.audit, R.drawable.audit, R.drawable.office_checkin, R.drawable.logout_menu_icon, R.drawable.footer_new};
 
-    public static String merchandiserMenuOption[] = {"My Customers", "Execution Summary", "Others", "Logout", "footer"};
+    public static String[] merchandiserMenuOption = {"My Customers", "Execution Summary", "Others", "Logout", "footer"};
 
-    public static int merchandiserMenuOptionIcon[] = {R.drawable.mycustomer_icon, R.drawable.paymentsummary_icon, R.drawable.about_application_icon, R.drawable.logout_menu_icon, R.drawable.footer_new};
+    public static int[] merchandiserMenuOptionIcon = {R.drawable.mycustomer_icon, R.drawable.paymentsummary_icon, R.drawable.about_application_icon, R.drawable.logout_menu_icon, R.drawable.footer_new};
 /*
 
 	public static String merchandiserMenuOption[]   = {"Journey Plan","Next Day Journey Plan","My Customers","Others","Things to Focus","Office Check-In/Out","Logout","footer"};
@@ -707,17 +705,17 @@ public class AppConstants {
     //public static int presellerCheckedInMenuOptionIcon[]   = {R.drawable.next_journey_plan_icon, R.drawable.arcollection_icon,/*R.drawable.product_catalog_icon,*/
     //	R.drawable.about_application_icon,R.drawable.order_summary,R.drawable.add_necustomer_icon,R.drawable.thingstofocus_icon};
 
-    public static String vanSalesCheckedInOption[] = {"Customer Dashboard", "Load Management", "Execution Summary", "Collection Settlement",
+    public static String[] vanSalesCheckedInOption = {"Customer Dashboard", "Load Management", "Execution Summary", "Collection Settlement",
             "Checkout", "Add New Customers", "Others", "Things to Focus"};
 
-    public static int vanSalesCheckedInOptionIcon[] = {R.drawable.journey_plan_icon, R.drawable.load_management_icon, R.drawable.arcollection_icon, R.drawable.product_catalog_icon,
+    public static int[] vanSalesCheckedInOptionIcon = {R.drawable.journey_plan_icon, R.drawable.load_management_icon, R.drawable.arcollection_icon, R.drawable.product_catalog_icon,
             R.drawable.order_summary, R.drawable.add_necustomer_icon, R.drawable.about_application_icon, R.drawable.thingstofocus_icon};
 
-    public static String merchandiserCheckedInOption[] = {"Customer Dashboard",
+    public static String[] merchandiserCheckedInOption = {"Customer Dashboard",
             "Checkout", "Others", "Things to Focus"};
 
 
-    public static int merchandiserCheckedInOptionIcon[] = {R.drawable.journey_plan_icon,
+    public static int[] merchandiserCheckedInOptionIcon = {R.drawable.journey_plan_icon,
             R.drawable.order_summary, R.drawable.about_application_icon, R.drawable.arcollection_icon};
 
 	/*	public static String presellerExecutionSummaryOption[]   = {"Order Summary","Payment Summary","Survey","Competitive Execution",
@@ -727,30 +725,30 @@ public class AppConstants {
 		R.drawable.assets_request_icon,R.drawable.paymentsummary_icon};*/
     /******************************************************************************************************/
 
-    public static String loadMangementOption[] = {"Van Stock",/*,"Return Stock","Receive/Verify Stock","Today and next 3 days load","Unload","Audit Info",*/"Audit Return"
+    public static String[] loadMangementOption = {"Van Stock",/*,"Return Stock","Receive/Verify Stock","Today and next 3 days load","Unload","Audit Info",*/"Audit Return"
 //			"Current Stock Report",
             , "Expiry Returns",
             "Unload Stock"
     };
 //	public static String loadMangementOption[]   = {"Van Stock"/*,"Return Stock","Receive/Verify Stock","Today and next 3 days load","Unload"*/,"Audit Info","Audit Return"};
 
-    public static int loadMangementOptionIcon[] = {R.drawable.salable_van_stock_icon,/*R.drawable.returnstock_stock,R.drawable.stockverification_icon,R.drawable.dailyload_icon,R.drawable.order_summary,*/R.drawable.order_summary
+    public static int[] loadMangementOptionIcon = {R.drawable.salable_van_stock_icon,/*R.drawable.returnstock_stock,R.drawable.stockverification_icon,R.drawable.dailyload_icon,R.drawable.order_summary,*/R.drawable.order_summary
             , R.drawable.order_summary
             , R.drawable.load_management_icon};
 //	public static int loadMangementOptionIcon[]   = {R.drawable.salable_van_stock_icon,/*R.drawable.returnstock_stock,R.drawable.stockverification_icon,R.drawable.dailyload_icon,*/R.drawable.order_summary,R.drawable.order_summary};
 
-    public static String othersOption[] = {/*"Product Catalog",*/"Settings"/*,"Capture Competitor"*/, "About Application"};
+    public static String[] othersOption = {/*"Product Catalog",*/"Settings"/*,"Capture Competitor"*/, "About Application"};
 
-    public static int othersOptionIcon[] = {/*R.drawable.product_catalog_icon,*/R.drawable.settings_icon/*,R.drawable.competitor_icon*/, R.drawable.about};
+    public static int[] othersOptionIcon = {/*R.drawable.product_catalog_icon,*/R.drawable.settings_icon/*,R.drawable.competitor_icon*/, R.drawable.about};
 
-    public static String executionSummaryOption[] = {"Order Summary", "Payment Summary"/*,"Competitive Execution"*//*,"Order Trace"*/, "Log Report"/*,"Score Card"*/, "Return Summary"};
+    public static String[] executionSummaryOption = {"Order Summary", "Payment Summary"/*,"Competitive Execution"*//*,"Order Trace"*/, "Log Report"/*,"Score Card"*/, "Return Summary"};
 
-    public static int executionSummaryOptionIcon[] = {R.drawable.order_summary, R.drawable.paymentsummary_icon/*,R.drawable.invontery*//*,R.drawable.competitor_icon*/, R.drawable.assets_request_icon, R.drawable.paymentsummary_icon, R.drawable.assets_request_icon, R.drawable.paymentsummary_icon};
+    public static int[] executionSummaryOptionIcon = {R.drawable.order_summary, R.drawable.paymentsummary_icon/*,R.drawable.invontery*//*,R.drawable.competitor_icon*/, R.drawable.assets_request_icon, R.drawable.paymentsummary_icon, R.drawable.assets_request_icon, R.drawable.paymentsummary_icon};
 
 
-    public static String checkin_executionSummaryOption[] = {"Order Summary", "Payment Summary"/*,"Competitive Execution"*//*,"Order Trace"*/, "Log Report"/*,"Score Card"*/, "Return Summary"};
+    public static String[] checkin_executionSummaryOption = {"Order Summary", "Payment Summary"/*,"Competitive Execution"*//*,"Order Trace"*/, "Log Report"/*,"Score Card"*/, "Return Summary"};
 
-    public static int checkin_executionSummaryOptionIcon[] = {R.drawable.order_summary, R.drawable.paymentsummary_icon/*,R.drawable.invontery*//*,R.drawable.competitor_icon*/, R.drawable.assets_request_icon, R.drawable.paymentsummary_icon, R.drawable.assets_request_icon, R.drawable.paymentsummary_icon, R.drawable.salable_van_stock_icon};
+    public static int[] checkin_executionSummaryOptionIcon = {R.drawable.order_summary, R.drawable.paymentsummary_icon/*,R.drawable.invontery*//*,R.drawable.competitor_icon*/, R.drawable.assets_request_icon, R.drawable.paymentsummary_icon, R.drawable.assets_request_icon, R.drawable.paymentsummary_icon, R.drawable.salable_van_stock_icon};
 
 
 
@@ -1398,8 +1396,8 @@ public class AppConstants {
 
         int pos = filename.lastIndexOf('.');
         if (pos != -1) {
-            String ext = filename.substring(filename.lastIndexOf('.') + 1,
-                    filename.length());
+            String ext = filename.substring(filename.lastIndexOf('.') + 1
+            );
 
             if (ext.equalsIgnoreCase("mp3"))
                 return "audio/mpeg";

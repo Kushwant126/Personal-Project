@@ -18,48 +18,64 @@ import java.util.List;
 
 public class DoubleBarChart {
     private final BarChart barChart;
-    private List<BarEntry> barEntries1, barEntries2;
     private final List<String> xlabels;
-    private String label1 = "", label2 = "";
-    private int barColor1 = 0, barColor2 = 0;
     private final ArrayList<Integer> growPercentage;
-    private int angle = 0, aboveTextColor = 0;
-    private boolean aboveImage = true, isValueSelected = true;
     float setVisibleXRangeMaximum = 4.1f;
     XAxis xAxis;
+    private List<BarEntry> barEntries1, barEntries2;
+    private String label1 = "", label2 = "";
+    private int barColor1 = 0, barColor2 = 0;
+    private int angle = 0, aboveTextColor = 0;
+    private boolean aboveImage = true, isValueSelected = true;
 
-    public DoubleBarChart(BarChart chart, List<String> xlabels, ArrayList<Integer> percantage){
+    public DoubleBarChart(BarChart chart, List<String> xlabels, ArrayList<Integer> percantage) {
         this.barChart = chart;
         this.xlabels = xlabels;
         this.growPercentage = percantage;
     }
-    public void setDetails1(List<BarEntry> entries,String label,int color){
+
+    public void setDetails1(List<BarEntry> entries, String label, int color) {
         this.barEntries1 = entries;
         this.label1 = label;
         this.barColor1 = color;
     }
-    public void setDetails2(List<BarEntry> entries,String label,int color){
+
+    public void setDetails2(List<BarEntry> entries, String label, int color) {
         this.barEntries2 = entries;
         this.label2 = label;
         this.barColor2 = color;
     }
 
-    public void setAboveImageEnable(Boolean angle){ this.aboveImage=angle;}
-    public void setAboveTextColor(Integer angle){ this.aboveTextColor=angle;}
-    public void isValueSelected(Boolean angle){ this.isValueSelected=angle;}
+    public void setAboveImageEnable(Boolean angle) {
+        this.aboveImage = angle;
+    }
 
-    public void setLabelRotationAngle(int angle){ this.angle=angle;}
-    public void setVisibleXRangeMaximum(float max){ this.setVisibleXRangeMaximum=max;}
+    public void setAboveTextColor(Integer angle) {
+        this.aboveTextColor = angle;
+    }
+
+    public void isValueSelected(Boolean angle) {
+        this.isValueSelected = angle;
+    }
+
+    public void setLabelRotationAngle(int angle) {
+        this.angle = angle;
+    }
+
+    public void setVisibleXRangeMaximum(float max) {
+        this.setVisibleXRangeMaximum = max;
+    }
+
     public void createBarChart() {
 //        barChart.clear();
-        barChart.setExtraOffsets(5,30,0,15);
+        barChart.setExtraOffsets(5, 30, 0, 15);
         barChart.setDrawValueAboveBar(false);
-        AboveAndCurveCustomBarChart aboveAndCurveCustomBarChart= new AboveAndCurveCustomBarChart(
-                barChart.getContext(), barChart,barChart.getAnimator(),barChart.getViewPortHandler(),growPercentage);
+        AboveAndCurveCustomBarChart aboveAndCurveCustomBarChart = new AboveAndCurveCustomBarChart(
+                barChart.getContext(), barChart, barChart.getAnimator(), barChart.getViewPortHandler(), growPercentage);
         aboveAndCurveCustomBarChart.setRadius(20);
         aboveAndCurveCustomBarChart.textNeededBarPosition(2);
         aboveAndCurveCustomBarChart.disaplayImage(aboveImage);
-        if(aboveTextColor!=0) aboveAndCurveCustomBarChart.aboveValueTextColor(aboveTextColor);
+        if (aboveTextColor != 0) aboveAndCurveCustomBarChart.aboveValueTextColor(aboveTextColor);
         barChart.setRenderer(aboveAndCurveCustomBarChart);
 
         float barSpace = 0.1f;
@@ -81,29 +97,29 @@ public class DoubleBarChart {
         barDataSet1.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                int qwe=(int) value;
+                int qwe = (int) value;
 //                float qwe= value;
-                if(qwe>0){
-                    if(isValueSelected){
-                        return qwe+"L";
-                    }else{
-                        return qwe+"";
+                if (qwe > 0) {
+                    if (isValueSelected) {
+                        return qwe + "L";
+                    } else {
+                        return qwe + "";
                     }
-                }else return "";
+                } else return "";
             }
         });
         barDataSet2.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                int qwe=(int) value;
+                int qwe = (int) value;
 //                float qwe= value;
-                if(qwe>0){
-                    if(isValueSelected){
-                        return qwe+"L";
-                    }else{
-                        return qwe+"";
+                if (qwe > 0) {
+                    if (isValueSelected) {
+                        return qwe + "L";
+                    } else {
+                        return qwe + "";
                     }
-                }else return "";
+                } else return "";
             }
         });
 
@@ -124,7 +140,7 @@ public class DoubleBarChart {
         xAxis.setDrawGridLines(false);
 //        xAxis.setLabelRotationAngle(315);
         xAxis.setLabelRotationAngle(angle);
-        xAxis.setAxisMaximum(barEntries1.size()+.5f);
+        xAxis.setAxisMaximum(barEntries1.size() + .5f);
 
         YAxis rightYAxis = barChart.getAxisRight();
         rightYAxis.setEnabled(false);
@@ -134,7 +150,7 @@ public class DoubleBarChart {
         leftYAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftYAxis.setDrawGridLines(false);
 
-        barChart.animateXY(1500,1500);
+        barChart.animateXY(1500, 1500);
         barChart.animate();
         barChart.setDoubleTapToZoomEnabled(false);//to stop zoom on double tap
         barChart.setHighlightPerTapEnabled(false);// to disable the highlight on selection of the bar

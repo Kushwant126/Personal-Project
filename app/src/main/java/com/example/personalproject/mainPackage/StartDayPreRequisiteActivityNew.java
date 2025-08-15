@@ -71,7 +71,7 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
     long mStartRX = 0, mStartTX = 0;
     private int batteryLevel = 0;
     LinearLayout llStartDay, llattendance_DropDown;
-    TextView down_load, up_load, battery_percentage, tvattendance_type, tv_timeDetails, tv_locationDetails,startday_proceed;
+    TextView down_load, up_load, battery_percentage, tvattendance_type, tv_timeDetails, tv_locationDetails, startday_proceed;
     ImageView internetspeed_tick, internetspeed_cross, syn_tick, syn_cross, datacheck_tick, datacheck_cross, battery_tick, battery_cross, selfie_img, ivRetake_selfie;
     RelativeLayout startday_PreCheck, startday_TakeSelfie, selfie_taken;
     CardView startday_PreCheck_attendance, startday_capture_selfie;
@@ -145,13 +145,15 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
         getLocationNew();
 
     }
+
     private void initilizeControl() {
         tv_timeDetails = llStartDay.findViewById(R.id.tv_timeDetails);
         tv_locationDetails = llStartDay.findViewById(R.id.tv_locationDetails);
         ivRetake_selfie = llStartDay.findViewById(R.id.ivRetake_selfie);
         tvattendance_type = llStartDay.findViewById(R.id.tvattendance_type);
         llattendance_DropDown = llStartDay.findViewById(R.id.llattendance_DropDown);
-        startday_proceed = llStartDay.findViewById(R.id.startday_proceed);startday_proceed.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
+        startday_proceed = llStartDay.findViewById(R.id.startday_proceed);
+        startday_proceed.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
         selfie_img = llStartDay.findViewById(R.id.selfie_img);
         startday_capture_selfie = llStartDay.findViewById(R.id.startday_capture_selfie);
         selfie_taken = llStartDay.findViewById(R.id.selfie_taken);
@@ -171,17 +173,27 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
         syn_tick = llStartDay.findViewById(R.id.syn_tick);
         syn_cross = llStartDay.findViewById(R.id.syn_cross);
 
-        TextView sync1 = llStartDay.findViewById(R.id.sync1);sync1.setTypeface(AppConstants.SanFranciscoDisplay_Regular);
-        TextView data1 = llStartDay.findViewById(R.id.data1);data1.setTypeface(AppConstants.SanFranciscoDisplay_Regular);
-        TextView netspeed1 = llStartDay.findViewById(R.id.netspeed1);netspeed1.setTypeface(AppConstants.SanFranciscoDisplay_Regular);
-        TextView battery1 = llStartDay.findViewById(R.id.battery1); battery1.setTypeface(AppConstants.SanFranciscoDisplay_Regular);
-        TextView mark_attendance = llStartDay.findViewById(R.id.mark_attendance);mark_attendance.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
-        TextView start_day_pr = llStartDay.findViewById(R.id.start_day_pr);start_day_pr.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
+        TextView sync1 = llStartDay.findViewById(R.id.sync1);
+        sync1.setTypeface(AppConstants.SanFranciscoDisplay_Regular);
+        TextView data1 = llStartDay.findViewById(R.id.data1);
+        data1.setTypeface(AppConstants.SanFranciscoDisplay_Regular);
+        TextView netspeed1 = llStartDay.findViewById(R.id.netspeed1);
+        netspeed1.setTypeface(AppConstants.SanFranciscoDisplay_Regular);
+        TextView battery1 = llStartDay.findViewById(R.id.battery1);
+        battery1.setTypeface(AppConstants.SanFranciscoDisplay_Regular);
+        TextView mark_attendance = llStartDay.findViewById(R.id.mark_attendance);
+        mark_attendance.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
+        TextView start_day_pr = llStartDay.findViewById(R.id.start_day_pr);
+        start_day_pr.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
 
-        TextView battery_percentage = llStartDay.findViewById(R.id.battery_percentage);battery_percentage.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
-        TextView down_load = llStartDay.findViewById(R.id.down_load);down_load.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
-        TextView up_load = llStartDay.findViewById(R.id.up_load);up_load.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
-        TextView netspeed2 = llStartDay.findViewById(R.id.netspeed2);netspeed2.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
+        TextView battery_percentage = llStartDay.findViewById(R.id.battery_percentage);
+        battery_percentage.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
+        TextView down_load = llStartDay.findViewById(R.id.down_load);
+        down_load.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
+        TextView up_load = llStartDay.findViewById(R.id.up_load);
+        up_load.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
+        TextView netspeed2 = llStartDay.findViewById(R.id.netspeed2);
+        netspeed2.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
 
 //        TextView sync = llStartDay.findViewById(R.id.sync);sync.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
 //        TextView data = llStartDay.findViewById(R.id.data);data.setTypeface(AppConstants.SanFranciscoDisplay_Bold);
@@ -198,31 +210,30 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
         });
 
         startday_capture_selfie.setOnClickListener(v -> {
-            if(vecDamageImageDOS != null)
+            if (vecDamageImageDOS != null)
                 new Handler().postDelayed(() -> {
                 }, 2000);
 
-            if(isChecked){
+            if (isChecked) {
 //                captureSelfiImage();
 //                checkPermissionsAndOpenCamera(selfie_img);
                 openCamera();
-            }else{
-                Toast.makeText(getApplicationContext(),getResources().getString(R.string.please_mark_tick), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.please_mark_tick), Toast.LENGTH_SHORT).show();
             }
         });
 
         startday_proceed.setOnClickListener(v -> {
-            if (isChecked){
-                if (bitmapProcessed!=null) {
+            if (isChecked) {
+                if (bitmapProcessed != null) {
 //                    isStartDayDone = true;
-                    preference.saveBooleanInPreference(Preference.START_DAY,true);
+                    preference.saveBooleanInPreference(Preference.START_DAY, true);
                     preference.commitPreference();
                     finish();
-                }
-                else
+                } else
                     showCustomDialog(StartDayPreRequisiteActivityNew.this, getResources().getString(R.string.alert), getResources().getString(R.string.please_capture_the_selfie), getResources().getString(R.string.OK), null, "");
-            }
-            else showCustomDialog(StartDayPreRequisiteActivityNew.this, getResources().getString(R.string.alert), getResources().getString(R.string.please_mark_attendance_yes_no), getResources().getString(R.string.OK), null, "");
+            } else
+                showCustomDialog(StartDayPreRequisiteActivityNew.this, getResources().getString(R.string.alert), getResources().getString(R.string.please_mark_attendance_yes_no), getResources().getString(R.string.OK), null, "");
         });
 
 
@@ -231,8 +242,8 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
 //        attendance_types.add(getString(R.string.present));
 //        attendance_types.add(getString(R.string.absent));
 
-        final String[] options =attendance_types.toArray(new String[0]);
-        String attendance=tvattendance_type.getText().toString();
+        final String[] options = attendance_types.toArray(new String[0]);
+        String attendance = tvattendance_type.getText().toString();
         if (attendance == null || attendance.isEmpty()) {
             tvattendance_type.setText(options[0]);
         }
@@ -259,10 +270,9 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
         boolean isCellularSignalAvailable = isCellularSignalAvailableCheck();
         boolean isWifiSignalAvailable = isWifiSignalAvailableCheck();
 
-        if (isCellularSignalAvailable || isWifiSignalAvailable)
-            isdatacheckWorking = true;
-        else isdatacheckWorking = false;
+        isdatacheckWorking = isCellularSignalAvailable || isWifiSignalAvailable;
     }
+
     public boolean isCellularSignalAvailableCheck() {
         int pid = android.os.Process.myPid(); // Get the process ID
         int uid = android.os.Process.myUid(); // Get the user ID
@@ -278,6 +288,7 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
 
         return false; // TelephonyManager is null, cannot determine network type
     }
+
     public boolean isWifiSignalAvailableCheck() {
         ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {
@@ -286,6 +297,7 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
         }
         return false;
     }
+
     void getBattery_percentage() {
         IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         Intent batteryStatus = getApplicationContext().registerReceiver(null, ifilter);
@@ -294,36 +306,39 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
         float batteryPct = level / (float) scale;
         float p = batteryPct * 100;
 
-        battery_percentage.setText(String.valueOf(Math.round(p))+"%");
+        battery_percentage.setText(Math.round(p) + "%");
         batteryLevel = Math.round(p);
     }
+
     public void internetSpeedCheck() {
         mStartRX = TrafficStats.getTotalRxBytes();
         mStartTX = TrafficStats.getTotalTxBytes();
         if (mStartRX == TrafficStats.UNSUPPORTED || mStartTX == TrafficStats.UNSUPPORTED) {
-            showCustomDialog(StartDayPreRequisiteActivityNew.this, getResources().getString(R.string.alert),getResources().getString(R.string.your_device_does_not_support_traffice),getResources().getString(R.string.OK),"","");
+            showCustomDialog(StartDayPreRequisiteActivityNew.this, getResources().getString(R.string.alert), getResources().getString(R.string.your_device_does_not_support_traffice), getResources().getString(R.string.OK), "", "");
         } else {
             mHandler.postDelayed(mRunnable, 1000);
         }
     }
+
     Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
             long Rx = TrafficStats.getTotalRxBytes();
             long Tx = TrafficStats.getTotalTxBytes();
             long rxBytes = Rx - mStartRX;
-            down_load.setText(rxBytes+"Bps");
+            down_load.setText(rxBytes + "Bps");
 //            down_load.setText(formatSpeed(rxBytes));
 
             mStartRX = Rx;
             long txBytes = Tx - mStartTX;
-            up_load.setText(txBytes+"Bps");
+            up_load.setText(txBytes + "Bps");
 //            up_load.setText(formatSpeed(txBytes));
 
             mStartTX = Tx;
-            mHandler.postDelayed(mRunnable,1000);
+            mHandler.postDelayed(mRunnable, 1000);
         }
     };
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -339,9 +354,10 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
 
 
     private void loadAttendanceType(String selectedOption) {
-        switch (selectedOption){
-            case "Present": isChecked=true;
-                isCheckedAbsent=false;
+        switch (selectedOption) {
+            case "Present":
+                isChecked = true;
+                isCheckedAbsent = false;
                 startday_capture_selfie.setVisibility(View.VISIBLE);
                 selfie_taken.setVisibility(View.GONE);
                 if (selfie_img.getDrawable() != null) selfie_img.setImageBitmap(null);
@@ -355,8 +371,8 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
                 }*/
                 break;
             case "Absent":
-                isChecked=false;
-                isCheckedAbsent=true;
+                isChecked = false;
+                isCheckedAbsent = true;
                 camera_imagepath = "";
                 startday_capture_selfie.setVisibility(View.GONE);
                 selfie_taken.setVisibility(View.GONE);
@@ -364,6 +380,7 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
                 break;
         }
     }
+
     @Override
     public void onBackPressed() {
         if (startday_TakeSelfie.getVisibility() == View.VISIBLE) {
@@ -378,8 +395,7 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
     }
 
 
-
-    ////////////////////////////////////////////////////////////////////////////////////
+    /// /////////////////////////////////////////////////////////////////////////////////
      /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                 File photoFile = null;
@@ -398,7 +414,6 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                 }
             }*/
-
     @SuppressLint("MissingPermission")
     private void getLocationNew() {
         FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -413,8 +428,7 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
         }
         if (selectedLanguage.equalsIgnoreCase(AppConstants.langEnglish)) {
             dateFormat = new SimpleDateFormat("h:mm a, dd-MMM-yyyy", Locale.US);
-        }
-        else {
+        } else {
             dateFormat = new SimpleDateFormat("h:mm a, dd-MMM-yyyy", Locale.getDefault());
         }
 
@@ -423,8 +437,8 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
                 Location lastKnownLocation = task.getResult();
                 double latitude = lastKnownLocation.getLatitude();
                 double longitude = lastKnownLocation.getLongitude();
-                AppConstants.currentLat=latitude+"";
-                AppConstants.currentLng=longitude+"";
+                AppConstants.currentLat = latitude + "";
+                AppConstants.currentLng = longitude + "";
 
                 // Now you have the latitude and longitude, you can use them to get the address
                 String address = LocationUtils.getAddress(this, latitude, longitude);
@@ -436,6 +450,7 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
             }
         });
     }
+
     private void openCameraWorking() {
         if (isDeviceSupportCamera()) {
             File file = FileUtils.getOutputImageFile("Kush PP");
@@ -453,11 +468,11 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
                 intent.putExtra("filePath", file.getAbsolutePath());
                 startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
             }
-        }
-        else {
+        } else {
             Toast.makeText(this, getString(R.string.sorry_Device_not_supported_to_camera), Toast.LENGTH_SHORT).show();
         }
     }
+
     private void openCamera() {
         if (!isDeviceSupportCamera()) {
             Toast.makeText(this, R.string.sorry_Device_not_supported_to_camera, Toast.LENGTH_SHORT).show();
@@ -492,7 +507,7 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
 
             bitmapProcessed = getBitMap(bitmapProcessed, camera_imagepath);
 
-            if(bitmapProcessed!=null){
+            if (bitmapProcessed != null) {
                 if (selfie_taken.getVisibility() == View.GONE) {
                     startday_capture_selfie.setVisibility(View.GONE);
                     selfie_taken.setVisibility(View.VISIBLE);
@@ -507,11 +522,12 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
             }
         }
     }
+
     Bitmap getBitMap(Bitmap bmp, String camera_imagepath) {
         Bitmap mBtBitmap = null;
         if (bmp != null) {
-            if (currentLatLng!=null)
-                bitmapProcessed = BitmapUtilsLatLang.processBitmap2(bmp, currentLatLng.latitude+"", currentLatLng.longitude+"", "");
+            if (currentLatLng != null)
+                bitmapProcessed = BitmapUtilsLatLang.processBitmap2(bmp, currentLatLng.latitude + "", currentLatLng.longitude + "", "");
             else
                 bitmapProcessed = BitmapUtilsLatLang.processBitmap2(bmp, "0", "0", "");
             if (bmp != null && !bmp.isRecycled())
@@ -566,7 +582,7 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
         }
     }*/
 
-    ////////////////////////////////////////////////////////////////////////////////////
+    /// /////////////////////////////////////////////////////////////////////////////////
     // by kushwant
     private void getLocationNew1() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -595,13 +611,13 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
                 Log.d("getLocation", "addressDetails: No address found");
                 tv_locationDetails.setText("No address found");
             }
-        }
-        else {
+        } else {
 //                Toast.makeText(this, "No address found for the provided coordinates", Toast.LENGTH_SHORT).show();
             Log.d("getLocation", "addressDetails: No address found");
             tv_locationDetails.setText("No address found 1");
         }
     }
+
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -609,9 +625,10 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
         return image;
     }
+
     private File createImageFileNew() throws IOException {
         //        File captureImagesStorageDir = new File(Environment.getExternalStorageDirectory()+"/KR/outlet");
-        File captureImagesStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+"/KR/ImagesPP");
+        File captureImagesStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/KR/ImagesPP");
 
         if (!captureImagesStorageDir.exists()) {
             if (!captureImagesStorageDir.mkdirs()) {
@@ -620,10 +637,11 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
             }
         }
 
-        String timestamp = System.currentTimeMillis()+"";
+        String timestamp = System.currentTimeMillis() + "";
         File imageFile = new File(captureImagesStorageDir.getPath() + File.separator + "CAPTURE_" + timestamp + ".jpg");
         return imageFile;
     }
+
     private void setBitmapImage(final ImageView imageView, String capturedImageFilePath) {
 
         Bitmap stampBitmap = decodeFile(new File(capturedImageFilePath), (int) (1280 * px), (int) (720 * px));
@@ -644,6 +662,7 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
             });
         }
     }
+
     public static Bitmap decodeFile(File f, int WIDTH, int HIGHT) {
         try {
             // Decode image size
@@ -663,13 +682,13 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
             BitmapFactory.Options o2 = new BitmapFactory.Options();
             o2.inSampleSize = scale;
             return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+        } catch (FileNotFoundException e) {
         }
-        catch (FileNotFoundException e) {}
         return null;
     }
 
 
-    ////////////////////////////////////////////////////////////////////////////////////
+    /// /////////////////////////////////////////////////////////////////////////////////
     // Method to add a timestamp to the bitmap
     private Bitmap addTimestampToImage(Bitmap originalBitmap) {
         String timestamp = new SimpleDateFormat("dd MMMM, yyyy HH:mm", Locale.getDefault()).format(new Date());
@@ -692,6 +711,7 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
 
         return mutableBitmap;
     }
+
     // Method to save the modified bitmap to a file
     private void saveBitmapToFile(Bitmap bitmap, File file) {
         try {

@@ -25,8 +25,15 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import java.util.ArrayList;
 
 public class CustomHorizonatalOneSideBCRenderer extends HorizontalBarChartRenderer {
-    private RectF mBarShadowRectBuffer = new RectF();
+    Context context;
+    private final RectF mBarShadowRectBuffer = new RectF();
     private int mRadius;
+    private boolean imageDisplay = false;
+    private int abovetextColor = 0;
+    private int barPosition = 1;
+    private final Paint myPaint;
+    private ArrayList<Integer> myColors;
+    private ArrayList<Integer> growPercentage;
     public CustomHorizonatalOneSideBCRenderer(BarDataProvider chart, ChartAnimator animator, ViewPortHandler viewPortHandler) {
         super(chart, animator, viewPortHandler);
 
@@ -34,6 +41,7 @@ public class CustomHorizonatalOneSideBCRenderer extends HorizontalBarChartRender
         this.myColors = myColors;
         this.context = context;
     }
+
     public void setRadius(int radius) {
         this.mRadius = radius;
     }
@@ -101,9 +109,9 @@ public class CustomHorizonatalOneSideBCRenderer extends HorizontalBarChartRender
         int j = 0;
         while (j < buffer.size()) {
 //            int setDiableCustom=25;
-            int setDiableCustom=0;//still working on it.. by kush
+            int setDiableCustom = 0;//still working on it.. by kush
             if (!mViewPortHandler.isInBoundsTop(buffer.buffer[j + 1]) ||
-                    !mViewPortHandler.isInBoundsBottom(buffer.buffer[j + 3]-setDiableCustom) ||
+                    !mViewPortHandler.isInBoundsBottom(buffer.buffer[j + 3] - setDiableCustom) ||
                     !mViewPortHandler.isInBoundsLeft(buffer.buffer[j + 2]) ||
                     !mViewPortHandler.isInBoundsRight(buffer.buffer[j])) {
                 j += 4;
@@ -159,6 +167,7 @@ public class CustomHorizonatalOneSideBCRenderer extends HorizontalBarChartRender
             j += 4;
         }
     }
+
     private Path roundRectRight(RectF rect, float rx, float ry, boolean tl, boolean tr, boolean br, boolean bl) {
         float top = rect.top;
         float left = rect.left;
@@ -213,21 +222,14 @@ public class CustomHorizonatalOneSideBCRenderer extends HorizontalBarChartRender
         return path;
     }
 
-
-
-
-
     public void getContextF(Context context) {
         this.context = context;
     }
-    public void setGroupPercentage(ArrayList<Integer> growPercentage) { this.growPercentage = growPercentage; }
-    private boolean imageDisplay = false;
-    private int abovetextColor = 0;
-    private int barPosition = 1;
-    private Paint myPaint;
-    private ArrayList<Integer> myColors;
-    private ArrayList<Integer> growPercentage;
-    Context context;
+
+    public void setGroupPercentage(ArrayList<Integer> growPercentage) {
+        this.growPercentage = growPercentage;
+    }
+
     public void disaplayImage(boolean imageDisplay) {
         this.imageDisplay = imageDisplay;
     }
@@ -239,6 +241,7 @@ public class CustomHorizonatalOneSideBCRenderer extends HorizontalBarChartRender
     public void textNeededBarPosition(int barPosition) {
         this.barPosition = barPosition - 1;
     }
+
     @Override
     public void drawValues(Canvas c) {
         super.drawValues(c);
@@ -255,7 +258,7 @@ public class CustomHorizonatalOneSideBCRenderer extends HorizontalBarChartRender
                 top = buffer.buffer[j + 1];
                 bottom = buffer.buffer[j + 3];
 
-                int valueAtIndex=0;
+                int valueAtIndex = 0;
                 if (i == barPosition) {
                     int index = (int) buffer.buffer[j] % growPercentage.size();
 //                    valueAtIndex = growPercentage.get(Listindex);
@@ -272,21 +275,21 @@ public class CustomHorizonatalOneSideBCRenderer extends HorizontalBarChartRender
             }
         }
     }
+
     private void drawBitmapAndTextAboveBar(Canvas c, float left, float top, float right, float bottom,
                                            int valueAtIndex) {
 
         int setDiableCustom = 0;
         if (mViewPortHandler.isInBoundsTop(top + setDiableCustom) && mViewPortHandler.isInBoundsBottom(bottom)
                 && mViewPortHandler.isInBoundsLeft(left) &&
-                mViewPortHandler.isInBoundsRight(right + setDiableCustom))
-        {
+                mViewPortHandler.isInBoundsRight(right + setDiableCustom)) {
             int convertedValue = Math.abs(valueAtIndex);
             String customText = convertedValue + "%";
 
 //            float centerX = ( right) ;
 //            float centerY = bottom + 50f; // Adjust the vertical position as needed
             float centerX = right + 30f; // Adjust the horizontal position as needed
-            float centerY = (top + bottom) / 2f+15f;
+            float centerY = (top + bottom) / 2f + 15f;
 
             Paint textPaint = new Paint();
 //            textPaint.setTextSize(30f);
@@ -308,15 +311,8 @@ public class CustomHorizonatalOneSideBCRenderer extends HorizontalBarChartRender
     }
 
 
-
-
-
-
-
-
-
     private void drawBitmapAndTextAboveBar1(Canvas c, float left, float top, float right, float bottom,
-                                           int valueAtIndex) {
+                                            int valueAtIndex) {
 
         int setDiableCustom = 0;
         if (mViewPortHandler.isInBoundsTop(top + setDiableCustom) && mViewPortHandler.isInBoundsBottom(bottom)
@@ -329,8 +325,8 @@ public class CustomHorizonatalOneSideBCRenderer extends HorizontalBarChartRender
             int convertedValue = Math.abs(valueAtIndex);
             String customText = convertedValue + "%";
 
-            textColor=Color.BLACK;
-            float centerX = (left + right)/2f;
+            textColor = Color.BLACK;
+            float centerX = (left + right) / 2f;
             float centerY = bottom + 50f; // Adjust the vertical position as needed
 
             Paint textPaint = new Paint();

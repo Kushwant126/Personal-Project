@@ -22,14 +22,20 @@ import java.util.concurrent.locks.ReentrantLock;
  * singly-linked list protected by a ReentrantLock, with a Condition
  * to manage waiting for elements in take().
  */
-public class LinkedBlockingStack<E> extends AbstractQueue<E> 
-    implements BlockingQueue<E> {
+public class LinkedBlockingStack<E> extends AbstractQueue<E>
+        implements BlockingQueue<E> {
 
-    /** Simple linked list nodes */
+    /**
+     * Simple linked list nodes
+     */
     static class Node<E> {
         E item;
         Node<E> next;
-        Node(E x, Node<E> n) { item = x; next = n; }
+
+        Node(E x, Node<E> n) {
+            item = x;
+            next = n;
+        }
     }
 
     private Node<E> head;
@@ -44,14 +50,18 @@ public class LinkedBlockingStack<E> extends AbstractQueue<E>
         addAll(c);
     }
 
-    /** Insert node at front of list */
+    /**
+     * Insert node at front of list
+     */
     private void insert(E o) {
         head = new Node<E>(o, head);
         ++count;
         cond.signal();
     }
-    
-    /** Remove node at front of list. Call only when nonempty */
+
+    /**
+     * Remove node at front of list. Call only when nonempty
+     */
     private E extract() {
         E x = head.item;
         head = head.next;
@@ -61,18 +71,22 @@ public class LinkedBlockingStack<E> extends AbstractQueue<E>
 
     public int size() {
         lock.lock();
-        try { 
+        try {
             return count;
-        } finally { lock.unlock(); }
-    }        
+        } finally {
+            lock.unlock();
+        }
+    }
 
     public boolean offer(E o) {
         if (o == null) throw new NullPointerException();
         lock.lock();
-        try { 
+        try {
             insert(o);
             return true;
-        } finally { lock.unlock(); }
+        } finally {
+            lock.unlock();
+        }
     }
 
     public void put(E o) {
@@ -85,68 +99,78 @@ public class LinkedBlockingStack<E> extends AbstractQueue<E>
 
     public E peek() {
         lock.lock();
-        try { 
+        try {
             if (count == 0)
                 return null;
             return head.item;
-        } finally { lock.unlock(); }
+        } finally {
+            lock.unlock();
+        }
     }
 
     public E take() throws InterruptedException {
         lock.lock();
-        try { 
+        try {
             while (count == 0)
                 cond.await();
             return extract();
-        } finally { lock.unlock(); }
+        } finally {
+            lock.unlock();
+        }
     }
 
     public E poll() {
         lock.lock();
-        try { 
+        try {
             if (count == 0)
                 return null;
             return extract();
-        } finally { lock.unlock(); }
+        } finally {
+            lock.unlock();
+        }
     }
 
     public E poll(long t, TimeUnit unit) throws InterruptedException {
         long ns = unit.toNanos(t);
         lock.lock();
-        try { 
-            for (;;) {
-                if (count != 0) 
+        try {
+            for (; ; ) {
+                if (count != 0)
                     return extract();
                 if (ns <= 0)
                     return null;
                 ns = cond.awaitNanos(ns);
             }
-        } finally { lock.unlock(); }
+        } finally {
+            lock.unlock();
+        }
     }
 
-    public int remainingCapacity() { 
-        return Integer.MAX_VALUE; 
+    public int remainingCapacity() {
+        return Integer.MAX_VALUE;
     }
 
     public boolean contains(Object o) {
         lock.lock();
-        try { 
-            for (Node<E> p = head; p != null; p = p.next) 
+        try {
+            for (Node<E> p = head; p != null; p = p.next)
                 if (o.equals(p.item))
                     return true;
             return false;
-        } finally { lock.unlock(); }
-    }        
+        } finally {
+            lock.unlock();
+        }
+    }
 
     public boolean remove(Object o) {
         lock.lock();
-        try { 
+        try {
             Node<E> trail = null;
             Node<E> p = head;
             while (p != null) {
                 Node<E> next = p.next;
                 if (o.equals(p.item)) {
-                    if (trail == null) 
+                    if (trail == null)
                         head = next;
                     else
                         trail.next = next;
@@ -157,18 +181,22 @@ public class LinkedBlockingStack<E> extends AbstractQueue<E>
                 p = next;
             }
             return false;
-        } finally { lock.unlock(); }
-    }        
+        } finally {
+            lock.unlock();
+        }
+    }
 
 
     public void clear() {
         lock.lock();
-        try { 
+        try {
             head = null;
             count = 0;
-        } finally { lock.unlock(); }
-    }        
-    
+        } finally {
+            lock.unlock();
+        }
+    }
+
 
     public int drainTo(Collection<? super E> c) {
         if (c == null)
@@ -177,11 +205,13 @@ public class LinkedBlockingStack<E> extends AbstractQueue<E>
             throw new IllegalArgumentException();
         Node<E> p;
         lock.lock();
-        try { 
+        try {
             p = head;
             head = null;
             count = 0;
-        } finally { lock.unlock(); }
+        } finally {
+            lock.unlock();
+        }
         int n = 0;
         while (p != null) {
             E x = p.item;
@@ -214,32 +244,42 @@ public class LinkedBlockingStack<E> extends AbstractQueue<E>
 
     // Utilities needed by iterators
 
-    /** Get next under lock. Needed by iterator */
+    /**
+     * Get next under lock. Needed by iterator
+     */
     Node<E> getNext(Node<E> p) {
         lock.lock();
-        try { 
+        try {
             return p.next;
-        } finally { lock.unlock(); }
-    }        
+        } finally {
+            lock.unlock();
+        }
+    }
 
-    /** Get head of list under lock. Needed by iterator */
+    /**
+     * Get head of list under lock. Needed by iterator
+     */
     Node<E> getHead() {
         lock.lock();
-        try { 
+        try {
             return head;
-        } finally { lock.unlock(); }
-    }        
+        } finally {
+            lock.unlock();
+        }
+    }
 
-    /** Variant of remove needed by iterator */
+    /**
+     * Variant of remove needed by iterator
+     */
     boolean removeNode(Node<E> x) {
         lock.lock();
-        try { 
+        try {
             Node<E> trail = null;
             Node<E> p = head;
             while (p != null) {
                 Node<E> next = p.next;
                 if (p == x) {
-                    if (trail == null) 
+                    if (trail == null)
                         head = next;
                     else
                         trail.next = next;
@@ -250,26 +290,30 @@ public class LinkedBlockingStack<E> extends AbstractQueue<E>
                 p = next;
             }
             return false;
-        } finally { lock.unlock(); }
-    }        
+        } finally {
+            lock.unlock();
+        }
+    }
 
-    /** Iterator for LinkedBlockingStack */
+    /**
+     * Iterator for LinkedBlockingStack
+     */
     class Itr implements Iterator<E> {
         Node<E> last;
         Node<E> current;
         Node<E> next = getHead();
 
         public boolean hasNext() {
-            if (current != null) 
+            if (current != null)
                 return true;
-            if ((current = next) == null) 
+            if ((current = next) == null)
                 return false;
             next = getNext(next);
             return true;
         }
 
         public E next() {
-            if (current == null && !hasNext()) 
+            if (current == null && !hasNext())
                 throw new NoSuchElementException();
             last = current;
             current = null;

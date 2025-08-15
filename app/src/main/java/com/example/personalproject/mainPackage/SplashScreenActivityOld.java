@@ -43,7 +43,7 @@ import java.util.Vector;
 public class SplashScreenActivityOld extends BaseActivity implements GPSCallback {
     private LinearLayout llSplash;
     private Vector<String> vecLanguage;
-    private String isLanguageSelected = "";
+    private final String isLanguageSelected = "";
     private static final int PERMISSION_REQUEST_CODE = 200;
     boolean isOld = true, isbackPressed = true;
     ProgressBar progressBar;
@@ -77,8 +77,7 @@ public class SplashScreenActivityOld extends BaseActivity implements GPSCallback
 //        showLanguagePopup();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermission(getRequestPermissionList());
-        } else
-            showLanguagePopup();
+        } else showLanguagePopup();
         /*AppConstants.SanFranciscoDisplay_Regular 	= Typeface.createFromAsset(getApplicationContext().getAssets(), "Montserrat-Regular.ttf");
         AppConstants.SanFranciscoDisplay_Medium 	= Typeface.createFromAsset(getApplicationContext().getAssets(), "Montserrat-Medium.ttf");
         AppConstants.SanFranciscoDisplay_Semibold 	= Typeface.createFromAsset(getApplicationContext().getAssets(), "Montserrat-SemiBold.ttf");
@@ -101,21 +100,17 @@ public class SplashScreenActivityOld extends BaseActivity implements GPSCallback
                 for (String perm : info.requestedPermissions) {
                     // Check Android version to determine which permissions to consider
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 14+
-                        if (perm.equals(Manifest.permission.READ_EXTERNAL_STORAGE) ||
-                                perm.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        if (perm.equals(Manifest.permission.READ_EXTERNAL_STORAGE) || perm.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                             continue; // Skip deprecated permissions
                         }
                     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { // Android 12 and 13
-                        if (perm.equals(Manifest.permission.READ_MEDIA_IMAGES) ||
-                                perm.equals(Manifest.permission.READ_MEDIA_AUDIO) ||
-                                perm.equals(Manifest.permission.READ_MEDIA_VIDEO)) {
+                        if (perm.equals(Manifest.permission.READ_MEDIA_IMAGES) || perm.equals(Manifest.permission.READ_MEDIA_AUDIO) || perm.equals(Manifest.permission.READ_MEDIA_VIDEO)) {
                             continue; // Skip permissions not applicable to Android 12+
                         }
                     }
 
                     // Only add permissions not already granted
-                    if (!AppConstants.NORMAL_PERMISSIONS.contains(perm) &&
-                            ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED) {
+                    if (!AppConstants.NORMAL_PERMISSIONS.contains(perm) && ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED) {
                         permissions.add(perm);
                     }
                 }
@@ -374,7 +369,7 @@ public class SplashScreenActivityOld extends BaseActivity implements GPSCallback
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, final String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, final String[] permissions, int[] grantResults) {
         if (false) super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE:

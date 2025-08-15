@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -27,14 +28,14 @@ import java.util.zip.ZipOutputStream;
  * @author once
  */
 public class ZipUtils {
-	static String tag = "ZipUtils";
+    static String tag = "ZipUtils";
     private static final int BUFF_SIZE = 1024 * 1024; // 1M Byte
 
     /**
      * ����ѹ���ļ����У�
      *
      * @param resFileList Ҫѹ�����ļ����У��б�
-     * @param zipFile ���ɵ�ѹ���ļ�
+     * @param zipFile     ���ɵ�ѹ���ļ�
      * @throws IOException ��ѹ�����̳���ʱ�׳�
      */
     public static void zipFiles(Collection<File> resFileList, File zipFile) throws IOException {
@@ -50,8 +51,8 @@ public class ZipUtils {
      * ����ѹ���ļ����У�
      *
      * @param resFileList Ҫѹ�����ļ����У��б�
-     * @param zipFile ���ɵ�ѹ���ļ�
-     * @param comment ѹ���ļ���ע��
+     * @param zipFile     ���ɵ�ѹ���ļ�
+     * @param comment     ѹ���ļ���ע��
      * @throws IOException ��ѹ�����̳���ʱ�׳�
      */
     public static void zipFiles(Collection<File> resFileList, File zipFile, String comment)
@@ -68,59 +69,23 @@ public class ZipUtils {
     /**
      * ��ѹ��һ���ļ�
      *
-     * @param zipFile ѹ���ļ�
+     * @param zipFile    ѹ���ļ�
      * @param folderPath ��ѹ����Ŀ��Ŀ¼
      * @throws IOException ����ѹ�����̳���ʱ�׳�
      */
-    public static void upZipFile(File zipFile, String folderPath) throws ZipException, IOException {
+    public static void upZipFile(File zipFile, String folderPath) throws IOException {
         File desDir = new File(folderPath);
         if (!desDir.exists()) {
             desDir.mkdirs();
         }
         ZipFile zf = new ZipFile(zipFile);
-        byte buffer[] = new byte[BUFF_SIZE];
-        for (Enumeration<?> entries = zf.entries(); entries.hasMoreElements();) {
-            ZipEntry entry = ((ZipEntry)entries.nextElement());
+        byte[] buffer = new byte[BUFF_SIZE];
+        for (Enumeration<?> entries = zf.entries(); entries.hasMoreElements(); ) {
+            ZipEntry entry = ((ZipEntry) entries.nextElement());
             InputStream in = zf.getInputStream(entry);
-            String str = folderPath+entry.getName();
-            str = new String(str.getBytes("8859_1"), "GB2312");
-            LogUtils.errorLog(tag, "upZipFile:"+str);
-            File desFile = new File(str);
-            if (!desFile.exists()) {
-                File fileParentDir = desFile.getParentFile();
-                if (!fileParentDir.exists()) {
-                    fileParentDir.mkdirs();
-                }
-                desFile.createNewFile();
-            }
-            OutputStream out = new FileOutputStream(desFile);           
-            int realLength;
-            while ((realLength = in.read(buffer)) > 0) {
-                out.write(buffer, 0, realLength);
-            }
-            
-            File salesman = new File(folderPath,"salesman.sqlite");
-            
-            if(desFile.exists())
-            	desFile.renameTo(salesman);
-            DatabaseHelper.createTables();
-            in.close();
-            out.close();
-        }
-    }
-    public static void upZipFileForSalesHistory(File zipFile, String folderPath) throws ZipException, IOException {
-        File desDir = new File(folderPath);
-        if (!desDir.exists()) {
-            desDir.mkdirs();
-        }
-        ZipFile zf = new ZipFile(zipFile);
-        byte buffer[] = new byte[BUFF_SIZE];
-        for (Enumeration<?> entries = zf.entries(); entries.hasMoreElements();) {
-            ZipEntry entry = ((ZipEntry)entries.nextElement());
-            InputStream in = zf.getInputStream(entry);
-            String str = folderPath+entry.getName();
-            str = new String(str.getBytes("8859_1"), "GB2312");
-            LogUtils.errorLog(tag, "upZipFile:"+str);
+            String str = folderPath + entry.getName();
+            str = new String(str.getBytes(StandardCharsets.ISO_8859_1), "GB2312");
+            LogUtils.errorLog(tag, "upZipFile:" + str);
             File desFile = new File(str);
             if (!desFile.exists()) {
                 File fileParentDir = desFile.getParentFile();
@@ -135,9 +100,9 @@ public class ZipUtils {
                 out.write(buffer, 0, realLength);
             }
 
-            File salesman = new File(folderPath,""+ AppConstants.DATABASE_SALES_HISTORY_NAME);
+            File salesman = new File(folderPath, "salesman.sqlite");
 
-            if(desFile.exists())
+            if (desFile.exists())
                 desFile.renameTo(salesman);
             DatabaseHelper.createTables();
             in.close();
@@ -145,19 +110,19 @@ public class ZipUtils {
         }
     }
 
-    public static void upZipAPKFile(File zipFile, String folderPath) throws ZipException, IOException {
+    public static void upZipFileForSalesHistory(File zipFile, String folderPath) throws IOException {
         File desDir = new File(folderPath);
         if (!desDir.exists()) {
             desDir.mkdirs();
         }
         ZipFile zf = new ZipFile(zipFile);
-        byte buffer[] = new byte[BUFF_SIZE];
-        for (Enumeration<?> entries = zf.entries(); entries.hasMoreElements();) {
-            ZipEntry entry = ((ZipEntry)entries.nextElement());
+        byte[] buffer = new byte[BUFF_SIZE];
+        for (Enumeration<?> entries = zf.entries(); entries.hasMoreElements(); ) {
+            ZipEntry entry = ((ZipEntry) entries.nextElement());
             InputStream in = zf.getInputStream(entry);
-            String str = folderPath+entry.getName();
-            str = new String(str.getBytes("8859_1"), "GB2312");
-            LogUtils.errorLog(tag, "upZipFile:"+str);
+            String str = folderPath + entry.getName();
+            str = new String(str.getBytes(StandardCharsets.ISO_8859_1), "GB2312");
+            LogUtils.errorLog(tag, "upZipFile:" + str);
             File desFile = new File(str);
             if (!desFile.exists()) {
                 File fileParentDir = desFile.getParentFile();
@@ -166,17 +131,54 @@ public class ZipUtils {
                 }
                 desFile.createNewFile();
             }
-            OutputStream out = new FileOutputStream(desFile);           
+            OutputStream out = new FileOutputStream(desFile);
             int realLength;
             while ((realLength = in.read(buffer)) > 0) {
                 out.write(buffer, 0, realLength);
             }
-            
-            File salesman = new File(folderPath,"salesman.sqlite");
-            
-            if(desFile.exists())
-            	desFile.renameTo(salesman);
-            
+
+            File salesman = new File(folderPath, AppConstants.DATABASE_SALES_HISTORY_NAME);
+
+            if (desFile.exists())
+                desFile.renameTo(salesman);
+            DatabaseHelper.createTables();
+            in.close();
+            out.close();
+        }
+    }
+
+    public static void upZipAPKFile(File zipFile, String folderPath) throws IOException {
+        File desDir = new File(folderPath);
+        if (!desDir.exists()) {
+            desDir.mkdirs();
+        }
+        ZipFile zf = new ZipFile(zipFile);
+        byte[] buffer = new byte[BUFF_SIZE];
+        for (Enumeration<?> entries = zf.entries(); entries.hasMoreElements(); ) {
+            ZipEntry entry = ((ZipEntry) entries.nextElement());
+            InputStream in = zf.getInputStream(entry);
+            String str = folderPath + entry.getName();
+            str = new String(str.getBytes(StandardCharsets.ISO_8859_1), "GB2312");
+            LogUtils.errorLog(tag, "upZipFile:" + str);
+            File desFile = new File(str);
+            if (!desFile.exists()) {
+                File fileParentDir = desFile.getParentFile();
+                if (!fileParentDir.exists()) {
+                    fileParentDir.mkdirs();
+                }
+                desFile.createNewFile();
+            }
+            OutputStream out = new FileOutputStream(desFile);
+            int realLength;
+            while ((realLength = in.read(buffer)) > 0) {
+                out.write(buffer, 0, realLength);
+            }
+
+            File salesman = new File(folderPath, "salesman.sqlite");
+
+            if (desFile.exists())
+                desFile.renameTo(salesman);
+
             in.close();
             out.close();
         }
@@ -185,14 +187,14 @@ public class ZipUtils {
     /**
      * ��ѹ�ļ��������������ֵ��ļ�
      *
-     * @param zipFile ѹ���ļ�
-     * @param folderPath Ŀ���ļ���
+     * @param zipFile      ѹ���ļ�
+     * @param folderPath   Ŀ���ļ���
      * @param nameContains ������ļ�ƥ����
      * @throws ZipException ѹ����ʽ����ʱ�׳�
-     * @throws IOException IO����ʱ�׳�
+     * @throws IOException  IO����ʱ�׳�
      */
     public static ArrayList<File> upZipSelectedFile(File zipFile, String folderPath,
-            String nameContains) throws ZipException, IOException {
+                                                    String nameContains) throws ZipException, IOException {
         ArrayList<File> fileList = new ArrayList<File>();
 
         File desDir = new File(folderPath);
@@ -201,12 +203,12 @@ public class ZipUtils {
         }
 
         ZipFile zf = new ZipFile(zipFile);
-        for (Enumeration<?> entries = zf.entries(); entries.hasMoreElements();) {
-            ZipEntry entry = ((ZipEntry)entries.nextElement());
+        for (Enumeration<?> entries = zf.entries(); entries.hasMoreElements(); ) {
+            ZipEntry entry = ((ZipEntry) entries.nextElement());
             if (entry.getName().contains(nameContains)) {
                 InputStream in = zf.getInputStream(entry);
                 String str = folderPath + File.separator + entry.getName();
-                str = new String(str.getBytes("8859_1"), "GB2312");
+                str = new String(str.getBytes(StandardCharsets.ISO_8859_1), "GB2312");
                 // str.getBytes("GB2312"),"8859_1" ���
                 // str.getBytes("8859_1"),"GB2312" ����
                 File desFile = new File(str);
@@ -218,7 +220,7 @@ public class ZipUtils {
                     desFile.createNewFile();
                 }
                 OutputStream out = new FileOutputStream(desFile);
-                byte buffer[] = new byte[BUFF_SIZE];
+                byte[] buffer = new byte[BUFF_SIZE];
                 int realLength;
                 while ((realLength = in.read(buffer)) > 0) {
                     out.write(buffer, 0, realLength);
@@ -237,14 +239,14 @@ public class ZipUtils {
      * @param zipFile ѹ���ļ�
      * @return ѹ���ļ����ļ�����
      * @throws ZipException ѹ���ļ���ʽ����ʱ�׳�
-     * @throws IOException ����ѹ�����̳���ʱ�׳�
+     * @throws IOException  ����ѹ�����̳���ʱ�׳�
      */
     public static ArrayList<String> getEntriesNames(File zipFile) throws ZipException, IOException {
         ArrayList<String> entryNames = new ArrayList<String>();
         Enumeration<?> entries = getEntriesEnumeration(zipFile);
         while (entries.hasMoreElements()) {
-            ZipEntry entry = ((ZipEntry)entries.nextElement());
-            entryNames.add(new String(getEntryName(entry).getBytes("GB2312"), "8859_1"));
+            ZipEntry entry = ((ZipEntry) entries.nextElement());
+            entryNames.add(new String(getEntryName(entry).getBytes("GB2312"), StandardCharsets.ISO_8859_1));
         }
         return entryNames;
     }
@@ -255,7 +257,7 @@ public class ZipUtils {
      * @param zipFile ѹ���ļ�
      * @return ����һ��ѹ���ļ��б�
      * @throws ZipException ѹ���ļ���ʽ����ʱ�׳�
-     * @throws IOException IO��������ʱ�׳�
+     * @throws IOException  IO��������ʱ�׳�
      */
     public static Enumeration<?> getEntriesEnumeration(File zipFile) throws ZipException,
             IOException {
@@ -272,7 +274,7 @@ public class ZipUtils {
      * @throws UnsupportedEncodingException
      */
     public static String getEntryComment(ZipEntry entry) throws UnsupportedEncodingException {
-        return new String(entry.getComment().getBytes("GB2312"), "8859_1");
+        return new String(entry.getComment().getBytes("GB2312"), StandardCharsets.ISO_8859_1);
     }
 
     /**
@@ -283,30 +285,30 @@ public class ZipUtils {
      * @throws UnsupportedEncodingException
      */
     public static String getEntryName(ZipEntry entry) throws UnsupportedEncodingException {
-        return new String(entry.getName().getBytes("GB2312"), "8859_1");
+        return new String(entry.getName().getBytes("GB2312"), StandardCharsets.ISO_8859_1);
     }
 
     /**
      * ѹ���ļ�
      *
-     * @param resFile ��Ҫѹ�����ļ����У�
-     * @param zipout ѹ����Ŀ���ļ�
+     * @param resFile  ��Ҫѹ�����ļ����У�
+     * @param zipout   ѹ����Ŀ���ļ�
      * @param rootpath ѹ�����ļ�·��
      * @throws FileNotFoundException �Ҳ����ļ�ʱ�׳�
-     * @throws IOException ��ѹ�����̳���ʱ�׳�
+     * @throws IOException           ��ѹ�����̳���ʱ�׳�
      */
     private static void zipFile(File resFile, ZipOutputStream zipout, String rootpath)
             throws FileNotFoundException, IOException {
         rootpath = rootpath + (rootpath.trim().length() == 0 ? "" : File.separator)
                 + resFile.getName();
-        rootpath = new String(rootpath.getBytes("8859_1"), "GB2312");
+        rootpath = new String(rootpath.getBytes(StandardCharsets.ISO_8859_1), "GB2312");
         if (resFile.isDirectory()) {
             File[] fileList = resFile.listFiles();
             for (File file : fileList) {
                 zipFile(file, zipout, rootpath);
             }
         } else {
-            byte buffer[] = new byte[BUFF_SIZE];
+            byte[] buffer = new byte[BUFF_SIZE];
             BufferedInputStream in = new BufferedInputStream(new FileInputStream(resFile),
                     BUFF_SIZE);
             zipout.putNextEntry(new ZipEntry(rootpath));
@@ -320,19 +322,19 @@ public class ZipUtils {
         }
     }
 
-    public static void upZipFileCPS(File zipFile, String folderPath) throws ZipException, IOException {
+    public static void upZipFileCPS(File zipFile, String folderPath) throws IOException {
         File desDir = new File(folderPath);
         if (!desDir.exists()) {
             desDir.mkdirs();
         }
         ZipFile zf = new ZipFile(zipFile);
-        byte buffer[] = new byte[BUFF_SIZE];
-        for (Enumeration<?> entries = zf.entries(); entries.hasMoreElements();) {
-            ZipEntry entry = ((ZipEntry)entries.nextElement());
+        byte[] buffer = new byte[BUFF_SIZE];
+        for (Enumeration<?> entries = zf.entries(); entries.hasMoreElements(); ) {
+            ZipEntry entry = ((ZipEntry) entries.nextElement());
             InputStream in = zf.getInputStream(entry);
-            String str = folderPath+entry.getName();
-            str = new String(str.getBytes("8859_1"), "GB2312");
-            LogUtils.errorLog(tag, "upZipFile:"+str);
+            String str = folderPath + entry.getName();
+            str = new String(str.getBytes(StandardCharsets.ISO_8859_1), "GB2312");
+            LogUtils.errorLog(tag, "upZipFile:" + str);
             File desFile = new File(str);
             if (!desFile.exists()) {
                 File fileParentDir = desFile.getParentFile();
@@ -347,9 +349,9 @@ public class ZipUtils {
                 out.write(buffer, 0, realLength);
             }
 
-            File salesman = new File(folderPath,"salesmancpsdetails.sqlite");
+            File salesman = new File(folderPath, "salesmancpsdetails.sqlite");
 
-            if(desFile.exists())
+            if (desFile.exists())
                 desFile.renameTo(salesman);
             DatabaseHelper.createTables();
             in.close();

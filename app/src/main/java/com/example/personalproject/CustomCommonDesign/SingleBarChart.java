@@ -16,12 +16,12 @@ import java.util.List;
 
 public class SingleBarChart {
 
-    private BarChart barChart;
-    private List<BarEntry> barEntries;
-    private List<String> xlabels;
-    private int angle=0,barColor=0;
-    private String label="";
-    private boolean isValueSelected=true;
+    private final BarChart barChart;
+    private final List<BarEntry> barEntries;
+    private final List<String> xlabels;
+    private int angle = 0, barColor = 0;
+    private String label = "";
+    private boolean isValueSelected = true;
 
     public SingleBarChart(BarChart chart, List<BarEntry> entries, List<String> xlabels) {
         this.barChart = chart;
@@ -29,24 +29,37 @@ public class SingleBarChart {
         this.xlabels = xlabels;
     }
 
-    public void setLabelRotationAngle(int angle){ this.angle=angle;}
-    public void setbarlabel(String label){ this.label=label;}
-    public void setbarColor(int label){ this.barColor=label;}
+    public void setLabelRotationAngle(int angle) {
+        this.angle = angle;
+    }
 
-    public void clearBarChart(){ barChart.clear(); }
-    public void isValueSelected(Boolean angle){ this.isValueSelected=angle;}
+    public void setbarlabel(String label) {
+        this.label = label;
+    }
+
+    public void setbarColor(int label) {
+        this.barColor = label;
+    }
+
+    public void clearBarChart() {
+        barChart.clear();
+    }
+
+    public void isValueSelected(Boolean angle) {
+        this.isValueSelected = angle;
+    }
 
     public void createBarChart() {
         barChart.clear();
 
-        CustomBarChartRender customBarChartRender= new CustomBarChartRender(barChart,barChart.getAnimator(),barChart.getViewPortHandler());
+        CustomBarChartRender customBarChartRender = new CustomBarChartRender(barChart, barChart.getAnimator(), barChart.getViewPortHandler());
         customBarChartRender.setRadius(30);
         barChart.setRenderer(customBarChartRender);
 
         String[] labelsArray = xlabels.toArray(new String[0]);
         BarDataSet barDataSet = new BarDataSet(barEntries, label);
 
-        barChart.setExtraOffsets(10,0,0,15);
+        barChart.setExtraOffsets(10, 0, 0, 15);
 //        barChart.setExtraBottomOffset(5f);
 
 
@@ -74,14 +87,14 @@ public class SingleBarChart {
             public String getFormattedValue(float value) {
                 /*if(value>0) return (int) value + "L";
                 else return "";*/
-                int qwe=(int) value;
-                if(qwe>0){
-                    if(isValueSelected){
-                        return qwe+"L";
-                    }else{
-                        return qwe+"";
+                int qwe = (int) value;
+                if (qwe > 0) {
+                    if (isValueSelected) {
+                        return qwe + "L";
+                    } else {
+                        return qwe + "";
                     }
-                }else return "";
+                } else return "";
             }
         });
 

@@ -19,8 +19,8 @@ public class LoginAcivity extends BaseActivity implements GPSCallback {
     private EditText etUserName, etPassword;
     private Button btnLogin;
     private TextView tvForgotPassword, tvServerSettings, tvRemember;
-    private LinearLayout ll_rememberme,llLogin;
-    private boolean isFirstTimeLogin = false;
+    private LinearLayout ll_rememberme, llLogin;
+    private final boolean isFirstTimeLogin = false;
     private TextView tvIMEINO_NEW;
 
     @Override
@@ -29,7 +29,7 @@ public class LoginAcivity extends BaseActivity implements GPSCallback {
         llLogin = (LinearLayout) inflater.inflate(R.layout.new_login_screen, null);
         llBody.addView(llLogin, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         setTypeFaceRobotoOriginalMedium(llLogin);
-        btnLogin=findViewById(R.id.btnLogin);
+        btnLogin = findViewById(R.id.btnLogin);
 //        isStartDayDone=false;
 
         gpsUtills.setListner(this);
@@ -38,25 +38,25 @@ public class LoginAcivity extends BaseActivity implements GPSCallback {
 
         btnLogin.setOnClickListener(v -> {
             showLoader(getString(R.string.Syncing_Data));
-            preference.saveBooleanInPreference(Preference.START_DAY,false);
+            preference.saveBooleanInPreference(Preference.START_DAY, false);
             preference.commitPreference();
-            Intent intent =	new Intent(LoginAcivity.this, MainActivity.class);//CompetitorsListActivity
+            Intent intent = new Intent(LoginAcivity.this, MainActivity.class);//CompetitorsListActivity
             startActivity(intent);
-            overridePendingTransition(R.anim.slide_left,R.anim.slide_right);
+            overridePendingTransition(R.anim.slide_left, R.anim.slide_right);
             finish();
         });
-        tvIMEINO_NEW =  llLogin.findViewById(R.id.tvIMEINO_NEW);
-        tvIMEINO_NEW.setText("IMEI : "+getUniqueID());
+        tvIMEINO_NEW = llLogin.findViewById(R.id.tvIMEINO_NEW);
+        tvIMEINO_NEW.setText("IMEI : " + getUniqueID());
 
-        TextView tvAppVersion =  llLogin.findViewById(R.id.tvAppVersion);
-        TextView tvVersion =  llLogin.findViewById(R.id.tvVersion);
-        etUserName =  llLogin.findViewById(R.id.etUserName);
-        btnLogin =(Button) llLogin.findViewById(R.id.btnLogin);
-        tvServerSettings =  llLogin.findViewById(R.id.tvServerSettings);
-        etPassword =  llLogin.findViewById(R.id.etPassword);
-        tvRemember =  llLogin.findViewById(R.id.tvRemember);
-        ll_rememberme = (LinearLayout) llLogin.findViewById(R.id.ll_rememberme);
-        tvForgotPassword =  llLogin.findViewById(R.id.tvForgotPassword);
+        TextView tvAppVersion = llLogin.findViewById(R.id.tvAppVersion);
+        TextView tvVersion = llLogin.findViewById(R.id.tvVersion);
+        etUserName = llLogin.findViewById(R.id.etUserName);
+        btnLogin = llLogin.findViewById(R.id.btnLogin);
+        tvServerSettings = llLogin.findViewById(R.id.tvServerSettings);
+        etPassword = llLogin.findViewById(R.id.etPassword);
+        tvRemember = llLogin.findViewById(R.id.tvRemember);
+        ll_rememberme = llLogin.findViewById(R.id.ll_rememberme);
+        tvForgotPassword = llLogin.findViewById(R.id.tvForgotPassword);
         tvForgotPassword.setVisibility(View.GONE);
 
         etUserName.setTypeface(AppConstants.SanFranciscoDisplay_Medium);
@@ -76,8 +76,7 @@ public class LoginAcivity extends BaseActivity implements GPSCallback {
         if (code == GPSErrorCode.EC_UNABLE_TO_FIND_LOCATION) {
             currentLatLng = (LatLng) response;
             //unable to find location means lat = 0.0 ,lng = 0.0;
-        }
-        else if (code == GPSErrorCode.EC_LOCATION_FOUND) {
+        } else if (code == GPSErrorCode.EC_LOCATION_FOUND) {
             currentLatLng = (LatLng) response;
 
             //Added by Asad
@@ -104,6 +103,7 @@ public class LoginAcivity extends BaseActivity implements GPSCallback {
         super.onPause();
         gpsUtills.stopLocationUpdates();
     }
+
     @Override
     public void onResume() {
         super.onResume();

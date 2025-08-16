@@ -63,13 +63,14 @@ import java.util.Date;
 import java.util.Locale;
 
 public class StartDayPreRequisiteActivityNew extends BaseActivity {
-    String camera_imagepath = "";
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    String camera_imagepath = "";
     Bitmap bitmapProcessed;
     ArrayList<String> vecDamageImageDOS = new ArrayList<>();
     Handler mHandler = new Handler();
     long mStartRX = 0, mStartTX = 0;
-    private int batteryLevel = 0;
     LinearLayout llStartDay, llattendance_DropDown;
     TextView down_load, up_load, battery_percentage, tvattendance_type, tv_timeDetails, tv_locationDetails, startday_proceed;
     ImageView internetspeed_tick, internetspeed_cross, syn_tick, syn_cross, datacheck_tick, datacheck_cross, battery_tick, battery_cross, selfie_img, ivRetake_selfie;
@@ -77,9 +78,32 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
     CardView startday_PreCheck_attendance, startday_capture_selfie;
     ArrayList<String> attendance_types = new ArrayList<>();
     boolean isdatacheckWorking = false, isSyncFailed = false, isChecked = true, isCheckedAbsent = false;
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private int batteryLevel = 0;
     private Uri photoURI;
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+
+    public static Bitmap decodeFile(File f, int WIDTH, int HIGHT) {
+        try {
+            // Decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(new FileInputStream(f), null, o);
+
+            // The new size we want to scale to
+            final int REQUIRED_WIDTH = WIDTH;
+            final int REQUIRED_HIGHT = HIGHT;
+            // Find the correct scale value. It should be the power of 2.
+            int scale = 1;
+            while (o.outWidth / scale / 2 >= REQUIRED_WIDTH && o.outHeight / scale / 2 >= REQUIRED_HIGHT)
+                scale *= 2;
+
+            // Decode with inSampleSize
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+        } catch (FileNotFoundException e) {
+        }
+        return null;
+    }
 
     @Override
     public void initialize() {
@@ -265,7 +289,6 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
         ivRetake_selfie.setOnClickListener(view -> startday_capture_selfie.performClick());
     }
 
-
     public void checkSignals() {
         boolean isCellularSignalAvailable = isCellularSignalAvailableCheck();
         boolean isWifiSignalAvailable = isWifiSignalAvailableCheck();
@@ -318,9 +341,7 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
         } else {
             mHandler.postDelayed(mRunnable, 1000);
         }
-    }
-
-    Runnable mRunnable = new Runnable() {
+    }    Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
             long Rx = TrafficStats.getTotalRxBytes();
@@ -663,31 +684,6 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
         }
     }
 
-    public static Bitmap decodeFile(File f, int WIDTH, int HIGHT) {
-        try {
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(new FileInputStream(f), null, o);
-
-            // The new size we want to scale to
-            final int REQUIRED_WIDTH = WIDTH;
-            final int REQUIRED_HIGHT = HIGHT;
-            // Find the correct scale value. It should be the power of 2.
-            int scale = 1;
-            while (o.outWidth / scale / 2 >= REQUIRED_WIDTH && o.outHeight / scale / 2 >= REQUIRED_HIGHT)
-                scale *= 2;
-
-            // Decode with inSampleSize
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
-        } catch (FileNotFoundException e) {
-        }
-        return null;
-    }
-
-
     /// /////////////////////////////////////////////////////////////////////////////////
     // Method to add a timestamp to the bitmap
     private Bitmap addTimestampToImage(Bitmap originalBitmap) {
@@ -723,4 +719,6 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
             e.printStackTrace();
         }
     }
+
+
 }

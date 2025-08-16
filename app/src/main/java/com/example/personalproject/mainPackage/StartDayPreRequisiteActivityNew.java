@@ -268,20 +268,23 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
 
         final String[] options = attendance_types.toArray(new String[0]);
         String attendance = tvattendance_type.getText().toString();
-        if (attendance == null || attendance.isEmpty()) {
-            tvattendance_type.setText(options[0]);
-        }
+        if (attendance == null || attendance.isEmpty()) tvattendance_type.setText(options[0]);
 
         llattendance_DropDown.setOnClickListener(view -> {
             PopupMenu popupMenu = new PopupMenu(StartDayPreRequisiteActivityNew.this.getApplicationContext(), view);
-            for (int i = 0; i < options.length; i++) {
-                if (!options[i].equals(tvattendance_type.getText().toString()))
-                    popupMenu.getMenu().add(options[i]);
+            for (String option : options) {
+                if (!option.equals(tvattendance_type.getText().toString()))
+                    popupMenu.getMenu().add(option);
             }
             popupMenu.setOnMenuItemClickListener(item -> {
                 String selectedOption = item.getTitle().toString();
                 tvattendance_type.setText(selectedOption);
                 loadAttendanceType(selectedOption);
+
+                if (selectedOption.equals("Absent")) {
+                    bitmapProcessed.recycle(); // free memory
+                    bitmapProcessed = null;
+                }
                 return true;
             });
             popupMenu.show();
@@ -341,24 +344,7 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
         } else {
             mHandler.postDelayed(mRunnable, 1000);
         }
-    }    Runnable mRunnable = new Runnable() {
-        @Override
-        public void run() {
-            long Rx = TrafficStats.getTotalRxBytes();
-            long Tx = TrafficStats.getTotalTxBytes();
-            long rxBytes = Rx - mStartRX;
-            down_load.setText(rxBytes + "Bps");
-//            down_load.setText(formatSpeed(rxBytes));
-
-            mStartRX = Rx;
-            long txBytes = Tx - mStartTX;
-            up_load.setText(txBytes + "Bps");
-//            up_load.setText(formatSpeed(txBytes));
-
-            mStartTX = Tx;
-            mHandler.postDelayed(mRunnable, 1000);
-        }
-    };
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -372,7 +358,6 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
             }
         }
     }
-
 
     private void loadAttendanceType(String selectedOption) {
         switch (selectedOption) {
@@ -400,7 +385,24 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
                 if (selfie_img.getDrawable() != null) selfie_img.setImageBitmap(null);
                 break;
         }
-    }
+    }    Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            long Rx = TrafficStats.getTotalRxBytes();
+            long Tx = TrafficStats.getTotalTxBytes();
+            long rxBytes = Rx - mStartRX;
+            down_load.setText(rxBytes + "Bps");
+//            down_load.setText(formatSpeed(rxBytes));
+
+            mStartRX = Rx;
+            long txBytes = Tx - mStartTX;
+            up_load.setText(txBytes + "Bps");
+//            up_load.setText(formatSpeed(txBytes));
+
+            mStartTX = Tx;
+            mHandler.postDelayed(mRunnable, 1000);
+        }
+    };
 
     @Override
     public void onBackPressed() {
@@ -414,7 +416,6 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
 //            finish();
         }
     }
-
 
     /// /////////////////////////////////////////////////////////////////////////////////
      /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -559,49 +560,6 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
         }
         return mBtBitmap;
     }
-    /*public String site_id = "";
-    private boolean isLocationFound;
-    @Override
-    public void gotGpsValidationResponse(Object response, GPSErrorCode code)
-    {
-        String userId = preference.getStringFromPreference(Preference.EMP_NO, "");
-        if (code == GPSErrorCode.EC_GPS_PROVIDER_NOT_ENABLED) {
-            gpsUtills.createdLogDataForApp("GpsProviderNotEnabled", userId, site_id, "");
-            showSettingsAlert();
-
-        } else if (code == GPSErrorCode.EC_GPS_PROVIDER_ENABLED) {
-            gpsUtills.createdLogDataForApp("GpsProviderEnabled", userId,
-                    site_id, "");
-        } else if (code == GPSErrorCode.EC_UNABLE_TO_FIND_LOCATION) {
-            isLocationFound = false;
-            currentLatLng = (LatLng) response;
-            gpsUtills.createdLogDataForApp("UnableFindLocation", userId,site_id,
-                    "Current Lattitude: "+ currentLatLng.latitude+ ", Current Longitude: "+ currentLatLng.longitude);
-
-            showToast("unable to find location");
-
-        } else if (code == GPSErrorCode.EC_LOCATION_FOUND) {
-            if (isGPSEnable(this)) {
-                currentLatLng = (LatLng) response;
-                isLocationFound = true;
-                gpsUtills.createdLogDataForApp("LocationFound", userId, site_id, "Currnet Lattitude: " + currentLatLng.latitude +
-                        ", Currnet Longitude: " + currentLatLng.longitude);
-            }
-            else {
-                isLocationFound = false;
-                showSettingsAlert();
-            }
-
-        } else if (code == GPSErrorCode.EC_CUSTOMER_LOCATION_IS_VALID) {
-            gpsUtills.createdLogDataForApp("CustomerLocationIsVaild", userId,site_id, "OfficeInOut");
-            //            startJouney();
-            showCustomDialog(this,getString(R.string.alert),getString(R.string.Do_you_wanttosubmit_EOT), getString(R.string.Yes), getString(R.string.No), "SubmitEOD", false);
-        } else if (code == GPSErrorCode.EC_CUSTOMER_lOCATION_IS_INVAILD) {
-            gpsUtills.createdLogDataForApp("CustomerLocationIsNotVaild",preference.getStringFromPreference(Preference.EMP_NO, ""), site_id, "OfficeInOut Not Allowed");
-            hideLoader();
-            showCustomDialog(this,getString(R.string.alert),getString(R.string.you_are_not_at_depot_location), getString(R.string.OK), null, "", false);
-        }
-    }*/
 
     /// /////////////////////////////////////////////////////////////////////////////////
     // by kushwant
@@ -646,6 +604,49 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
         return image;
     }
+    /*public String site_id = "";
+    private boolean isLocationFound;
+    @Override
+    public void gotGpsValidationResponse(Object response, GPSErrorCode code)
+    {
+        String userId = preference.getStringFromPreference(Preference.EMP_NO, "");
+        if (code == GPSErrorCode.EC_GPS_PROVIDER_NOT_ENABLED) {
+            gpsUtills.createdLogDataForApp("GpsProviderNotEnabled", userId, site_id, "");
+            showSettingsAlert();
+
+        } else if (code == GPSErrorCode.EC_GPS_PROVIDER_ENABLED) {
+            gpsUtills.createdLogDataForApp("GpsProviderEnabled", userId,
+                    site_id, "");
+        } else if (code == GPSErrorCode.EC_UNABLE_TO_FIND_LOCATION) {
+            isLocationFound = false;
+            currentLatLng = (LatLng) response;
+            gpsUtills.createdLogDataForApp("UnableFindLocation", userId,site_id,
+                    "Current Lattitude: "+ currentLatLng.latitude+ ", Current Longitude: "+ currentLatLng.longitude);
+
+            showToast("unable to find location");
+
+        } else if (code == GPSErrorCode.EC_LOCATION_FOUND) {
+            if (isGPSEnable(this)) {
+                currentLatLng = (LatLng) response;
+                isLocationFound = true;
+                gpsUtills.createdLogDataForApp("LocationFound", userId, site_id, "Currnet Lattitude: " + currentLatLng.latitude +
+                        ", Currnet Longitude: " + currentLatLng.longitude);
+            }
+            else {
+                isLocationFound = false;
+                showSettingsAlert();
+            }
+
+        } else if (code == GPSErrorCode.EC_CUSTOMER_LOCATION_IS_VALID) {
+            gpsUtills.createdLogDataForApp("CustomerLocationIsVaild", userId,site_id, "OfficeInOut");
+            //            startJouney();
+            showCustomDialog(this,getString(R.string.alert),getString(R.string.Do_you_wanttosubmit_EOT), getString(R.string.Yes), getString(R.string.No), "SubmitEOD", false);
+        } else if (code == GPSErrorCode.EC_CUSTOMER_lOCATION_IS_INVAILD) {
+            gpsUtills.createdLogDataForApp("CustomerLocationIsNotVaild",preference.getStringFromPreference(Preference.EMP_NO, ""), site_id, "OfficeInOut Not Allowed");
+            hideLoader();
+            showCustomDialog(this,getString(R.string.alert),getString(R.string.you_are_not_at_depot_location), getString(R.string.OK), null, "", false);
+        }
+    }*/
 
     private File createImageFileNew() throws IOException {
         //        File captureImagesStorageDir = new File(Environment.getExternalStorageDirectory()+"/KR/outlet");
@@ -719,6 +720,8 @@ public class StartDayPreRequisiteActivityNew extends BaseActivity {
             e.printStackTrace();
         }
     }
+
+
 
 
 }

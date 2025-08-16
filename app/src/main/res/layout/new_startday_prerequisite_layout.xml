@@ -18,7 +18,7 @@
             android:id="@+id/startday_PreCheck"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -145,6 +145,7 @@
                                 android:layout_height="50dp"
                                 app:cardBackgroundColor="#E57676"
                                 app:cardCornerRadius="@dimen/size25">
+
                                 <ImageView
                                     android:layout_width="@dimen/size30"
                                     android:layout_height="@dimen/size30"
@@ -159,7 +160,7 @@
                                 android:orientation="vertical"
                                 android:paddingLeft="@dimen/size15">
 
-<!--                                android:text="@string/data_check"-->
+                                <!--                                android:text="@string/data_check"-->
                                 <TextView
                                     android:id="@+id/data"
                                     android:layout_width="wrap_content"
@@ -219,6 +220,7 @@
                                 android:layout_height="50dp"
                                 app:cardBackgroundColor="#7224AF"
                                 app:cardCornerRadius="@dimen/size25">
+
                                 <ImageView
                                     android:layout_width="@dimen/size30"
                                     android:layout_height="@dimen/size30"
@@ -342,6 +344,7 @@
                                 android:layout_height="50dp"
                                 app:cardBackgroundColor="#FFA943"
                                 app:cardCornerRadius="@dimen/size25">
+
                                 <ImageView
                                     android:layout_width="@dimen/size30"
                                     android:layout_height="@dimen/size30"
@@ -674,6 +677,7 @@
                     app:cardElevation="@dimen/size25">
 
                 </androidx.cardview.widget.CardView>
+
                 <TextView
                     android:id="@+id/startday_proceed"
                     android:layout_width="match_parent"
@@ -681,11 +685,11 @@
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="@dimen/size24"
                     android:layout_marginBottom="@dimen/size15"
+                    android:background="@drawable/corner_radius_16"
                     android:fontFamily="@font/montserrat_bold"
                     android:gravity="center"
-                    android:text="@string/proceed"
                     android:paddingVertical="@dimen/size20"
-                    android:background="@drawable/corner_radius_16"
+                    android:text="@string/proceed"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
 

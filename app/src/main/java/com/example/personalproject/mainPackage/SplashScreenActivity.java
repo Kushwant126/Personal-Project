@@ -42,14 +42,14 @@ import java.util.Vector;
 
 @SuppressLint("CustomSplashScreen")
 public class SplashScreenActivity extends BaseActivity implements GPSCallback {
-    private LinearLayout llSplash;
-    private Vector<String> vecLanguage;
-    private final String isLanguageSelected = "";
     private static final int PERMISSION_REQUEST_CODE = 200;
+    private final String isLanguageSelected = "";
     boolean isOld = true, isbackPressed = true;
     ProgressBar progressBar;
     TextView tEnglish, tArabic, tvSubmit, tvlanguage;
     LinearLayout llyenglish, llyarabic;
+    private LinearLayout llSplash;
+    private Vector<String> vecLanguage;
 
     /* @Override
      protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,28 +69,15 @@ public class SplashScreenActivity extends BaseActivity implements GPSCallback {
         TextView t2 = findViewById(R.id.t2);
         t2.setTypeface(ResourcesCompat.getFont(this, R.font.montserrat_light));
 
-        vecLanguage = new Vector<String>();
+        vecLanguage = new Vector<>();
         vecLanguage.add("English");
         vecLanguage.add("Arabic");
 
         initializeControlls();
 
 //        showLanguagePopup();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermission(getRequestPermissionList());
-        } else
-            showLanguagePopup();
-        /*AppConstants.SanFranciscoDisplay_Regular 	= Typeface.createFromAsset(getApplicationContext().getAssets(), "Montserrat-Regular.ttf");
-        AppConstants.SanFranciscoDisplay_Medium 	= Typeface.createFromAsset(getApplicationContext().getAssets(), "Montserrat-Medium.ttf");
-        AppConstants.SanFranciscoDisplay_Semibold 	= Typeface.createFromAsset(getApplicationContext().getAssets(), "Montserrat-SemiBold.ttf");
-        AppConstants.SanFranciscoDisplay_Bold 		= Typeface.createFromAsset(getApplicationContext().getAssets(), "Montserrat-Bold.ttf");
-
-        AppConstants.montserrat_black        = Typeface.createFromAsset(getApplicationContext().getAssets(), "Montserrat-Black.ttf");
-        AppConstants.montserrat_light        = Typeface.createFromAsset(getApplicationContext().getAssets(), "Montserrat-Light.ttf");
-        AppConstants.montserrat_extralight   = Typeface.createFromAsset(getApplicationContext().getAssets(), "Montserrat-ExtraLight.ttf");
-        AppConstants.montserrat_thin         = Typeface.createFromAsset(getApplicationContext().getAssets(), "Montserrat-Thin.ttf");
-        AppConstants.montserrat_extrabold    = Typeface.createFromAsset(getApplicationContext().getAssets(), "Montserrat-ExtraBold.ttf");*/
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) requestPermission(getRequestPermissionList());
+        else showLanguagePopup();
     }
 
     public ArrayList<String> getRequestPermissionList() {
@@ -106,24 +93,27 @@ public class SplashScreenActivity extends BaseActivity implements GPSCallback {
                                 perm.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                             continue; // Skip deprecated permissions
                         }
-                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { // Android 12 and 13
+                    }
+                    /*else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { // Android 12 and 13
                         if (perm.equals(Manifest.permission.READ_MEDIA_IMAGES) ||
                                 perm.equals(Manifest.permission.READ_MEDIA_AUDIO) ||
                                 perm.equals(Manifest.permission.READ_MEDIA_VIDEO)) {
                             continue; // Skip permissions not applicable to Android 12+
                         }
-                    }
+                    }*/ // by kush no need to recode audio or take picture.
 
                     // Only add permissions not already granted
-                    if (!AppConstants.NORMAL_PERMISSIONS.contains(perm) &&
-                            ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED) {
+                    if (!AppConstants.NORMAL_PERMISSIONS.contains(perm) && ContextCompat.checkSelfPermission(this, perm)
+                            != PackageManager.PERMISSION_GRANTED) {
                         permissions.add(perm);
                     }
                 }
             }
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace(); // Log or handle the exception as needed
+            e.printStackTrace();
         }
+        Log.d("PermissionResult", "Final permissions to request: " + permissions);
+        Log.d("PermissionResult", "");
         return permissions;
     }
 
@@ -319,12 +309,10 @@ public class SplashScreenActivity extends BaseActivity implements GPSCallback {
             case PERMISSION_REQUEST_CODE:
                 //                int i = 0;
                 if (grantResults.length > 0) {
-
                     for (int i = 0; i < permissions.length; i++) {
                         String permission = permissions[i];
-                        int grantResult = grantResults[i];
 
-                        if (grantResult == PackageManager.PERMISSION_GRANTED) {
+                        if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                             Log.d("PermissionResult", permission + " is granted.");
                         } else {
                             Log.d("PermissionResult", permission + " is denied.");
@@ -359,16 +347,14 @@ public class SplashScreenActivity extends BaseActivity implements GPSCallback {
 //                        startActivity(intent);
 
                         for (int i = 0; i < permissions.length; i++) {
-                            if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                            if (grantResults[i] == PackageManager.PERMISSION_DENIED)
                                 Log.d("PermissionResultNew", permissions[i] + " is denied.");
-                            }
                         }
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             //                            requestPermissions(new String[]{READ_PHONE_STATE},PERMISSION_REQUEST_CODE);
                             requestPermissions(permissions, PERMISSION_REQUEST_CODE);
                         }
-
                     }
                 }
                 break;

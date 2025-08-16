@@ -4,7 +4,6 @@ import static android.view.View.LAYOUT_DIRECTION_LTR;
 import static android.view.View.LAYOUT_DIRECTION_RTL;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -86,44 +85,46 @@ import java.util.Vector;
 
 //public abstract class BaseActivity extends FragmentActivity implements AbsListView.OnScrollListener, ViewPager.OnPageChangeListener {
 public abstract class BaseActivity extends AppCompatActivity implements AbsListView.OnScrollListener, ViewPager.OnPageChangeListener {
-    public LatLng currentLatLng = null;
-    SimpleDateFormat dateFormat;
     private static final int PERMISSION_REQUEST_CODE = 1;
-    TextView tvEndtrip;
-    CustomDialog subMenuPopUP, customDialog;
-    MenuAdapter subMenuAdapter;
-    private Toast toast;
     public static float px;
-    private int groupPos = 0;
+    public static int selectedBar = 1;
+    public LatLng currentLatLng = null;
     public PopupWindow customKeyBoardpopup;
-    private View customKeyBoard, globalView;
     public LayoutInflater inflater;
-    private TextView tvDone, tvNext, tvOne, tvTwo, tvThree, tvFour, tvFive, tvSix, tvSeven, tvEight, tvNine, tvZero, tvClear, tvDot, tvUserADID, tvUsername;
-    private ExpandableListView lvDashBoard;
-    protected DashBoardOptionsCustomAdapter adapter;
     public DrawerLayout drawerLayout;
     public Button btnMenu;
-    Vector<MenuDO> vecMenus = null;
     public Preference preference;
     public LinearLayout llHeader, llBody, llMenuOne, llMenuTwo, llMenuThree, llOthers, llNavigationBar, llstart_day, llnon_start_day;
     public ImageView ivMenuOne, ivMenuTwo, ivMenuThree, ivOthers, ivOutsideImage, ImageView01, keyBack, ivprofile;
     public TextView tvMenuOne, tvMenuTwo, tvMenuThree, tvOthers;
     public View v1, v2, v3, v4;
     public CardView cvBottomNavigationBar;
-    public static int selectedBar = 1;
+    public PendingIntent pIntent;
+    public boolean isCancelableLoader;
+    public GPSUtills gpsUtills;
+    public FrameLayout flMenu;
+    public boolean isStartDayDone = false, isEOTDoneNew, isCanStartDayNew = true, isShortRoute, isPreviousDayEOTDone;
+    protected DashBoardOptionsCustomAdapter adapter;
+    protected Dialog dialog;
+    SimpleDateFormat dateFormat;
+    TextView tvEndtrip;
+    CustomDialog subMenuPopUP, customDialog;
+    MenuAdapter subMenuAdapter;
+    Vector<MenuDO> vecMenus = null;
     int textSize_b = 12, textSize_s = 9, count = 0, userType = 100;
     String[] menus;
     Integer[] menuIcons;
+    String selectedLanguage = "";
+    private Toast toast;
+    private int groupPos = 0;
+    private View customKeyBoard, globalView;
+    private TextView tvDone, tvNext, tvOne, tvTwo, tvThree, tvFour, tvFive, tvSix, tvSeven, tvEight, tvNine, tvZero, tvClear, tvDot, tvUserADID, tvUsername;
+    private ExpandableListView lvDashBoard;
+    private Animation rotateXaxis;
+    private ImageView ivBuildImage, ivSignal;
+    private Dialog updateGooglePlayServiceDialog = null;
 
     public abstract void initialize();
-
-    public PendingIntent pIntent;
-    protected Dialog dialog;
-    private Animation rotateXaxis;
-    public boolean isCancelableLoader;
-
-    public GPSUtills gpsUtills;
-
 
     @SuppressLint({"NewApi", "WrongConstant"})
     @Override
@@ -209,7 +210,6 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         logDeviceInfo();
     }
 
-
     public void logDeviceInfo() {
         String deviceModel = Build.MODEL;
         String manufacturer = Build.MANUFACTURER;
@@ -271,10 +271,6 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         preference.commitPreference();
     }
 
-
-    String selectedLanguage = "";
-    private ImageView ivBuildImage, ivSignal;
-
     private void setSignalResource() {
         if (ivSignal != null) {
             if (isNetworkConnectionAvailable(BaseActivity.this))
@@ -319,8 +315,6 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         }
     }
 
-    public FrameLayout flMenu;
-
     public void toggleDrawer() {
         if (drawerLayout.isDrawerOpen(flMenu)) {
             drawerLayout.closeDrawer(flMenu);
@@ -332,8 +326,6 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
     public void closeDrawer() {
         drawerLayout.closeDrawer(flMenu);
     }
-
-    public boolean isStartDayDone = false, isEOTDoneNew, isCanStartDayNew = true, isShortRoute, isPreviousDayEOTDone;
 
     protected void onResume() {
         super.onResume();
@@ -413,58 +405,6 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
 
     public void showLoader(String msg, String title) {
         runOnUiThread(new RunShowLoaderCustom(msg, title));
-    }
-
-
-    class RunShowLoaderCustom implements Runnable {
-        private String title;
-        private final String strMsg;
-
-        public RunShowLoaderCustom(String strMsg) {
-            this.strMsg = strMsg;
-        }
-
-        public RunShowLoaderCustom(String strMsg, String title) {
-            this.strMsg = strMsg;
-            this.title = title;
-        }
-
-        @Override
-        public void run() {
-            try {
-                if (dialog == null)
-                    dialog = new Dialog(BaseActivity.this, R.style.Theme_Dialog_Translucent);
-
-                dialog.setContentView(R.layout.loading);
-//                if (!isCancelableLoader) dialog.setCancelable(false); else dialog.setCancelable(true);
-                dialog.setCancelable(isCancelableLoader);
-
-                try {
-                    dialog.show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                LinearLayout llPopup = dialog.findViewById(R.id.llPopup);
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llPopup.getLayoutParams();
-                params.gravity = Gravity.CENTER; // Center both horizontally and vertically
-                llPopup.setLayoutParams(params);
-
-                ivOutsideImage = dialog.findViewById(R.id.ivOutsideImage);
-                ImageView01 = dialog.findViewById(R.id.ImageView01);
-
-                TextView tvLoading = dialog.findViewById(R.id.tvLoading);
-                if (!strMsg.equalsIgnoreCase("")) tvLoading.setText(strMsg);
-                else tvLoading.setVisibility(View.GONE);
-
-                rotateXaxis = AnimationUtils.loadAnimation(BaseActivity.this, R.anim.rotate_x_axis);
-                rotateXaxis.setInterpolator(new LinearInterpolator());
-
-                ivOutsideImage.setAnimation(rotateXaxis);
-                applyRotation();
-            } catch (Exception e) {
-            }
-        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -936,86 +876,6 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         }
     }
 
-    public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyHolder> {
-        Context context;
-        int row_index = 0;
-        ArrayList<String> menu;
-        ArrayList<Integer> menu_icon;
-        private Vector<MenuDO> vecMenuDOs;
-
-        public MenuAdapter(Vector<MenuDO> vecMenuDOs) {
-            this.vecMenuDOs = vecMenuDOs;
-        }
-
-        public void refreshDashBoardOptionsCustomAdapter(Vector<MenuDO> vecMenuDOs) {
-            this.vecMenuDOs = vecMenuDOs;
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.nav_list_item, parent, false);
-
-            return new MyHolder(itemView);
-        }
-
-        @Override
-        public void onBindViewHolder(MyHolder holder, @SuppressLint("RecyclerView") final int position) {
-            try {
-                final MenuDO menuDO = vecMenuDOs.get(position);
-
-                holder.tv_title.setText(menuDO.menuName);
-                holder.tv_title.setTypeface(AppConstants.SanFranciscoDisplay_Semibold);
-                Glide.with(holder.itemView.getContext()).load(menuDO.menuImage).into(holder.iv_icon);
-
-                holder.ivArrowIcon.setVisibility(menuDO.vecMenuDOs.isEmpty() ? View.INVISIBLE : View.VISIBLE);
-                holder.itemView.setTag(menuDO.menuName);
-                holder.itemView.setOnClickListener(v -> {
-//                            TopBarMenuClick();
-//                            groupPos = -1;
-
-                    if (menuDO.vecMenuDOs.size() == 0) {
-                        new Handler().postDelayed(() -> {
-                            if (!v.getTag().toString().equalsIgnoreCase("Checkout")) {
-                                Intent intent = new Intent();
-                                intent.setAction(AppConstants.ACTION_GOTO_HOME);
-                                sendBroadcast(intent);
-                            }
-//                                    navigateToActivity(menuDO);
-                            showToast("Under Development...!!!");
-                        }, 400);
-                    } else showSubMenuPopUp(menuDO.vecMenuDOs);
-                });
-                holder.itemView.setBackgroundColor(Color.TRANSPARENT);
-            } catch (Exception e) {
-                Log.i("menuAdapter", "onBindViewHolder: menu Adapter Exception :" + e);
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            if (vecMenuDOs != null && vecMenuDOs.size() > 0) {
-                return vecMenuDOs.size();
-            } else return 0;
-        }
-
-        class MyHolder extends RecyclerView.ViewHolder {
-            TextView tv_title;
-            ImageView iv_icon;
-            ImageView ivArrowIcon;
-
-            public MyHolder(View itemView) {
-                super(itemView);
-                tv_title = itemView.findViewById(R.id.tv_title);
-                iv_icon = itemView.findViewById(R.id.iv_icon);
-                ivArrowIcon = itemView.findViewById(R.id.ivArrowIcon);
-
-
-            }
-        }
-    }
-
     private void showSubMenuPopUp(Vector<MenuDO> vecMenuDo) {
         if (subMenuPopUP != null && subMenuPopUP.isShowing()) {
             subMenuPopUP.dismiss();
@@ -1069,7 +929,6 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         }
     }
 
-
     public String getMenuDO1(String field) {
         String asd = "";
         switch (field) {
@@ -1090,185 +949,6 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
                 break;
         }
         return asd;
-    }
-
-
-    public class DashBoardOptionsCustomAdapter extends BaseExpandableListAdapter {
-        private Vector<MenuDO> vecMenuDOs;
-
-        protected DashBoardOptionsCustomAdapter(Vector<MenuDO> vecMenuDOs) {
-            this.vecMenuDOs = vecMenuDOs;
-        }
-
-        public void refreshDashBoardOptionsCustomAdapter(Vector<MenuDO> vecMenuDOs) {
-            this.vecMenuDOs = vecMenuDOs;
-            notifyDataSetInvalidated();
-        }
-
-        @Override
-        public int getGroupCount() {
-            return vecMenuDOs.size();
-        }
-
-        @Override
-        public int getChildrenCount(int groupPosition) {
-            return vecMenuDOs.get(groupPosition).vecMenuDOs.size();
-        }
-
-        @Override
-        public Object getGroup(int groupPosition) {
-            return vecMenuDOs.get(groupPosition);
-        }
-
-        @Override
-        public Object getChild(int groupPosition, int childPosition) {
-            return vecMenuDOs.get(groupPosition).vecMenuDOs.get(childPosition);
-        }
-
-        @Override
-        public long getGroupId(int groupPosition) {
-            return groupPosition;
-        }
-
-        @Override
-
-        public long getChildId(int groupPosition, int childPosition) {
-            return childPosition;
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return false;
-        }
-
-        @Override
-        public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-            convertView = inflater.inflate(R.layout.dashboard_options_cell, null);
-            ImageView ivOptionIcon = convertView.findViewById(R.id.ivOptionIcon);
-            ImageView ivArrowIcon = convertView.findViewById(R.id.ivArrowIcon);
-            TextView tvOptionName = convertView.findViewById(R.id.tvOptionName);
-            LinearLayout llMenu = convertView.findViewById(R.id.llMenu);
-            LinearLayout rlCalender = convertView.findViewById(R.id.rlCalender);
-            ImageView ivFooter = convertView.findViewById(R.id.ivFooter);
-
-            ivOptionIcon.setImageResource(vecMenuDOs.get(groupPosition).menuImage);
-            tvOptionName.setText(vecMenuDOs.get(groupPosition).menuName);
-//            tvOptionName.setTypeface(AppConstants.SanFranciscoDisplay_Medium);
-            tvOptionName.setTypeface(AppConstants.SanFranciscoDisplay_Semibold);
-
-            if (vecMenuDOs.get(groupPosition).vecMenuDOs.size() > 0)
-                ivArrowIcon.setVisibility(View.VISIBLE);
-            else
-                ivArrowIcon.setVisibility(View.GONE);
-            if (groupPos == groupPosition) {
-                if (isExpanded) {
-                    ExpandableListView mExpandableListView = (ExpandableListView) parent;
-                    mExpandableListView.expandGroup(groupPosition);
-                } else {
-                    ExpandableListView mExpandableListView = (ExpandableListView) parent;
-                    mExpandableListView.collapseGroup(groupPosition);
-                }
-            }
-
-
-            if (vecMenuDOs.get(groupPosition).menuName.equalsIgnoreCase(getString(R.string.Footer))) {
-                rlCalender.setVisibility(View.GONE);
-                ivFooter.setVisibility(View.VISIBLE);
-            } else {
-                rlCalender.setVisibility(View.VISIBLE);
-                ivFooter.setVisibility(View.GONE);
-            }
-
-            if (vecMenuDOs.get(groupPosition).vecMenuDOs.size() == 0) {
-                convertView.setTag(vecMenuDOs.get(groupPosition).menuName);
-                convertView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(final View v) {
-                        TopBarMenuClick();
-                        groupPos = -1;
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (!v.getTag().toString().equalsIgnoreCase("Checkout")) {
-                                    Intent intent = new Intent();
-                                    intent.setAction(AppConstants.ACTION_GOTO_HOME);
-                                    sendBroadcast(intent);
-                                }
-
-//                                moveToNextAcivityGT(v.getTag().toString());
-//                                navigateToActivity(vecMenuDOs.get(groupPosition));
-                            }
-                        }, 400);
-                    }
-                });
-            }
-
-
-            if (isExpanded) {
-                ivArrowIcon.setBackgroundResource(R.drawable.menu_arrow_down);
-//                ivArrowIcon.setBackgroundResource(R.drawable.arrow_dwn);
-//                ivArrowIcon.setBackgroundResource(R.drawable.arrow_down_new_1);
-            } else
-                ivArrowIcon.setBackgroundResource(R.drawable.menu_arrow_right);
-//                ivArrowIcon.setBackgroundResource(R.drawable.arrow_one);
-
-            convertView.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (55 * px)));
-
-            return convertView;
-        }
-
-        @Override
-        public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-            final Vector<MenuDO> vecDos = vecMenuDOs.get(groupPosition).vecMenuDOs;
-
-            convertView = inflater.inflate(R.layout.dashboard_options_cell, null);
-            //			convertView.setBackgroundResource(R.color.dark_menu);
-            ImageView ivOptionIcon = convertView.findViewById(R.id.ivOptionIcon);
-            TextView tvOptionName = convertView.findViewById(R.id.tvOptionName);
-            LinearLayout rlCalender = convertView.findViewById(R.id.rlCalender);
-            ImageView ivFooter = convertView.findViewById(R.id.ivFooter);
-            ImageView ivArrowIcon = convertView.findViewById(R.id.ivArrowIcon);
-
-            ivOptionIcon.setImageResource(vecDos.get(childPosition).menuImage);
-            ivArrowIcon.setVisibility(View.GONE);
-            tvOptionName.setText(vecDos.get(childPosition).menuName);
-//            tvOptionName.setTypeface(AppConstants.SanFranciscoDisplay_Medium);
-            tvOptionName.setTypeface(AppConstants.SanFranciscoDisplay_Semibold);
-
-            //rlCalender.setBackgroundColor(getResources().getColor(R.color.gray_light));
-
-            convertView.setTag(vecDos.get(childPosition).menuName);
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View v) {
-                    groupPos = groupPosition;
-
-                    TopBarMenuClick();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent intent = new Intent();
-                            intent.setAction(AppConstants.ACTION_GOTO_HOME);
-                            sendBroadcast(intent);
-
-//                            moveToNextAcivityGT(v.getTag().toString());
-//                            navigateToActivity(vecDos.get(childPosition));
-                        }
-                    }, 400);
-                }
-            });
-
-            convertView.setPadding(20, 5, 5, 5);
-            convertView.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (55 * px)));
-
-            return convertView;
-        }
-
-        @Override
-        public boolean isChildSelectable(int groupPosition, int childPosition) {
-            return true;
-        }
-
     }
 
     public Context getBaseActivityContext() {
@@ -1457,7 +1137,6 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         // Add more else-if as needed
     }
 
-
     public void onButtonYesClick(String from, String params) {
 //        String serverURL = preference.getStringFromPreference(Preference.SETTINGS_URL, "");
 //        if (from.equalsIgnoreCase("server_settings") && !serverURL.equalsIgnoreCase(params)) {
@@ -1584,7 +1263,6 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         }
     }
 
-
     public void clickLogOut() {
         showCustomDialog(BaseActivity.this, getResources().getString(R.string.warning), getResources().getString(R.string.do_you_want_to_logout), getResources().getString(R.string.Yes), getResources().getString(R.string.No), "logout");
     }
@@ -1597,6 +1275,405 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
         runOnUiThread(new RunshowCustomDialogs(context, strTitle, strMessage, firstBtnName, secondBtnName, from, isCancelable));
     }
 
+    public void hideLoader() {
+        runOnUiThread(() -> {
+            try {
+                if (dialog != null && dialog.isShowing())
+                    dialog.dismiss();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @SuppressLint("HardwareIds")
+    public String getUniqueIDOriginal() {
+        String myAndroidDeviceId = "";
+        TelephonyManager mTelephony = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        if (!TextUtils.isEmpty(mTelephony.getDeviceId())) {
+            myAndroidDeviceId = mTelephony.getDeviceId();
+        } else {
+            myAndroidDeviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);//777817287dc5bc9
+        }
+        if (!TextUtils.isEmpty(myAndroidDeviceId))
+            myAndroidDeviceId = myAndroidDeviceId.toUpperCase();
+        return myAndroidDeviceId;
+    }
+
+    @SuppressLint("HardwareIds")
+    public String getUniqueID() {
+        String myAndroidDeviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        if (!TextUtils.isEmpty(myAndroidDeviceId)) {
+            myAndroidDeviceId = myAndroidDeviceId.toUpperCase();
+        }
+        return myAndroidDeviceId;
+    }
+
+    public HttpImageManager getHttpImageManager() {
+        return ((MyApplicationNew) BaseActivity.this.getApplication()).getHttpImageManager();
+    }
+
+    public File getOutputMediaFile() {
+        File fileDir = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+        //        File fileDir = getExternalFilesDir(Environment.getExternalStorageDirectory()+"/HaierEmpower/"+"Images");
+        File mediaStorageDir = new File(fileDir, "Kush1");
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                showToast("Failed to create directory to take picture.");
+                return null;
+            }
+        }
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmssSSS", Locale.US).format(new Date());
+        return new File(mediaStorageDir + File.separator + "HAIER_SLF_" + timeStamp + ".jpg");
+    }
+
+    public void showGoogleUpdateServiceAlert() {
+        updateGooglePlayServiceDialog = null;
+
+        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(BaseActivity.this);
+        if (status != ConnectionResult.SUCCESS) {
+            updateGooglePlayServiceDialog = GooglePlayServicesUtil.getErrorDialog(status, this, 1);
+            if (!isFinishing()) updateGooglePlayServiceDialog.show();
+        } else
+            Toast.makeText(BaseActivity.this, "You have updated googlePlayservice already", Toast.LENGTH_SHORT).show();
+    }
+
+    public void cancelGoogleUpdateServiceAlert() {
+        if (updateGooglePlayServiceDialog != null && updateGooglePlayServiceDialog.isShowing()) {
+            updateGooglePlayServiceDialog.dismiss();
+        }
+    }
+
+    public void showSettingsAlert() {
+        showCustomDialog(BaseActivity.this, getString(R.string.GPS_Settings), getString(R.string.GPS_not_enabled), "Settings", null, "Settings");
+    }
+
+    public boolean isDeviceSupportCamera() {
+        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
+    }
+
+    public boolean isGPSEnable(Context context) {
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        try {
+            boolean gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            boolean network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            if (!gps_enabled && !network_enabled)
+                return false;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return true;
+    }
+
+    class RunShowLoaderCustom implements Runnable {
+        private final String strMsg;
+        private String title;
+
+        public RunShowLoaderCustom(String strMsg) {
+            this.strMsg = strMsg;
+        }
+
+        public RunShowLoaderCustom(String strMsg, String title) {
+            this.strMsg = strMsg;
+            this.title = title;
+        }
+
+        @Override
+        public void run() {
+            try {
+                if (dialog == null)
+                    dialog = new Dialog(BaseActivity.this, R.style.Theme_Dialog_Translucent);
+
+                dialog.setContentView(R.layout.loading);
+//                if (!isCancelableLoader) dialog.setCancelable(false); else dialog.setCancelable(true);
+                dialog.setCancelable(isCancelableLoader);
+
+                try {
+                    dialog.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                LinearLayout llPopup = dialog.findViewById(R.id.llPopup);
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llPopup.getLayoutParams();
+                params.gravity = Gravity.CENTER; // Center both horizontally and vertically
+                llPopup.setLayoutParams(params);
+
+                ivOutsideImage = dialog.findViewById(R.id.ivOutsideImage);
+                ImageView01 = dialog.findViewById(R.id.ImageView01);
+
+                TextView tvLoading = dialog.findViewById(R.id.tvLoading);
+                if (!strMsg.equalsIgnoreCase("")) tvLoading.setText(strMsg);
+                else tvLoading.setVisibility(View.GONE);
+
+                rotateXaxis = AnimationUtils.loadAnimation(BaseActivity.this, R.anim.rotate_x_axis);
+                rotateXaxis.setInterpolator(new LinearInterpolator());
+
+                ivOutsideImage.setAnimation(rotateXaxis);
+                applyRotation();
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyHolder> {
+        Context context;
+        int row_index = 0;
+        ArrayList<String> menu;
+        ArrayList<Integer> menu_icon;
+        private Vector<MenuDO> vecMenuDOs;
+
+        public MenuAdapter(Vector<MenuDO> vecMenuDOs) {
+            this.vecMenuDOs = vecMenuDOs;
+        }
+
+        public void refreshDashBoardOptionsCustomAdapter(Vector<MenuDO> vecMenuDOs) {
+            this.vecMenuDOs = vecMenuDOs;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.nav_list_item, parent, false);
+
+            return new MyHolder(itemView);
+        }
+
+        @Override
+        public void onBindViewHolder(MyHolder holder, @SuppressLint("RecyclerView") final int position) {
+            try {
+                final MenuDO menuDO = vecMenuDOs.get(position);
+
+                holder.tv_title.setText(menuDO.menuName);
+                holder.tv_title.setTypeface(AppConstants.SanFranciscoDisplay_Semibold);
+                Glide.with(holder.itemView.getContext()).load(menuDO.menuImage).into(holder.iv_icon);
+
+                holder.ivArrowIcon.setVisibility(menuDO.vecMenuDOs.isEmpty() ? View.INVISIBLE : View.VISIBLE);
+                holder.itemView.setTag(menuDO.menuName);
+                holder.itemView.setOnClickListener(v -> {
+//                            TopBarMenuClick();
+//                            groupPos = -1;
+
+                    if (menuDO.vecMenuDOs.size() == 0) {
+                        new Handler().postDelayed(() -> {
+                            if (!v.getTag().toString().equalsIgnoreCase("Checkout")) {
+                                Intent intent = new Intent();
+                                intent.setAction(AppConstants.ACTION_GOTO_HOME);
+                                sendBroadcast(intent);
+                            }
+//                                    navigateToActivity(menuDO);
+                            showToast("Under Development...!!!");
+                        }, 400);
+                    } else showSubMenuPopUp(menuDO.vecMenuDOs);
+                });
+                holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+            } catch (Exception e) {
+                Log.i("menuAdapter", "onBindViewHolder: menu Adapter Exception :" + e);
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            if (vecMenuDOs != null && vecMenuDOs.size() > 0) {
+                return vecMenuDOs.size();
+            } else return 0;
+        }
+
+        class MyHolder extends RecyclerView.ViewHolder {
+            TextView tv_title;
+            ImageView iv_icon;
+            ImageView ivArrowIcon;
+
+            public MyHolder(View itemView) {
+                super(itemView);
+                tv_title = itemView.findViewById(R.id.tv_title);
+                iv_icon = itemView.findViewById(R.id.iv_icon);
+                ivArrowIcon = itemView.findViewById(R.id.ivArrowIcon);
+
+
+            }
+        }
+    }
+
+    public class DashBoardOptionsCustomAdapter extends BaseExpandableListAdapter {
+        private Vector<MenuDO> vecMenuDOs;
+
+        protected DashBoardOptionsCustomAdapter(Vector<MenuDO> vecMenuDOs) {
+            this.vecMenuDOs = vecMenuDOs;
+        }
+
+        public void refreshDashBoardOptionsCustomAdapter(Vector<MenuDO> vecMenuDOs) {
+            this.vecMenuDOs = vecMenuDOs;
+            notifyDataSetInvalidated();
+        }
+
+        @Override
+        public int getGroupCount() {
+            return vecMenuDOs.size();
+        }
+
+        @Override
+        public int getChildrenCount(int groupPosition) {
+            return vecMenuDOs.get(groupPosition).vecMenuDOs.size();
+        }
+
+        @Override
+        public Object getGroup(int groupPosition) {
+            return vecMenuDOs.get(groupPosition);
+        }
+
+        @Override
+        public Object getChild(int groupPosition, int childPosition) {
+            return vecMenuDOs.get(groupPosition).vecMenuDOs.get(childPosition);
+        }
+
+        @Override
+        public long getGroupId(int groupPosition) {
+            return groupPosition;
+        }
+
+        @Override
+
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return false;
+        }
+
+        @Override
+        public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+            convertView = inflater.inflate(R.layout.dashboard_options_cell, null);
+            ImageView ivOptionIcon = convertView.findViewById(R.id.ivOptionIcon);
+            ImageView ivArrowIcon = convertView.findViewById(R.id.ivArrowIcon);
+            TextView tvOptionName = convertView.findViewById(R.id.tvOptionName);
+            LinearLayout llMenu = convertView.findViewById(R.id.llMenu);
+            LinearLayout rlCalender = convertView.findViewById(R.id.rlCalender);
+            ImageView ivFooter = convertView.findViewById(R.id.ivFooter);
+
+            ivOptionIcon.setImageResource(vecMenuDOs.get(groupPosition).menuImage);
+            tvOptionName.setText(vecMenuDOs.get(groupPosition).menuName);
+//            tvOptionName.setTypeface(AppConstants.SanFranciscoDisplay_Medium);
+            tvOptionName.setTypeface(AppConstants.SanFranciscoDisplay_Semibold);
+
+            if (vecMenuDOs.get(groupPosition).vecMenuDOs.size() > 0)
+                ivArrowIcon.setVisibility(View.VISIBLE);
+            else
+                ivArrowIcon.setVisibility(View.GONE);
+            if (groupPos == groupPosition) {
+                if (isExpanded) {
+                    ExpandableListView mExpandableListView = (ExpandableListView) parent;
+                    mExpandableListView.expandGroup(groupPosition);
+                } else {
+                    ExpandableListView mExpandableListView = (ExpandableListView) parent;
+                    mExpandableListView.collapseGroup(groupPosition);
+                }
+            }
+
+
+            if (vecMenuDOs.get(groupPosition).menuName.equalsIgnoreCase(getString(R.string.Footer))) {
+                rlCalender.setVisibility(View.GONE);
+                ivFooter.setVisibility(View.VISIBLE);
+            } else {
+                rlCalender.setVisibility(View.VISIBLE);
+                ivFooter.setVisibility(View.GONE);
+            }
+
+            if (vecMenuDOs.get(groupPosition).vecMenuDOs.size() == 0) {
+                convertView.setTag(vecMenuDOs.get(groupPosition).menuName);
+                convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View v) {
+                        TopBarMenuClick();
+                        groupPos = -1;
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!v.getTag().toString().equalsIgnoreCase("Checkout")) {
+                                    Intent intent = new Intent();
+                                    intent.setAction(AppConstants.ACTION_GOTO_HOME);
+                                    sendBroadcast(intent);
+                                }
+
+//                                moveToNextAcivityGT(v.getTag().toString());
+//                                navigateToActivity(vecMenuDOs.get(groupPosition));
+                            }
+                        }, 400);
+                    }
+                });
+            }
+
+
+            if (isExpanded) {
+                ivArrowIcon.setBackgroundResource(R.drawable.menu_arrow_down);
+//                ivArrowIcon.setBackgroundResource(R.drawable.arrow_dwn);
+//                ivArrowIcon.setBackgroundResource(R.drawable.arrow_down_new_1);
+            } else
+                ivArrowIcon.setBackgroundResource(R.drawable.menu_arrow_right);
+//                ivArrowIcon.setBackgroundResource(R.drawable.arrow_one);
+
+            convertView.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (55 * px)));
+
+            return convertView;
+        }
+
+        @Override
+        public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+            final Vector<MenuDO> vecDos = vecMenuDOs.get(groupPosition).vecMenuDOs;
+
+            convertView = inflater.inflate(R.layout.dashboard_options_cell, null);
+            //			convertView.setBackgroundResource(R.color.dark_menu);
+            ImageView ivOptionIcon = convertView.findViewById(R.id.ivOptionIcon);
+            TextView tvOptionName = convertView.findViewById(R.id.tvOptionName);
+            LinearLayout rlCalender = convertView.findViewById(R.id.rlCalender);
+            ImageView ivFooter = convertView.findViewById(R.id.ivFooter);
+            ImageView ivArrowIcon = convertView.findViewById(R.id.ivArrowIcon);
+
+            ivOptionIcon.setImageResource(vecDos.get(childPosition).menuImage);
+            ivArrowIcon.setVisibility(View.GONE);
+            tvOptionName.setText(vecDos.get(childPosition).menuName);
+//            tvOptionName.setTypeface(AppConstants.SanFranciscoDisplay_Medium);
+            tvOptionName.setTypeface(AppConstants.SanFranciscoDisplay_Semibold);
+
+            //rlCalender.setBackgroundColor(getResources().getColor(R.color.gray_light));
+
+            convertView.setTag(vecDos.get(childPosition).menuName);
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    groupPos = groupPosition;
+
+                    TopBarMenuClick();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent();
+                            intent.setAction(AppConstants.ACTION_GOTO_HOME);
+                            sendBroadcast(intent);
+
+//                            moveToNextAcivityGT(v.getTag().toString());
+//                            navigateToActivity(vecDos.get(childPosition));
+                        }
+                    }, 400);
+                }
+            });
+
+            convertView.setPadding(20, 5, 5, 5);
+            convertView.setLayoutParams(new ListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (55 * px)));
+
+            return convertView;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return true;
+        }
+
+    }
 
     // For showing Dialog message.
     class RunshowCustomDialogs implements Runnable {
@@ -1822,100 +1899,6 @@ public abstract class BaseActivity extends AppCompatActivity implements AbsListV
                 }
             }
         }
-    }
-
-
-    public void hideLoader() {
-        runOnUiThread(() -> {
-            try {
-                if (dialog != null && dialog.isShowing())
-                    dialog.dismiss();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    @SuppressLint("HardwareIds")
-    public String getUniqueIDOriginal() {
-        String myAndroidDeviceId = "";
-        TelephonyManager mTelephony = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        if (!TextUtils.isEmpty(mTelephony.getDeviceId())) {
-            myAndroidDeviceId = mTelephony.getDeviceId();
-        } else {
-            myAndroidDeviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);//777817287dc5bc9
-        }
-        if (!TextUtils.isEmpty(myAndroidDeviceId))
-            myAndroidDeviceId = myAndroidDeviceId.toUpperCase();
-        return myAndroidDeviceId;
-    }
-
-    @SuppressLint("HardwareIds")
-    public String getUniqueID() {
-        String myAndroidDeviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        if (!TextUtils.isEmpty(myAndroidDeviceId)) {
-            myAndroidDeviceId = myAndroidDeviceId.toUpperCase();
-        }
-        return myAndroidDeviceId;
-    }
-
-    public HttpImageManager getHttpImageManager() {
-        return ((MyApplicationNew) BaseActivity.this.getApplication()).getHttpImageManager();
-    }
-
-    public File getOutputMediaFile() {
-        File fileDir = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
-        //        File fileDir = getExternalFilesDir(Environment.getExternalStorageDirectory()+"/HaierEmpower/"+"Images");
-        File mediaStorageDir = new File(fileDir, "Kush1");
-        if (!mediaStorageDir.exists()) {
-            if (!mediaStorageDir.mkdirs()) {
-                showToast("Failed to create directory to take picture.");
-                return null;
-            }
-        }
-
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmssSSS", Locale.US).format(new Date());
-        return new File(mediaStorageDir + File.separator + "HAIER_SLF_" + timeStamp + ".jpg");
-    }
-
-    private Dialog updateGooglePlayServiceDialog = null;
-
-    public void showGoogleUpdateServiceAlert() {
-        updateGooglePlayServiceDialog = null;
-
-        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(BaseActivity.this);
-        if (status != ConnectionResult.SUCCESS) {
-            updateGooglePlayServiceDialog = GooglePlayServicesUtil.getErrorDialog(status, this, 1);
-            if (!isFinishing()) updateGooglePlayServiceDialog.show();
-        } else
-            Toast.makeText(BaseActivity.this, "You have updated googlePlayservice already", Toast.LENGTH_SHORT).show();
-    }
-
-    public void cancelGoogleUpdateServiceAlert() {
-        if (updateGooglePlayServiceDialog != null && updateGooglePlayServiceDialog.isShowing()) {
-            updateGooglePlayServiceDialog.dismiss();
-        }
-    }
-
-    public void showSettingsAlert() {
-        showCustomDialog(BaseActivity.this, getString(R.string.GPS_Settings), getString(R.string.GPS_not_enabled), "Settings", null, "Settings");
-    }
-
-    public boolean isDeviceSupportCamera() {
-        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
-    }
-
-    public boolean isGPSEnable(Context context) {
-        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        try {
-            boolean gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            boolean network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-            if (!gps_enabled && !network_enabled)
-                return false;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return true;
     }
 
 }

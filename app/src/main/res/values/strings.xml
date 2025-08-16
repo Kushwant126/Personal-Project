@@ -2052,6 +2052,7 @@
     <string name="end_odometer_reading_should_be">End Odometer reading should be greater than start odometer reading.</string>
     <string name="synchronization">Synchronization</string>
     <string name="data_check">Data Check</string>
+    <string name="wifi_connected1">WIFI Connection Check</string>
     <string name="internet_speed_check">Internet Speed Check</string>
     <string name="battery_check"> Battery Check</string>
     <string name="battery_level_is">Battery Level</string>

@@ -2647,6 +2647,7 @@
     <string name="end_odometer_reading_should_be">يجب أن تكون قراءة نهاية عداد المسافات أكبر من قراءة بدء عداد المسافات.</string>
     <string name="synchronization">المزامنة</string>
     <string name="data_check">فحص البيانات</string>
+    <string name="wifi_connected1">Wifi Connected</string>
     <string name="internet_speed_check">فحص سرعة الانترنيت</string>
     <string name="battery_check">فحص البطارية</string>
     <string name="battery_level_is">مستوى البطارية</string>
